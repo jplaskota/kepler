@@ -1,29 +1,16 @@
-# Ignore node_modules except when building inside a container
 node_modules
-npm-debug.log
-yarn-error.log
-
-# Ignore build artifacts
-/dist
-
-# Ignore development files
-/.env
-/.env.local
-/.env.development.local
-/.env.test.local
-/.env.production.local
-.DS_Store
-
-# Ignore version control files
+Dockerfile*
+docker-compose*
+.dockerignore
 .git
 .gitignore
-
-# Ignore Docker-related files
-Dockerfile*
-.dockerignore
-
-# Ignore logs and databases
-*.log
-
-# Ignore Vite build cache
-node_modules/.vite
+README.md
+LICENSE
+.vscode
+Makefile
+helm-charts
+.env
+.editorconfig
+.idea
+coverage*
+.DS_Store

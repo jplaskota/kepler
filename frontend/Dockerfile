@@ -1,15 +1,16 @@
-FROM node:current-alpine
+FROM oven/bun
 
 WORKDIR /app
 
-COPY package*.json /app
+COPY bun.lockb /app
+COPY package.json /app
 
-RUN npm i
+RUN bun i --frozen-lockfile
 
 COPY . .
 
 EXPOSE 5173
 
-RUN npm i
+RUN bun i
 
-CMD ["npm", "run", "dev"]
+CMD ["bun", "run", "dev"]
