@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
 import { styled } from "styled-components";
 
 const StyledMovieCard = styled.div`
+  width: fit-content;
   display: flex;
   flex-direction: column;
   background-color: #dbd9d2;
@@ -16,11 +16,13 @@ const StyledMovieCard = styled.div`
 `;
 
 const Title = styled.span`
+  width: 250px;
   font-size: 3rem;
   font-family: "Anton", sans-serif;
   font-weight: 400;
   font-style: normal;
   line-height: 3rem;
+  word-wrap: break-word;
 `;
 
 const Info = styled.span`
@@ -49,13 +51,5 @@ function MovieCard({ title, img, date, running, director }) {
     </StyledMovieCard>
   );
 }
-
-MovieCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  img: PropTypes.any,
-  date: PropTypes.string.isRequired,
-  running: PropTypes.string,
-  director: PropTypes.string,
-};
 
 export default MovieCard;
