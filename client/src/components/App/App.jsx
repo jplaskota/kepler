@@ -1,7 +1,9 @@
-import MovieCard from "../Movie/MovieCard";
-import MovieList from "../Movie/MovieList";
-import BatmanPoster from "/BatmanPoster.png";
-import BohemianPoster from "/BohemianPoster.png";
+import MovieCard from "../MovieCard/MovieCard";
+import MovieList from "../MovieList/MovieList";
+import BatmanPoster from "/BatmanPoster.jpg";
+import BohemianPoster from "/BohemianPoster.jpg";
+import JokerPoster from "/JokerPoster.jpg";
+import TLOUPoster from "/TLOUPoster.jpg";
 
 function App() {
   return (
@@ -19,6 +21,20 @@ function App() {
         date={"2018"}
         running={"134MIN"}
         director={"Bryan Singer, Dexter Fletcher"}
+      ></MovieCard>
+      <MovieCard
+        title={"THE LAST OF US"}
+        img={TLOUPoster}
+        date={"2023"}
+        running={"season 1"}
+        director={"Neil Druckmann, Craig Mazin"}
+      ></MovieCard>
+      <MovieCard
+        title={"JOKER"}
+        img={JokerPoster}
+        date={"2019"}
+        running={"122MIN"}
+        director={"Todd Phillips"}
       ></MovieCard>
     </MovieList>
   );

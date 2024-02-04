@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 
-const StyledMovieCard = styled.div`
+export const StyledMovieCard = styled.div`
   width: fit-content;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   background-color: #dbd9d2;
@@ -15,7 +16,7 @@ const StyledMovieCard = styled.div`
   }
 `;
 
-const Title = styled.span`
+export const Title = styled.span`
   width: 250px;
   font-size: 3rem;
   font-family: "Anton", sans-serif;
@@ -25,7 +26,7 @@ const Title = styled.span`
   word-wrap: break-word;
 `;
 
-const Info = styled.span`
+export const Info = styled.span`
   font-size: 1rem;
   font-family: "Fira Sans Extra Condensed", sans-serif;
   font-weight: 400;
@@ -33,23 +34,7 @@ const Info = styled.span`
   padding-left: 1px;
 `;
 
-const InLine = styled.div`
+export const InLine = styled.section`
   display: flex;
   gap: 5px;
 `;
-
-function MovieCard({ title, img, date, running, director }) {
-  return (
-    <StyledMovieCard>
-      <img src={img} alt="poster" />
-      <Title>{title}</Title>
-      <InLine>
-        <Info>[ {date} ]</Info>
-        <Info>[ {running} ]</Info>
-      </InLine>
-      <Info>{director}</Info>
-    </StyledMovieCard>
-  );
-}
-
-export default MovieCard;
