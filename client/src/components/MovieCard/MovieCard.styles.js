@@ -5,6 +5,7 @@ export const StyledMovieCard = styled.div`
   height: fit-content;
   display: flex;
   flex-direction: column;
+  gap: 5px;
   background-color: #dbd9d2;
   padding: 10px;
   border-radius: 10px;

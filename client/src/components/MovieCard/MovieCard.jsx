@@ -1,4 +1,4 @@
-import { InLine, Info, StyledMovieCard, Title } from "./MovieCard.styles.jsx";
+import { InLine, Info, StyledMovieCard, Title } from "./MovieCard.styles";
 
 function MovieCard({ title, img, date, running, director }) {
   return (
