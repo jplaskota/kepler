@@ -5,7 +5,7 @@ import Category from "./Category";
 import MovieList from "./MovieList";
 
 function App() {
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("all");
   const [list, setList] = useState(DATA);
 
   function categoryHandler(selected) {
@@ -22,9 +22,21 @@ function App() {
   return (
     <>
       <Category>
-        <Button onSelect={() => categoryHandler("all")} label="All" />
-        <Button onSelect={() => categoryHandler("movie")} label="Movies" />
-        <Button onSelect={() => categoryHandler("series")} label="Series" />
+        <Button
+          onSelect={() => categoryHandler("all")}
+          isSelected={category === "all"}
+          label="All"
+        />
+        <Button
+          onSelect={() => categoryHandler("movie")}
+          isSelected={category === "movie"}
+          label="Movies"
+        />
+        <Button
+          onSelect={() => categoryHandler("series")}
+          isSelected={category === "series"}
+          label="Series"
+        />
       </Category>
       <MovieList list={list} />
     </>

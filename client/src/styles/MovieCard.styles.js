@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const StyledMovieCard = styled.div`
-  width: fit-content;
+  width: 250px;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,6 @@ export const StyledMovieCard = styled.div`
   color: #1c1818;
 
   img {
-    width: 250px;
     object-fit: cover;
   }
 `;
@@ -29,9 +28,7 @@ export const Title = styled.span`
 
 export const Info = styled.span`
   font-size: 1rem;
-  font-family: "Fira Sans Extra Condensed", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  font-family: "Urbanist", sans-serif;
   padding-left: 1px;
 `;
 
