@@ -11,7 +11,7 @@ export const StyledMovieCard = styled.div`
   border-radius: 10px;
   color: #1c1818;
 
-  & img {
+  img {
     width: 250px;
     object-fit: cover;
   }
