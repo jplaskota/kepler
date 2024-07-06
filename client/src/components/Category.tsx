@@ -1,6 +1,10 @@
 import { StyledCategory } from "../styles/Category.styles";
 
-function Category({ children }) {
+interface CategoryProps {
+  children: React.ReactNode;
+}
+
+function Category({ children }: CategoryProps) {
   return <StyledCategory>{children}</StyledCategory>;
 }
 

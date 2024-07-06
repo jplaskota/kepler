@@ -9,7 +9,17 @@ import SpiderManPoster from "/SpiderManPoster.jpg";
 import TheBoysPoster from "/TheBoysPoster.jpg";
 import TLOUPoster from "/TLOUPoster.jpg";
 
-export const DATA = [
+export interface MediaItem {
+  id: number;
+  title: string;
+  img: string;
+  date: string;
+  running: string;
+  director: string;
+  type: "movie" | "series";
+}
+
+export const DATA: MediaItem[] = [
   {
     id: 0,
     title: "BATMAN",

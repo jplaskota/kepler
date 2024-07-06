@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { DATA } from "../data";
+import { DATA, MediaItem } from "../data";
 import Button from "./Button";
 import Category from "./Category";
 import MovieList from "./MovieList";
 
 function App() {
-  const [category, setCategory] = useState("all");
-  const [list, setList] = useState(DATA);
+  const [category, setCategory] = useState<string>("all");
+  const [list, setList] = useState<MediaItem[]>(DATA);
 
-  function categoryHandler(selected) {
+  function categoryHandler(selected: string) {
     setCategory(selected);
 
     if (selected !== "all") {

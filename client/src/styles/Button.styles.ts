@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{ isSelected: boolean }>`
   height: fit-content;
   width: 70px;
   background-color: transparent;
@@ -18,11 +18,13 @@ export const StyledButton = styled.button`
     padding: 2px 5px;
     border: 1px solid transparent;
     border-bottom: 1px solid
-      ${(props) => (props.$isSelected ? "#dbd9d2" : "transparent")};
+      ${(props) => (props.isSelected ? "#dbd9d2" : "transparent")};
   }
 `;
 
-// export const StyledButton = styled.button`
+//* alternative design of category buttons
+
+// export const StyledButton = styled.button<{isSelected: boolean}>`
 //   height: 35px;
 //   width: 80px;
 //   background-color: ${(props) =>
@@ -38,7 +40,7 @@ export const StyledButton = styled.button`
 //   span {
 //     font-size: 1.2rem;
 //     font-family: "Urbanist", sans-serif;
-//     color: ${(props) => (props.$isSelected ? "black" : "#dbd9d2")};
+//     color: ${(props) => (props.isSelected ? "black" : "#dbd9d2")};
 //     padding: 2px 5px;
 //   }
 // `;
