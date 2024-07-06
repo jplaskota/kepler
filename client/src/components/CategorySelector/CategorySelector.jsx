@@ -1,13 +1,7 @@
 import { StyledCategorySelector } from "./CategorySelector.styles";
 
-function CategorySlider() {
-  return (
-    <StyledCategorySelector>
-      <span>All</span>
-      <span>Film</span>
-      <span>Series</span>
-    </StyledCategorySelector>
-  );
+function CategorySlider({ children }) {
+  return <StyledCategorySelector>{children}</StyledCategorySelector>;
 }
 
 export default CategorySlider;
