@@ -14,22 +14,37 @@ export const StyledMovieCard = styled.div`
   img {
     object-fit: cover;
   }
+
+  @media only screen and (max-width: 768px) {
+    width: 38vw;
+    gap: 0.5vw;
+    padding: 2vw
+  }
 `;
 
 export const Title = styled.span`
-  width: 250px;
+  width: fit-content;
   font-size: 3rem;
   font-family: "Anton", sans-serif;
   font-weight: 400;
   font-style: normal;
   line-height: 3rem;
   word-wrap: break-word;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 7vw;
+    line-height: 7vw;
+  }
 `;
 
 export const Info = styled.span`
   font-size: 1rem;
   font-family: "Urbanist", sans-serif;
   padding-left: 1px;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 3vw;
+  }
 `;
 
 export const InLine = styled.section`
