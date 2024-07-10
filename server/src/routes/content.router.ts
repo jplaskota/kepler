@@ -1,13 +1,12 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { v4 as uuidv4 } from "uuid";
-import { z } from "zod";
 import { fakeContent } from "../fakeContent";
 import { contentSchema } from "../models/content.models";
 
 const postContentSchema = contentSchema.omit({ id: true });
 
-export const contentRoutes = new Hono()
+const router = new Hono()
   .get("/", (c) => {
     return c.json(fakeContent);
   })
@@ -41,3 +40,7 @@ export const contentRoutes = new Hono()
     const deletedContent = fakeContent.splice(index, 1)[0];
     return c.json({ content: deletedContent });
   });
+
+export default router;
+
+//TODO tests !
