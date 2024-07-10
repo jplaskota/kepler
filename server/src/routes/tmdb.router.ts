@@ -1,15 +1,20 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { serializeSigned } from "hono/utils/cookie";
-import { array } from "zod";
+import { z } from "zod";
 
 const api = Bun.env.TMDB_API_KEY;
 
+const mediaSchema = z.object({
+  type: z.enum(["movie", "tv"]),
+});
+
 const router = new Hono()
-  .get("/id/:id{[0-9]+}", async (c) => {
+  .get("/id/:id{[0-9]+}", zValidator("query", mediaSchema), async (c) => {
     const id = c.req.param("id");
+    const type = c.req.query("type");
 
     const idRes = await fetch(
-      "https://api.themoviedb.org/3/movie/" + id + "?api_key=" + api
+      "https://api.themoviedb.org/3/" + type + "/" + id + "?api_key=" + api
     ).then((res) => {
       if (!res.ok) {
         throw new Error("Network response was not ok");
@@ -17,7 +22,7 @@ const router = new Hono()
       return res.json();
     });
 
-    return c.json({ idRes });
+    return c.json(idRes);
   })
   .get("/name/:name", async (c) => {
     const searchName = c.req.param("name").split(" ").join("+");
