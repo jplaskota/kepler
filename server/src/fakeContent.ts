@@ -1,4 +1,4 @@
-import type { Content } from "./models/content.models";
+import type { Content } from "./models/content.model";
 
 export const fakeContent: Content[] = [
   {

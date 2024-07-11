@@ -1,31 +1,37 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
+import type { Movie } from "../models/movie.model";
+import type { Series } from "../models/series.model";
 
 const api = Bun.env.TMDB_API_KEY;
 
-const mediaSchema = z.object({
+const searchByIdSchema = z.object({
   type: z.enum(["movie", "tv"]),
 });
 
+const searchByNameSchema = z.object({
+  type: z.enum(["movie", "tv"]).optional(),
+});
+
 const router = new Hono()
-  .get("/id/:id{[0-9]+}", zValidator("query", mediaSchema), async (c) => {
+  .get("/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
     const id = c.req.param("id");
     const type = c.req.query("type");
 
-    const idRes = await fetch(
+    const results = await fetch(
       "https://api.themoviedb.org/3/" + type + "/" + id + "?api_key=" + api
     ).then((res) => {
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!res.ok) throw new Error("Network response was not ok");
       return res.json();
     });
 
-    return c.json(idRes);
+    results.media_type = type;
+    return c.json(results);
   })
-  .get("/name/:name", async (c) => {
+  .get("/:name", zValidator("query", searchByNameSchema), async (c) => {
     const searchName = c.req.param("name").split(" ").join("+");
+    const type = c.req.query("type");
 
     const movieRes = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
@@ -33,9 +39,7 @@ const router = new Hono()
         "&api_key=" +
         api
     ).then((res) => {
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!res.ok) throw new Error("Network response was not ok");
       return res.json();
     });
 
@@ -45,32 +49,35 @@ const router = new Hono()
         "&api_key=" +
         api
     ).then((res) => {
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!res.ok) throw new Error("Network response was not ok");
       return res.json();
     });
 
-    const moviesWithMediaType = movieRes.results.map((movie: any) => ({
-      ...movie,
-      media_type: "movie",
-    }));
+    const moviesPrepared: Movie[] = movieRes.results
+      .map((movie: Movie) => ({
+        ...movie,
+        media_type: "movie",
+      }))
+      .sort((a: Movie, b: Movie) => b.popularity - a.popularity);
 
-    const seriesWithMediaType = seriesRes.results.map((series: any) => ({
-      ...series,
-      media_type: "series",
-    }));
+    const seriesPrepared: Series[] = seriesRes.results
+      .map((series: Series) => ({
+        ...series,
+        media_type: "tv",
+      }))
+      .sort((a: Series, b: Series) => b.popularity - a.popularity);
 
-    return c.json({
-      movies: moviesWithMediaType
-        .slice(0, 3)
-        .sort((a: any, b: any) => b.popularity - a.popularity),
-      series: seriesWithMediaType
-        .slice(0, 3)
-        .sort((a: any, b: any) => b.popularity - a.popularity),
-    });
+    switch (type) {
+      case "movie":
+        return c.json(moviesPrepared.splice(0, 10));
+      case "tv":
+        return c.json(seriesPrepared.splice(0, 10));
+      default:
+        return c.json({
+          movies: moviesPrepared.slice(0, 3),
+          series: seriesPrepared.slice(0, 3),
+        });
+    }
   });
 
 export default router;
-
-//TODO get by id must be searched with media_types (from search by name section) (id of movie can be the same as series id )

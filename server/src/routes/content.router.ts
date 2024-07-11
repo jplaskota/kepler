@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { v4 as uuidv4 } from "uuid";
 import { fakeContent } from "../fakeContent";
-import { contentSchema } from "../models/content.models";
+import { contentSchema } from "../models/content.model";
 
 const postContentSchema = contentSchema.omit({ id: true });
 
