@@ -1,21 +1,16 @@
 import { z } from "zod";
 
-const genreSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-});
-
 export const movieSchema = z.object({
-  genres: z.array(genreSchema),
-  homepage: z.string(),
-  id: z.number(),
-  overview: z.string(),
-  popularity: z.number(),
-  poster_path: z.string(),
-  release_date: z.string(),
-  runtime: z.number(),
-  status: z.string(),
+  id: z.string(),
   title: z.string(),
+  runtime: z.number(),
+  release_date: z.string(),
+  genres: z.array(z.string()),
+  overview: z.string(),
+  homepage: z.string(),
+  poster_path: z.string(),
+  popularity: z.number(),
+  status: z.string(),
   vote_average: z.number(),
   media_type: z.string(),
 });

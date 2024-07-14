@@ -24,9 +24,13 @@ const router = new Hono()
       }
 
       const json = await res.json();
+      const data = _.pick(json, Object.keys(movieSchema.shape));
 
-      const data = _.pick(json, Object.keys(movieSchema.shape)) as Movie;
-      return data;
+      const genres = data.genres.map((genre: any) => genre.name);
+      data.genres = genres;
+      data.media_type = type;
+
+      return data as Movie;
     });
 
     return c.json(results);
