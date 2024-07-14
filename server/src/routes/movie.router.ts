@@ -2,9 +2,9 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { v4 as uuidv4 } from "uuid";
 import { fakeContent } from "../fakeContent";
-import { contentSchema } from "../models/content.model";
+import { movieSchema } from "../models/movie.model";
 
-const postContentSchema = contentSchema.omit({ id: true });
+const postContentSchema = movieSchema.omit({ id: true });
 
 const router = new Hono()
   .get("/", (c) => {

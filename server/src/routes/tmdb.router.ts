@@ -1,7 +1,8 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import _ from "lodash";
 import { z } from "zod";
-import type { Movie } from "../models/movie.model";
+import { movieSchema, type Movie } from "../models/movie.model";
 import type { Series } from "../models/series.model";
 
 const api = Bun.env.TMDB_API_KEY;
@@ -10,26 +11,27 @@ const searchByIdSchema = z.object({
   type: z.enum(["movie", "tv"]),
 });
 
-const searchByNameSchema = z.object({
-  type: z.enum(["movie", "tv"]).optional(),
-});
-
 const router = new Hono()
-  .get("/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
+  .get("/id/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
     const id = c.req.param("id");
     const type = c.req.query("type");
 
-    const results = await fetch(
-      "https://api.themoviedb.org/3/" + type + "/" + id + "?api_key=" + api
-    ).then((res) => {
-      if (!res.ok) throw new Error("Network response was not ok");
-      return res.json();
+    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${api}`;
+
+    const results = await fetch(url).then(async (res) => {
+      if (!res.ok) {
+        return { message: res.statusText };
+      }
+
+      const json = await res.json();
+
+      const data = _.pick(json, Object.keys(movieSchema.shape)) as Movie;
+      return data;
     });
 
-    results.media_type = type;
     return c.json(results);
   })
-  .get("/:name", zValidator("query", searchByNameSchema), async (c) => {
+  .get("/name/:name", async (c) => {
     const searchName = c.req.param("name").split(" ").join("+");
     const type = c.req.query("type");
 

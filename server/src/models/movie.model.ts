@@ -1,52 +1,23 @@
-export interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  belongs_to_collection: null;
-  budget: number;
-  genres: Genre[];
-  homepage: string;
-  id: number;
-  imdb_id: string;
-  origin_country: string[];
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  production_companies: ProductionCompany[];
-  production_countries: ProductionCountry[];
-  release_date: Date;
-  revenue: number;
-  runtime: number;
-  spoken_languages: SpokenLanguage[];
-  status: string;
-  tagline: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-  media_type: string;
-}
+import { z } from "zod";
 
-export interface Genre {
-  id: number;
-  name: string;
-}
+const genreSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
 
-export interface ProductionCompany {
-  id: number;
-  logo_path: null | string;
-  name: string;
-  origin_country: string;
-}
+export const movieSchema = z.object({
+  genres: z.array(genreSchema),
+  homepage: z.string(),
+  id: z.number(),
+  overview: z.string(),
+  popularity: z.number(),
+  poster_path: z.string(),
+  release_date: z.string(),
+  runtime: z.number(),
+  status: z.string(),
+  title: z.string(),
+  vote_average: z.number(),
+  media_type: z.string(),
+});
 
-export interface ProductionCountry {
-  iso_3166_1: string;
-  name: string;
-}
-
-export interface SpokenLanguage {
-  english_name: string;
-  iso_639_1: string;
-  name: string;
-}
+export type Movie = z.infer<typeof movieSchema>;
