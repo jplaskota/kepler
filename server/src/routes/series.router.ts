@@ -1,18 +1,18 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { v4 as uuidv4 } from "uuid";
-import { fakeMovies } from "../fakeContent";
-import { type Movie, movieSchema } from "../models/movie.model";
+import { fakeSeries } from "../fakeContent";
+import { type Series, seriesSchema } from "../models/series.model";
 
-const postContentSchema = movieSchema.omit({ id: true });
+const postSeriesSchema = seriesSchema.omit({ id: true });
 
 const router = new Hono()
   .get("/", (c) => {
-    return c.json(fakeMovies);
+    return c.json(fakeSeries);
   })
   .get("/:id{[a-zA-Z0-9-]+}", (c) => {
     const id = c.req.param("id");
-    const content = fakeMovies.find((content) => content.id === id) as Movie;
+    const content = fakeSeries.find((content) => content.id === id);
 
     if (!content) {
       return c.notFound();
@@ -20,24 +20,24 @@ const router = new Hono()
 
     return c.json({ content });
   })
-  .post("/", zValidator("json", postContentSchema), (c) => {
+  .post("/", zValidator("json", postSeriesSchema), (c) => {
     const content = c.req.valid("json");
-    const newContent: Movie = { id: uuidv4(), ...content };
+    const newContent: Series = { id: uuidv4(), ...content };
 
-    fakeMovies.push(newContent);
+    fakeSeries.push(newContent);
 
     c.status(201);
     return c.json(newContent);
   })
   .delete("/:id{[a-zA-Z0-9-]+}", (c) => {
     const id = c.req.param("id");
-    const index = fakeMovies.findIndex((content) => content.id === id);
+    const index = fakeSeries.findIndex((content) => content.id === id);
 
     if (index === -1) {
       return c.notFound();
     }
 
-    const deletedContent = fakeMovies.splice(index, 1)[0];
+    const deletedContent = fakeSeries.splice(index, 1)[0];
     return c.json({ content: deletedContent });
   });
 

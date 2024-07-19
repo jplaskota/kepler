@@ -26,7 +26,7 @@ export const seriesSchema = z.object({
   first_air_date: z.string(),
   genres: z.array(genreSchema),
   homepage: z.string(),
-  id: z.number(),
+  id: z.string(),
   name: z.string(),
   number_of_episodes: z.number(),
   number_of_seasons: z.number(),
