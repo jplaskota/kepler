@@ -2,8 +2,9 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import _ from "lodash";
 import { z } from "zod";
-import { movieSchema, type Movie } from "../models/movie.model";
+import type { Movie } from "../models/movie.model";
 import type { Series } from "../models/series.model";
+import { format } from "../utils/format.utils";
 
 const api = Bun.env.TMDB_API_KEY;
 
@@ -11,10 +12,14 @@ const searchByIdSchema = z.object({
   type: z.enum(["movie", "tv"]),
 });
 
+const searchByNameSchema = z.object({
+  type: z.enum(["movie", "tv"]).optional(),
+});
+
 const router = new Hono()
   .get("/id/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
     const id = c.req.param("id");
-    const type = c.req.query("type");
+    const type = c.req.query("type") as "movie" | "tv";
 
     const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${api}`;
 
@@ -24,20 +29,15 @@ const router = new Hono()
       }
 
       const json = await res.json();
-      const data = _.pick(json, Object.keys(movieSchema.shape));
 
-      const genres = data.genres.map((genre: any) => genre.name);
-      data.genres = genres;
-      data.media_type = type;
-
-      return data as Movie;
+      return format(json, type);
     });
 
     return c.json(results);
   })
-  .get("/name/:name", async (c) => {
+  .get("/name/:name", zValidator("query", searchByNameSchema), async (c) => {
     const searchName = c.req.param("name").split(" ").join("+");
-    const type = c.req.query("type");
+    const type = c.req.query("type") as "movie" | "tv" | undefined;
 
     const movieRes = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
@@ -87,3 +87,6 @@ const router = new Hono()
   });
 
 export default router;
+
+// TODO add pagination
+// FIXME series sometimes have to many seasons
