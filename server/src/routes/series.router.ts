@@ -18,7 +18,7 @@ const router = new Hono()
       return c.notFound();
     }
 
-    return c.json({ content });
+    return c.json(content);
   })
   .post("/", zValidator("json", postSeriesSchema), (c) => {
     const content = c.req.valid("json");

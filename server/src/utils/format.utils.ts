@@ -8,8 +8,7 @@ export const format = (json: unknown, type: "movie" | "tv"): Movie | Series => {
   if (type === "movie") {
     const data = _.pick(json, Object.keys(movieSchema.shape)) as Movie;
 
-    const genres = data.genres.map((genre: any) => genre.name);
-    data.genres = genres;
+    data.genres = _.map(data.genres, "name");
     data.media_type = type;
 
     return data;
@@ -18,9 +17,10 @@ export const format = (json: unknown, type: "movie" | "tv"): Movie | Series => {
   if (type === "tv") {
     const data = _.pick(json, Object.keys(seriesSchema.shape)) as Series;
 
-    const genres = data.genres.map((genre: any) => genre.name);
-    data.genres = genres;
+    data.genres = _.map(data.genres, "name");
     data.media_type = type;
+
+    _.remove(data.seasons, (s) => s.air_date === null);
 
     return data;
   }

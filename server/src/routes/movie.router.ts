@@ -10,7 +10,7 @@ const router = new Hono()
   .get("/", (c) => {
     return c.json(fakeMovies);
   })
-  .get("/:id{[a-zA-Z0-9-]+}", (c) => {
+  .get("/id/:id{[a-zA-Z0-9-]+}", (c) => {
     const id = c.req.param("id");
     const content = fakeMovies.find((content) => content.id === id) as Movie;
 
@@ -18,7 +18,7 @@ const router = new Hono()
       return c.notFound();
     }
 
-    return c.json({ content });
+    return c.json(content);
   })
   .post("/", zValidator("json", postContentSchema), (c) => {
     const content = c.req.valid("json");
@@ -29,7 +29,7 @@ const router = new Hono()
     c.status(201);
     return c.json(newContent);
   })
-  .delete("/:id{[a-zA-Z0-9-]+}", (c) => {
+  .delete("/id/:id{[a-zA-Z0-9-]+}", (c) => {
     const id = c.req.param("id");
     const index = fakeMovies.findIndex((content) => content.id === id);
 
