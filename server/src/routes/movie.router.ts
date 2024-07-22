@@ -5,7 +5,10 @@ import { v4 as uuidv4 } from "uuid";
 import { fakeMovies } from "../fakeContent";
 import { type Movie, movieSchema } from "../models/movie.model";
 
-const postContentSchema = movieSchema.omit({ tmdb_id: true });
+const postContentSchema = movieSchema.omit({
+  tmdb_id: true,
+  added_date: true,
+});
 
 const router = new Hono()
   .get("/", (c) => {
@@ -28,6 +31,7 @@ const router = new Hono()
       id: uuidv4(),
       tmdb_id: content.id,
       ...omit(content, "id"),
+      added_date: Date.now(),
     };
 
     fakeMovies.push(newContent);
@@ -44,7 +48,7 @@ const router = new Hono()
     }
 
     const deletedContent = fakeMovies.splice(index, 1)[0];
-    return c.json({ content: deletedContent });
+    return c.json({ deleted_id: deletedContent.id });
   });
 
 export default router;

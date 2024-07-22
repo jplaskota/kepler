@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import { fakeSeries } from "../fakeContent";
 import { type Series, seriesSchema } from "../models/series.model";
 
-const postSeriesSchema = seriesSchema.omit({ tmdb_id: true });
+const postSeriesSchema = seriesSchema.omit({ tmdb_id: true, added_date: true });
 
 const router = new Hono()
   .get("/", (c) => {
     return c.json(fakeSeries);
   })
-  .get("/:id{[a-zA-Z0-9-]+}", (c) => {
+  .get("/id/:id{[a-zA-Z0-9-]+}", (c) => {
     const id = c.req.param("id");
     const content = fakeSeries.find((content) => content.id === id);
 
@@ -28,6 +28,7 @@ const router = new Hono()
       id: uuidv4(),
       tmdb_id: content.id,
       ...omit(content, "id"),
+      added_date: Date.now(),
     };
 
     fakeSeries.push(newContent);
@@ -35,7 +36,7 @@ const router = new Hono()
     c.status(201);
     return c.json(newContent);
   })
-  .delete("/:id{[a-zA-Z0-9-]+}", (c) => {
+  .delete("/id/:id{[a-zA-Z0-9-]+}", (c) => {
     const id = c.req.param("id");
     const index = fakeSeries.findIndex((content) => content.id === id);
 
@@ -44,7 +45,7 @@ const router = new Hono()
     }
 
     const deletedContent = fakeSeries.splice(index, 1)[0];
-    return c.json({ content: deletedContent });
+    return c.json({ deleted_id: deletedContent.id });
   });
 
 export default router;
