@@ -1,10 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import _ from "lodash";
+import _, { result } from "lodash";
 import { z } from "zod";
 import type { Movie } from "../models/movie.model";
 import type { Series } from "../models/series.model";
-import { format } from "../utils/format.utils";
+import { getFormattedContent } from "../utils/getFormattedContent";
 
 const api = Bun.env.TMDB_API_KEY;
 
@@ -24,13 +24,11 @@ const router = new Hono()
     const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${api}`;
 
     const results = await fetch(url).then(async (res) => {
-      if (!res.ok) {
-        return { message: res.statusText };
-      }
+      if (!res.ok) throw new Error("Network response was not ok (Fetch by id)");
 
       const json = await res.json();
 
-      return format(json, type);
+      return getFormattedContent(json, type);
     });
 
     return c.json(results);
@@ -45,7 +43,8 @@ const router = new Hono()
         "&api_key=" +
         api
     ).then((res) => {
-      if (!res.ok) throw new Error("Network response was not ok");
+      if (!res.ok)
+        throw new Error("Network response was not ok (Fetch movie by name)");
       return res.json();
     });
 
@@ -55,7 +54,8 @@ const router = new Hono()
         "&api_key=" +
         api
     ).then((res) => {
-      if (!res.ok) throw new Error("Network response was not ok");
+      if (!res.ok)
+        throw new Error("Network response was not ok (Fetch series by name)");
       return res.json();
     });
 

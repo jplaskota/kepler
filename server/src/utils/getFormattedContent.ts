@@ -2,7 +2,10 @@ import _ from "lodash";
 import { movieSchema, type Movie } from "../models/movie.model";
 import { seriesSchema, type Series } from "../models/series.model";
 
-export const format = (json: unknown, type: "movie" | "tv"): Movie | Series => {
+export const getFormattedContent = (
+  json: unknown,
+  type: "movie" | "tv"
+): Movie | Series => {
   if (!json) throw new Error("No data");
 
   if (type === "movie") {

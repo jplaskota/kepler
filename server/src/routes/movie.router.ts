@@ -1,10 +1,11 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { omit } from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { fakeMovies } from "../fakeContent";
 import { type Movie, movieSchema } from "../models/movie.model";
 
-const postContentSchema = movieSchema.omit({ id: true });
+const postContentSchema = movieSchema.omit({ tmdb_id: true });
 
 const router = new Hono()
   .get("/", (c) => {
@@ -22,7 +23,12 @@ const router = new Hono()
   })
   .post("/", zValidator("json", postContentSchema), (c) => {
     const content = c.req.valid("json");
-    const newContent: Movie = { id: uuidv4(), ...content };
+
+    const newContent: Movie = {
+      id: uuidv4(),
+      tmdb_id: content.id,
+      ...omit(content, "id"),
+    };
 
     fakeMovies.push(newContent);
 
