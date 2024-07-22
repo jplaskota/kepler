@@ -1,21 +1,23 @@
 import { Hono } from "hono";
+import { serveStatic } from "hono/bun";
 import { logger } from "hono/logger";
 import contentRouter from "./routes/content.router";
 import movieRouter from "./routes/movie.router";
 import searchRouter from "./routes/search.router";
 import seriesRouter from "./routes/series.router";
 
-const app = new Hono().basePath("/api");
-app.use("*", logger());
+const app = new Hono();
+app.use("/api/*", logger());
 
-app.get("/", (c) => c.json({ message: "Hello API!" }));
+app.use("*", serveStatic({ root: "../client/dist" }));
+app.get("*", serveStatic({ path: "../client/dist/index.html" }));
 
-app.route("/content", contentRouter);
-app.route("/movie", movieRouter);
-app.route("/series", seriesRouter);
-app.route("/search", searchRouter);
+app.route("/api/content", contentRouter);
+app.route("/api/movie", movieRouter);
+app.route("/api/series", seriesRouter);
+app.route("/api/search", searchRouter);
 
-app.notFound((c) => c.json({ message: "Not Found" }, 404));
+app.notFound((c) => c.text("Not found ", 404));
 
 app.onError((err, c) => {
   console.error(`${err}`);
