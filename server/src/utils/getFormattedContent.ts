@@ -15,7 +15,7 @@ export const getFormattedContent = (
     data.genres = _.map(data.genres, "name");
     data.media_type = type;
 
-    return data;
+    return data as Movie;
   }
 
   if (type === "tv") {
@@ -31,7 +31,7 @@ export const getFormattedContent = (
 
     data.number_of_seasons = data.seasons.length;
 
-    return data;
+    return data as Series;
   }
 
   throw new Error("Invalid type");
