@@ -4,6 +4,7 @@ import type { Series } from "./models/series.model";
 export const fakeMovies: Movie[] = [
   {
     id: "1",
+    tmdb_id: "157336",
     title: "Interstellar",
     runtime: 169,
     release_date: "2014-11-05",
@@ -16,9 +17,11 @@ export const fakeMovies: Movie[] = [
     status: "Released",
     vote_average: 8.4,
     media_type: "movie",
+    added_date: 1721328842000,
   },
   {
     id: "2",
+    tmdb_id: "414906",
     title: "The Batman",
     runtime: 177,
     release_date: "2022-03-01",
@@ -31,9 +34,11 @@ export const fakeMovies: Movie[] = [
     status: "Released",
     vote_average: 7.678,
     media_type: "movie",
+    added_date: 1721415242000,
   },
   {
     id: "3",
+    tmdb_id: "680",
     title: "Pulp Fiction",
     runtime: 154,
     release_date: "1994-09-10",
@@ -46,7 +51,114 @@ export const fakeMovies: Movie[] = [
     status: "Released",
     vote_average: 8.488,
     media_type: "movie",
+    added_date: 1721501642000,
   },
 ];
 
-export const fakeSeries: Series[] = [];
+export const fakeSeries: Series[] = [
+  {
+    id: "4",
+    tmdb_id: "76479",
+    name: "The Boys",
+    number_of_seasons: 5,
+    number_of_episodes: 32,
+    first_air_date: "2019-07-25",
+    genres: ["Sci-Fi & Fantasy", "Action & Adventure"],
+    overview:
+      "A group of vigilantes known informally as “The Boys” set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
+    created_by: ["Eric Kripke"],
+    homepage: "https://www.amazon.com/dp/B0875L45GK",
+    popularity: 2617.509,
+    poster_path: "/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
+    seasons: [
+      {
+        air_date: "2020-09-10",
+        episode_count: 57,
+        id: 163277,
+        name: "Specials",
+        overview: "",
+        poster_path: "/fRNBdaCZMM3DPGTtqdg6Zf1XwX5.jpg",
+        season_number: 0,
+        vote_average: 0,
+      },
+      {
+        air_date: "2019-07-25",
+        episode_count: 8,
+        id: 98085,
+        name: "Season 1",
+        overview:
+          "The story takes place in a universe where most of the superpowered individuals are recognized as superheroes, but in reality abuse their powers for personal gain, information the public is kept unaware of.",
+        poster_path: "/iikrapejulhIvbNgUjj468mUE0I.jpg",
+        season_number: 1,
+        vote_average: 8.1,
+      },
+      {
+        air_date: "2020-09-03",
+        episode_count: 8,
+        id: 154681,
+        name: "Season 2",
+        overview:
+          "The even more intense, more insane season two finds The Boys on the run from the law, hunted by the Supes, and desperately trying to regroup and fight back against Vought. In hiding, Hughie, Mother’s Milk, Frenchie and Kimiko try to adjust to a new normal, with Butcher nowhere to be found. Meanwhile, Starlight must navigate her place in The Seven as Homelander sets his sights on taking complete control. His power is threatened with the addition of Stormfront, a social media-savvy new Supe, who has an agenda of her own. On top of that, the Supervillain threat takes center stage and makes waves as Vought seeks to capitalize on the nation’s paranoia.",
+        poster_path: "/mY7SeH4HFFxW1hiI6cWuwCRKptN.jpg",
+        season_number: 2,
+        vote_average: 8,
+      },
+      {
+        air_date: "2022-06-02",
+        episode_count: 8,
+        id: 215686,
+        name: "Season 3",
+        overview:
+          "It’s been a year of calm. Homelander’s subdued. Butcher works for the government, supervised by Hughie of all people. But both men itch to turn this peace and quiet into blood and bone. So when The Boys learn of a mysterious Anti-Supe weapon, it sends them crashing into the Seven, starting a war, and chasing the legend of the first Superhero: Soldier Boy.",
+        poster_path: "/7Ns6tO3aYjppI5bFhyYZurOYGBT.jpg",
+        season_number: 3,
+        vote_average: 7.8,
+      },
+      {
+        air_date: "2024-06-13",
+        episode_count: 8,
+        id: 305753,
+        name: "Season 4",
+        overview:
+          "The world is on the brink. Victoria Neuman is closer than ever to the Oval Office and under Homelander's muscly thumb as he consolidates his power. Butcher, with only months to live, has lost Becca's son, and his job as The Boys' leader. The rest of the team are fed up with his lies. With the stakes higher than ever, they must find a way to work together and save the world before it's too late.",
+        poster_path: "/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
+        season_number: 4,
+        vote_average: 7.1,
+      },
+    ],
+    vote_average: 8.5,
+    media_type: "tv",
+    added_date: 1721588042000,
+  },
+  {
+    id: "5",
+    tmdb_id: "94605",
+    name: "Arcane",
+    number_of_seasons: 2,
+    number_of_episodes: 9,
+    first_air_date: "2021-11-06",
+    genres: ["Animation", "Drama", "Sci-Fi & Fantasy", "Action & Adventure"],
+    overview:
+      "Amid the stark discord of twin cities Piltover and Zaun, two sisters fight on rival sides of a war between magic technologies and clashing convictions.",
+    created_by: ["Christian Linke", "Alex Yee"],
+    homepage: "https://arcane.com",
+    popularity: 126.47,
+    poster_path: "/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg",
+    seasons: [
+      {
+        air_date: "2021-11-06",
+        episode_count: 9,
+        id: 134187,
+        name: "Season 1",
+        overview:
+          "Two sisters. Two cities. One discovery that will change the world forever. In the cities of Piltover and Zaun, unrest stirs as inventors and thieves, politicians and crime lords chafe against the constraints of a society torn asunder.",
+        poster_path: "/6FMWx79iAtZx8WHtOrRj0VlM8Tp.jpg",
+        season_number: 1,
+        vote_average: 8.5,
+      },
+    ],
+    vote_average: 8.744,
+    media_type: "tv",
+    added_date: 1721069642000,
+  },
+];

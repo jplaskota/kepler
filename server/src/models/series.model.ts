@@ -13,6 +13,7 @@ const seasonSchema = z.object({
 
 export const seriesSchema = z.object({
   id: z.string(),
+  tmdb_id: z.string(),
   name: z.string(),
   number_of_seasons: z.number(),
   number_of_episodes: z.number(),
@@ -26,6 +27,7 @@ export const seriesSchema = z.object({
   seasons: z.array(seasonSchema),
   vote_average: z.number(),
   media_type: z.string(),
+  added_date: z.number().positive(),
 });
 
 export type Series = z.infer<typeof seriesSchema>;
