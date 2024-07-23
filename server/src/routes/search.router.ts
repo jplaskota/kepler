@@ -1,6 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import _, { result } from "lodash";
 import { z } from "zod";
 import type { Movie } from "../models/movie.model";
 import type { Series } from "../models/series.model";
@@ -18,7 +17,7 @@ const searchByNameSchema = z.object({
 
 const router = new Hono()
   .get("/id/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
-    const id = c.req.param("id");
+    const id = c.req.param("id") as string;
     const type = c.req.query("type") as "movie" | "tv";
 
     const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${api}`;
@@ -33,8 +32,8 @@ const router = new Hono()
 
     return c.json(results);
   })
-  .get("/name/:name", zValidator("query", searchByNameSchema), async (c) => {
-    const searchName = c.req.param("name").split(" ").join("+");
+  .get("/title/:title", zValidator("query", searchByNameSchema), async (c) => {
+    const searchName = c.req.param("title").split(" ").join("+") as string;
     const type = c.req.query("type") as "movie" | "tv" | undefined;
 
     const movieRes = await fetch(

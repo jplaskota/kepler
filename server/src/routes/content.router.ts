@@ -1,6 +1,8 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { fakeMovies, fakeSeries } from "../fakeContent";
 import { type Movie } from "../models/movie.model";
+import { idSchema } from "../models/param.model";
 import { type Series } from "../models/series.model";
 import { searchByName } from "../utils/searchByName";
 
@@ -12,7 +14,7 @@ const router = new Hono()
 
     return c.json(allContent);
   })
-  .get("/id/:id{[a-zA-Z0-9-]+}", (c) => {
+  .get("/id/:id", zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
 
     if (fakeMovies.some((c) => c.id === id)) {
@@ -24,9 +26,9 @@ const router = new Hono()
 
     return c.notFound();
   })
-  .get("/name/:name{[a-zA-Z0-9-]+}", (c) => {
-    const name = c.req.param("name");
-    const content = searchByName(name);
+  .get("/title/:title", (c) => {
+    const title = c.req.param("title");
+    const content = searchByName(title);
 
     return c.json(content);
   });

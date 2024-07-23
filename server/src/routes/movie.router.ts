@@ -4,8 +4,9 @@ import { omit } from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { fakeMovies } from "../fakeContent";
 import { type Movie, movieSchema } from "../models/movie.model";
+import { idSchema } from "../models/param.model";
 
-const postContentSchema = movieSchema.omit({
+const postMovieSchema = movieSchema.omit({
   tmdb_id: true,
   added_date: true,
 });
@@ -14,7 +15,7 @@ const router = new Hono()
   .get("/", (c) => {
     return c.json(fakeMovies);
   })
-  .get("/id/:id{[a-zA-Z0-9-]+}", (c) => {
+  .get("/id/:id", zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
     const content = fakeMovies.find((content) => content.id === id) as Movie;
 
@@ -24,7 +25,7 @@ const router = new Hono()
 
     return c.json(content);
   })
-  .post("/", zValidator("json", postContentSchema), (c) => {
+  .post("/", zValidator("json", postMovieSchema), (c) => {
     const content = c.req.valid("json");
 
     const newContent: Movie = {
@@ -39,7 +40,7 @@ const router = new Hono()
     c.status(201);
     return c.json(newContent);
   })
-  .delete("/id/:id{[a-zA-Z0-9-]+}", (c) => {
+  .delete("/id/:id", zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
     const index = fakeMovies.findIndex((content) => content.id === id);
 
