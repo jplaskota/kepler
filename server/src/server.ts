@@ -25,3 +25,5 @@ app.onError((err, c) => {
 });
 
 export default app;
+
+//TODO better error handling
