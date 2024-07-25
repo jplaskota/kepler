@@ -1,5 +1,5 @@
-import type { Movie } from "./models/movie.model";
-import type { Series } from "./models/series.model";
+import type { Movie } from "../models/movie.model";
+import type { Series } from "../models/series.model";
 
 export const fakeMovies: Movie[] = [
   {

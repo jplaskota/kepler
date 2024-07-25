@@ -2,22 +2,22 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { omit } from "lodash";
 import { v4 as uuidv4 } from "uuid";
+import { type Movie, movieSchema } from "../models/movie.model";
 import { idSchema } from "../models/param.model";
-import { type Series, seriesSchema } from "../models/series.model";
-import { fakeSeries } from "../services/fakeContent";
+import { fakeMovies } from "../services/fakeContent";
 
-const postSeriesSchema = seriesSchema.omit({
+const postMovieSchema = movieSchema.omit({
   tmdb_id: true,
   added_date: true,
 });
 
 const router = new Hono()
   .get("/", (c) => {
-    return c.json(fakeSeries);
+    return c.json(fakeMovies);
   })
   .get("/id/:id", zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
-    const content = fakeSeries.find((content) => content.id === id) as Series;
+    const content = fakeMovies.find((content) => content.id === id) as Movie;
 
     if (!content) {
       return c.notFound();
@@ -25,32 +25,30 @@ const router = new Hono()
 
     return c.json(content);
   })
-  .post("/", zValidator("json", postSeriesSchema), (c) => {
+  .post("/", zValidator("json", postMovieSchema), (c) => {
     const content = c.req.valid("json");
 
-    const newContent: Series = {
+    const newContent: Movie = {
       id: uuidv4(),
       tmdb_id: content.id,
       ...omit(content, "id"),
       added_date: Date.now(),
     };
 
-    fakeSeries.push(newContent);
+    fakeMovies.push(newContent);
 
     c.status(201);
     return c.json(newContent);
   })
   .delete("/id/:id", zValidator("param", idSchema), (c) => {
-    const id = c.req.param("id") as string;
-    const index = fakeSeries.findIndex(
-      (content) => content.id === id
-    ) as number;
+    const id = c.req.param("id");
+    const index = fakeMovies.findIndex((content) => content.id === id);
 
     if (index === -1) {
       return c.notFound();
     }
 
-    const deletedContent = fakeSeries.splice(index, 1)[0];
+    const deletedContent = fakeMovies.splice(index, 1)[0];
     return c.json({ deleted_id: deletedContent.id });
   });
 
