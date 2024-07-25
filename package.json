@@ -1,11 +1,12 @@
 {
   "name": "kepler",
   "type": "module",
+  "version": "0.0.1",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5.5.4"
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "hono": "^4.5.1"

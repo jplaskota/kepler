@@ -26,6 +26,5 @@
       "@server-rpc": ["../server/src/server.ts"]
     }
   },
-  "include": ["src", "../server/src/server.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "../server/src/server.ts"]
 }

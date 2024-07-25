@@ -1,8 +1,13 @@
+// import { type ApiRoutes } from "@server-rpc";
+// import { hc } from "hono/client";
 import { useState } from "react";
 import { DATA, MediaItem } from "../data";
 import Button from "./Button";
 import Category from "./Category";
 import MovieList from "./MovieList";
+
+// const client = hc<ApiRoutes>("/");
+
 
 function App() {
   const [category, setCategory] = useState<string>("all");
