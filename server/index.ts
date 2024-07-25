@@ -1,4 +1,4 @@
-import app from "./src/server";
+import app from "./app";
 
 Bun.serve({
   port: Bun.env.PORT,
