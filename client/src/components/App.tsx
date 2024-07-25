@@ -1,17 +1,28 @@
-// import { type ApiRoutes } from "@server-rpc";
-// import { hc } from "hono/client";
+// import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { DATA, MediaItem } from "../data";
+// import { api } from "../utils/api";
 import Button from "./Button";
 import Category from "./Category";
 import MovieList from "./MovieList";
 
-// const client = hc<ApiRoutes>("/");
-
+// async function getContent() {
+//   const res = await api.content.$get();
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch data");
+//   }
+//   const data = await res.json();
+//   return data;
+// }
 
 function App() {
   const [category, setCategory] = useState<string>("all");
   const [list, setList] = useState<MediaItem[]>(DATA);
+
+  // const { isPending } = useQuery({
+  //   queryKey: ["get-all-content"],
+  //   queryFn: getContent,
+  // });
 
   function categoryHandler(selected: string) {
     setCategory(selected);
