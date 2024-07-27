@@ -7,11 +7,14 @@ import Category from "./Category";
 import MovieList from "./MovieList";
 
 // async function getContent() {
-//   const res = await api.content.$get();
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch data");
-//   }
-//   const data = await res.json();
+//   const data = await api.content
+//     .$get()
+//     .then((res) => {
+//       if (res.ok) throw new Error("Failed to fetch data");
+//       return res;
+//     })
+//     .then((res) => res.json());
+
 //   return data;
 // }
 
@@ -19,7 +22,7 @@ function App() {
   const [category, setCategory] = useState<string>("all");
   const [list, setList] = useState<MediaItem[]>(DATA);
 
-  // const { isPending } = useQuery({
+  // const { isPending, error } = useQuery({
   //   queryKey: ["get-all-content"],
   //   queryFn: getContent,
   // });
@@ -53,6 +56,11 @@ function App() {
           isSelected={category === "series"}
           label="Series"
         />
+        {/* <Button
+          onSelect={() => categoryHandler("test")}
+          isSelected={category === "test"}
+          label={isPending ? "..." : error ? "Error" : "test"}
+        /> */}
       </Category>
       <MovieList list={list} />
     </>
@@ -60,3 +68,10 @@ function App() {
 }
 
 export default App;
+
+// TODO add useQuery to fetch movie/series data
+// TODO add error handling
+// TODO add skeleton loader
+// TODO add search bar
+// TODO add burger menu
+// TODO mui component + styled-components
