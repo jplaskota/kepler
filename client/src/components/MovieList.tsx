@@ -7,7 +7,7 @@ interface MovieListProps {
   list: MediaItem[];
 }
 
-function MovieList({ list }: MovieListProps) {
+export default function MovieList({ list }: MovieListProps) {
   const [cols, setCols] = useState<number>(2);
 
   useEffect(() => {
@@ -56,5 +56,3 @@ function MovieList({ list }: MovieListProps) {
     </StyledMovieList>
   );
 }
-
-export default MovieList;

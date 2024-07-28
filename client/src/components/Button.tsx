@@ -6,12 +6,10 @@ interface ButtonProps {
   isSelected: boolean;
 }
 
-function Button({ label, onSelect, isSelected }: ButtonProps) {
+export default function Button({ label, onSelect, isSelected }: ButtonProps) {
   return (
     <StyledButton $isSelected={isSelected} onClick={onSelect}>
       <span>{label}</span>
     </StyledButton>
   );
 }
-
-export default Button;

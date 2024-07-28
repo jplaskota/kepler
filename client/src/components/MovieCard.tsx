@@ -13,7 +13,13 @@ interface MovieCardProps {
   director: string;
 }
 
-function MovieCard({ title, img, date, running, director }: MovieCardProps) {
+export default function MovieCard({
+  title,
+  img,
+  date,
+  running,
+  director,
+}: MovieCardProps) {
   return (
     <StyledMovieCard>
       <img src={img} alt="poster" />
@@ -26,5 +32,3 @@ function MovieCard({ title, img, date, running, director }: MovieCardProps) {
     </StyledMovieCard>
   );
 }
-
-export default MovieCard;

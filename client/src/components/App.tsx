@@ -18,7 +18,7 @@ import MovieList from "./MovieList";
 //   return data;
 // }
 
-function App() {
+export default function App() {
   const [category, setCategory] = useState<string>("all");
   const [list, setList] = useState<MediaItem[]>(DATA);
 
@@ -66,8 +66,6 @@ function App() {
     </>
   );
 }
-
-export default App;
 
 // TODO add skeleton loader
 // TODO add search bar
