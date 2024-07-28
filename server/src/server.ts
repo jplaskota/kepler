@@ -19,7 +19,7 @@ const apiRoutes = app
   .route("/series", seriesRouter)
   .route("/search", searchRouter);
 
-app.notFound((c) => c.text("Not found ", 404));
+app.notFound((c) => c.text("Not found", 404));
 
 app.onError((err, c) => {
   console.error(`${err}`);

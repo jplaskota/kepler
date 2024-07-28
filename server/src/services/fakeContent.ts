@@ -3,7 +3,7 @@ import type { Series } from "../models/series.model";
 
 export const fakeMovies: Movie[] = [
   {
-    id: "9fc5f9de-cd3e-41d9-a427-7352eb731b29",
+    id: "bsMZ7foLX_KSkD5BePirQ",
     tmdb_id: "157336",
     title: "Interstellar",
     runtime: 169,
@@ -20,7 +20,7 @@ export const fakeMovies: Movie[] = [
     added_date: 1721328842000,
   },
   {
-    id: "76dff338-42dd-4828-aca0-1e00b590bdc6",
+    id: "b__JC_-JhyI6ppOW8i21J",
     tmdb_id: "414906",
     title: "The Batman",
     runtime: 177,
@@ -37,7 +37,7 @@ export const fakeMovies: Movie[] = [
     added_date: 1721415242000,
   },
   {
-    id: "a2727d37-9c60-4470-93f8-17c32a499736",
+    id: "eruoNMntPgxKmRCm8jxYs",
     tmdb_id: "680",
     title: "Pulp Fiction",
     runtime: 154,
@@ -57,7 +57,7 @@ export const fakeMovies: Movie[] = [
 
 export const fakeSeries: Series[] = [
   {
-    id: "8004d69d-cba5-43bd-8176-1ca65c838ac9",
+    id: "k0L5osn8SSmrNE55Czad4",
     tmdb_id: "76479",
     name: "The Boys",
     number_of_seasons: 5,
@@ -131,7 +131,7 @@ export const fakeSeries: Series[] = [
     added_date: 1721588042000,
   },
   {
-    id: "83d20593-0a24-48ca-ae9f-c98af218e084",
+    id: "v7ivAU-B_lx9tvEw1L7ut",
     tmdb_id: "94605",
     name: "Arcane",
     number_of_seasons: 2,

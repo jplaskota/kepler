@@ -88,4 +88,6 @@ const router = new Hono()
 export default router;
 
 // TODO add pagination
+// TODO need to return only list of movies/series
+// TODO need to return list of lists of movies/series in another route
 // FIXME series sometimes have to many seasons

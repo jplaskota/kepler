@@ -17,12 +17,11 @@ const router = new Hono()
   .get("/id/:id", zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
 
-    if (fakeMovies.some((c) => c.id === id)) {
+    if (fakeMovies.some((c) => c.id === id))
       return c.redirect("/api/movie/id/" + id);
-    }
-    if (fakeSeries.some((c) => c.id === id)) {
+
+    if (fakeSeries.some((c) => c.id === id))
       return c.redirect("/api/series/id/" + id);
-    }
 
     return c.notFound();
   })

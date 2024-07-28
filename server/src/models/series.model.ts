@@ -12,9 +12,9 @@ const seasonSchema = z.object({
 });
 
 export const seriesSchema = z.object({
-  id: z.string(),
-  tmdb_id: z.string(),
-  name: z.string(),
+  id: z.string().nanoid({ message: "Invalid id" }),
+  tmdb_id: z.string().min(1, { message: "TMDB id is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
   number_of_seasons: z.number(),
   number_of_episodes: z.number(),
   first_air_date: z.string(),
@@ -26,8 +26,8 @@ export const seriesSchema = z.object({
   poster_path: z.string(),
   seasons: z.array(seasonSchema),
   vote_average: z.number(),
-  media_type: z.string(),
-  added_date: z.number().positive(),
+  media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
+  added_date: z.number().positive({ message: "Invalid date" }),
 });
 
 export type Series = z.infer<typeof seriesSchema>;
