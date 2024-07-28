@@ -2,6 +2,9 @@
   "name": "kepler",
   "type": "module",
   "version": "0.0.1",
+  "scripts": {
+    "dev": "concurrently \"cd server && bun run dev\" \"cd client && bun run dev\""
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -9,6 +12,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "concurrently": "^8.2.2",
     "hono": "^4.5.1"
   }
 }
