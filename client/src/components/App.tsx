@@ -69,8 +69,6 @@ function App() {
 
 export default App;
 
-// TODO add useQuery to fetch movie/series data
-// TODO add error handling
 // TODO add skeleton loader
 // TODO add search bar
 // TODO add burger menu

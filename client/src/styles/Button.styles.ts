@@ -21,26 +21,3 @@ export const StyledButton = styled.button<{ $isSelected: boolean }>`
       ${(props) => (props.$isSelected ? "#dbd9d2" : "transparent")};
   }
 `;
-
-//* alternative design of category buttons
-
-// export const StyledButton = styled.button<{$isSelected: boolean}>`
-//   height: 35px;
-//   width: 80px;
-//   background-color: ${(props) =>
-//     props.$isSelected ? "#dbd9d2" : "transparent"};
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border: none;
-//   border-radius: 10px;
-//   cursor: pointer;
-//   transition: 0.4s;
-
-//   span {
-//     font-size: 1.2rem;
-//     font-family: "Urbanist", sans-serif;
-//     color: ${(props) => (props.$isSelected ? "black" : "#dbd9d2")};
-//     padding: 2px 5px;
-//   }
-// `;

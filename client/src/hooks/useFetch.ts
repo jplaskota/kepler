@@ -37,3 +37,7 @@ const useFetch = <T>(url: string, options?: RequestInit): FetchState<T> => {
 };
 
 export default useFetch;
+
+// TODO useQuery to fetch movie/series data
+// TODO add error handling
+// TODO hook for easy crud operations
