@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { idSchema } from "../models/crud.model";
 import { type Movie } from "../models/movie.model";
-import { idSchema } from "../models/param.model";
 import { type Series } from "../models/series.model";
 import { fakeMovies, fakeSeries } from "../services/fakeContent";
 import { searchByName } from "../utils/searchByName";

@@ -3,8 +3,8 @@ import { Hono } from "hono";
 import { omit } from "lodash";
 import { nanoid } from "nanoid";
 import { z } from "zod";
+import { idSchema } from "../models/crud.model";
 import { type Movie, movieSchema } from "../models/movie.model";
-import { idSchema } from "../models/param.model";
 import { fakeMovies } from "../services/fakeContent";
 
 const postMovieSchema = movieSchema

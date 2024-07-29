@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { omit } from "lodash";
 import { nanoid } from "nanoid";
 import { z } from "zod";
-import { idSchema } from "../models/param.model";
+import { idSchema } from "../models/crud.model";
 import { type Series, seriesSchema } from "../models/series.model";
 import { fakeSeries } from "../services/fakeContent";
 

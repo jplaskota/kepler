@@ -14,7 +14,7 @@ const seasonSchema = z.object({
 export const seriesSchema = z.object({
   id: z.string().nanoid({ message: "Invalid id" }),
   tmdb_id: z.string().min(1, { message: "TMDB id is required" }),
-  name: z.string().min(1, { message: "Name is required" }),
+  title: z.string().min(1, { message: "Title is required" }),
   number_of_seasons: z.number(),
   number_of_episodes: z.number(),
   first_air_date: z.string(),

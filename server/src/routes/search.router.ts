@@ -11,10 +11,6 @@ const searchByIdSchema = z.object({
   type: z.enum(["movie", "tv"]),
 });
 
-const searchByNameSchema = z.object({
-  type: z.enum(["movie", "tv"]).optional(),
-});
-
 const router = new Hono()
   .get("/id/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
     const id = c.req.param("id") as string;
@@ -32,9 +28,8 @@ const router = new Hono()
 
     return c.json(results);
   })
-  .get("/title/:title", zValidator("query", searchByNameSchema), async (c) => {
+  .get("/title/:title", async (c) => {
     const searchName = c.req.param("title").split(" ").join("+") as string;
-    const type = c.req.query("type") as "movie" | "tv" | undefined;
 
     const movieRes = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
@@ -72,17 +67,55 @@ const router = new Hono()
       }))
       .sort((a: Series, b: Series) => b.popularity - a.popularity);
 
-    switch (type) {
-      case "movie":
-        return c.json(moviesPrepared.splice(0, 10));
-      case "tv":
-        return c.json(seriesPrepared.splice(0, 10));
-      default:
-        return c.json({
-          movies: moviesPrepared.slice(0, 3),
-          series: seriesPrepared.slice(0, 3),
-        });
-    }
+    return c.json({
+      movies: moviesPrepared.slice(0, 5),
+      series: seriesPrepared.slice(0, 5),
+    });
+  })
+  .get("/movie/title/:title", async (c) => {
+    const searchName = c.req.param("title").split(" ").join("+") as string;
+
+    const movieRes = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        searchName +
+        "&api_key=" +
+        api
+    ).then((res) => {
+      if (!res.ok)
+        throw new Error("Network response was not ok (Fetch movie by name)");
+      return res.json();
+    });
+
+    const moviesPrepared: Movie[] = movieRes.results
+      .map((movie: Movie) => ({
+        ...movie,
+        media_type: "movie",
+      }))
+      .sort((a: Movie, b: Movie) => b.popularity - a.popularity);
+    return c.json(moviesPrepared.splice(0, 5));
+  })
+  .get("/series/title/:title", async (c) => {
+    const searchName = c.req.param("title").split(" ").join("+") as string;
+
+    const seriesRes = await fetch(
+      "https://api.themoviedb.org/3/search/tv?query=" +
+        searchName +
+        "&api_key=" +
+        api
+    ).then((res) => {
+      if (!res.ok)
+        throw new Error("Network response was not ok (Fetch series by name)");
+      return res.json();
+    });
+
+    const seriesPrepared: Series[] = seriesRes.results
+      .map((series: Series) => ({
+        ...series,
+        media_type: "tv",
+      }))
+      .sort((a: Series, b: Series) => b.popularity - a.popularity);
+
+    return c.json(seriesPrepared.splice(0, 5));
   });
 
 export default router;
