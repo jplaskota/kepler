@@ -1,10 +1,4 @@
 import { type Series } from "@server-models/series.model";
-import {
-  InLine,
-  Info,
-  StyledContentCard,
-  Title,
-} from "../styles/ContentCard.styles";
 
 interface SeriesCardProps {
   item: Series;
@@ -14,15 +8,15 @@ export default function SeriesCard({ item }: SeriesCardProps) {
   const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
 
   return (
-    <StyledContentCard>
+    <div>
       <img src={posterUrl} alt="poster" />
-      <Title>{item.title}</Title>
-      <InLine>
-        <Info>[ {item.first_air_date.split("-")[0]} ]</Info>
-        <Info>[ {item.number_of_seasons} seasons ]</Info>
-      </InLine>
-      <Info>{item.genres.join(", ")}</Info>
-    </StyledContentCard>
+      <h1>{item.title}</h1>
+      <div>
+        <p>[ {item.first_air_date.split("-")[0]} ]</p>
+        <p>[ {item.number_of_seasons} seasons ]</p>
+      </div>
+      <p>{item.genres.join(", ")}</p>
+    </div>
   );
 }
 

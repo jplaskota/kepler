@@ -1,4 +1,4 @@
-import { content, movie, series } from "./api.utils";
+import { content, movie, series } from "./api.services";
 
 export const getContent = async (type?: string) => {
   if (type === "movie") {

@@ -2,8 +2,8 @@ import { type Movie } from "@server-models/movie.model";
 import { type Series } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { StyledContentList } from "../styles/ContentList.styles";
-import { getContent } from "../utils/content.utils";
+import Masonry from "react-masonry-css";
+import { getContent } from "../services/content.services";
 import MovieCard from "./MovieCard";
 import SeriesCard from "./SeriesCard";
 
@@ -22,10 +22,6 @@ export default function ContentList({ category }: ContentListProps) {
     queryKey: ["content", { category }],
     queryFn: () => getContent(category),
   });
-
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
 
   useEffect(() => {
     const calculateCols = () => {
@@ -66,7 +62,7 @@ export default function ContentList({ category }: ContentListProps) {
   }, [content]);
 
   return (
-    <StyledContentList className="movie-list" breakpointCols={cols}>
+    <Masonry className="flex gap-5 w-full" breakpointCols={cols}>
       {isLoading ? (
         <div>Loading...</div>
       ) : isError ? (
@@ -81,6 +77,6 @@ export default function ContentList({ category }: ContentListProps) {
       ) : (
         <div>No data</div>
       )}
-    </StyledContentList>
+    </Masonry>
   );
 }

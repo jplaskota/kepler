@@ -1,5 +1,5 @@
 import { type Series } from "@server-models/series.model";
-import { series } from "./api.utils";
+import { series } from "./api.services";
 
 export const getSeriesById = async (id: string) => {
   const results = await series.id[":id"]

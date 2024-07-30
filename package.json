@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "concurrently \"cd server && bun run dev\" \"cd client && bun run dev\""
+    "dev": "concurrently \"cd server && bun dev\" \"cd client && bun dev\""
   },
   "devDependencies": {
     "@types/bun": "latest"

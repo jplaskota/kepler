@@ -1,4 +1,4 @@
-import { search } from "./api.utils";
+import { search } from "./api.services";
 
 export const searchByName = async (title: string) => {
   const results = await search.title[":title"]

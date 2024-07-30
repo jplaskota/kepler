@@ -1,36 +1,25 @@
 import { useState } from "react";
-import Button from "./Button";
 import Category from "./Category";
 import ContentList from "./ContentList";
+import { Button } from "./ui/button";
 
 export default function App() {
   const [category, setCategory] = useState("all");
 
-  function categoryHandler(selected: string) {
-    setCategory(selected);
-  }
-
+  const handleClick = (cat: string) => {
+    setCategory(cat);
+  };
   return (
-    <>
-      <Category>
-        <Button
-          onSelect={() => categoryHandler("all")}
-          isSelected={category === "all"}
-          label="All"
-        />
-        <Button
-          onSelect={() => categoryHandler("movie")}
-          isSelected={category === "movie"}
-          label="Movies"
-        />
-        <Button
-          onSelect={() => categoryHandler("tv")}
-          isSelected={category === "tv"}
-          label="Series"
-        />
-      </Category>
-      <ContentList category={category} />
-    </>
+    <div className="w-100 flex justify-center">
+      <div className="w-[80vw] ">
+        <nav className="w-100 flex justify-between">
+          <div className="flex gap-2">Kepler</div>
+          <Category category={category} onSelect={handleClick} />
+          <Button>Menu</Button>
+        </nav>
+        <ContentList category={category}></ContentList>
+      </div>
+    </div>
   );
 }
 
