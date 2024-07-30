@@ -22,7 +22,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@server-api": ["../server/src/server.ts"],
       "@server-models/*": ["../server/src/models/*"]
     }
