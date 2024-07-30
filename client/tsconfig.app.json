@@ -23,8 +23,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@server-api": ["../server/src/server.ts"]
+      "@server-api": ["../server/src/server.ts"],
+      "@server-models/*": ["../server/src/models/*"]
     }
   },
-  "include": ["src", "../server/src/server.ts"]
+  "include": ["src", "../server/src/server.ts", "../server/src/models/*"]
 }

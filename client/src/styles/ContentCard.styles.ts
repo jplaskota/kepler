@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const StyledMovieCard = styled.div`
+export const StyledContentCard = styled.div`
   width: 250px;
   height: fit-content;
   display: flex;
@@ -18,7 +18,7 @@ export const StyledMovieCard = styled.div`
   @media only screen and (max-width: 768px) {
     width: 38vw;
     gap: 0.5vw;
-    padding: 2vw
+    padding: 2vw;
   }
 `;
 

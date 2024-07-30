@@ -1,7 +1,7 @@
 import Masonry from "react-masonry-css";
 import { styled } from "styled-components";
 
-export const StyledMovieList = styled(Masonry)`
+export const StyledContentList = styled(Masonry)`
   height: fit-content;
   width: fit-content;
   display: flex;

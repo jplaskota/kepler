@@ -1,41 +1,13 @@
-// import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { DATA, MediaItem } from "../data";
-// import { api } from "../utils/api";
 import Button from "./Button";
 import Category from "./Category";
-import MovieList from "./MovieList";
-
-// async function getContent() {
-//   const data = await api.content
-//     .$get()
-//     .then((res) => {
-//       if (res.ok) throw new Error("Failed to fetch data");
-//       return res;
-//     })
-//     .then((res) => res.json());
-
-//   return data;
-// }
+import ContentList from "./ContentList";
 
 export default function App() {
-  const [category, setCategory] = useState<string>("all");
-  const [list, setList] = useState<MediaItem[]>(DATA);
-
-  // const { isPending, error } = useQuery({
-  //   queryKey: ["get-all-content"],
-  //   queryFn: getContent,
-  // });
+  const [category, setCategory] = useState("all");
 
   function categoryHandler(selected: string) {
     setCategory(selected);
-
-    if (selected !== "all") {
-      setList(DATA.filter((item) => item.type === selected));
-      return;
-    }
-
-    setList(DATA);
   }
 
   return (
@@ -52,17 +24,12 @@ export default function App() {
           label="Movies"
         />
         <Button
-          onSelect={() => categoryHandler("series")}
-          isSelected={category === "series"}
+          onSelect={() => categoryHandler("tv")}
+          isSelected={category === "tv"}
           label="Series"
         />
-        {/* <Button
-          onSelect={() => categoryHandler("test")}
-          isSelected={category === "test"}
-          label={isPending ? "..." : error ? "Error" : "test"}
-        /> */}
       </Category>
-      <MovieList list={list} />
+      <ContentList category={category} />
     </>
   );
 }

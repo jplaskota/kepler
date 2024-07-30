@@ -1,4 +1,4 @@
-import { type Movie } from "@server-models/movie.model";
+import { type Series } from "@server-models/series.model";
 import {
   InLine,
   Info,
@@ -6,11 +6,11 @@ import {
   Title,
 } from "../styles/ContentCard.styles";
 
-interface MovieCardProps {
-  item: Movie;
+interface SeriesCardProps {
+  item: Series;
 }
 
-export default function MovieCard({ item }: MovieCardProps) {
+export default function SeriesCard({ item }: SeriesCardProps) {
   const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
 
   return (
@@ -18,12 +18,12 @@ export default function MovieCard({ item }: MovieCardProps) {
       <img src={posterUrl} alt="poster" />
       <Title>{item.title}</Title>
       <InLine>
-        <Info>[ {item.release_date.split("-")[0]} ]</Info>
-        <Info>[ {item.runtime} min ]</Info>
+        <Info>[ {item.first_air_date.split("-")[0]} ]</Info>
+        <Info>[ {item.number_of_seasons} seasons ]</Info>
       </InLine>
       <Info>{item.genres.join(", ")}</Info>
     </StyledContentCard>
   );
 }
 
-// TODO movie page with more info
+// TODO series page with more info
