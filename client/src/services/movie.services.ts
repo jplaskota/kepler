@@ -1,5 +1,5 @@
 import { type Movie } from "@server-models/movie.model";
-import { movie } from "./api.utils";
+import { movie } from "./api.services";
 
 export const getMovieById = async (id: string) => {
   const results = await movie.id[":id"]
