@@ -62,7 +62,7 @@ export default function ContentList({ category }: ContentListProps) {
   }, [content]);
 
   return (
-    <Masonry className="flex gap-5 w-full" breakpointCols={cols}>
+    <Masonry className="flex gap-4 w-full" breakpointCols={cols}>
       {isLoading ? (
         <div>Loading...</div>
       ) : isError ? (
