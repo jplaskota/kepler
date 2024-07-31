@@ -6,7 +6,7 @@ export default function App() {
   const [category, setCategory] = useState("all");
 
   return (
-    <div className="w-100 flex justify-center font-thin">
+    <div className="w-100 flex justify-center">
       <div className="md:w-[80vw] max-md:p-4">
         <Navbar category={category} setCategory={setCategory} />
         <ContentList category={category}></ContentList>
@@ -16,6 +16,3 @@ export default function App() {
 }
 
 // TODO add skeleton loader
-// TODO add search bar
-// TODO add burger menu
-// TODO mui component + styled-components
