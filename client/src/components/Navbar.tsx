@@ -11,7 +11,7 @@ interface NavbarProps {
 
 export default function Navbar({ category, setCategory }: NavbarProps) {
   return (
-    <nav className="w-100 h-16 flex justify-between items-center">
+    <nav className="container justify-between sm:pl-10 sm:pr-10 flex h-14 items-center">
       <div className="flex h-5 items-center gap-2.5 sm:gap-4">
         <p className="text-xl select-none">Kepler</p>
         <Separator orientation="vertical" />

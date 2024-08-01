@@ -7,5 +7,3 @@ export const content = client.api.content;
 export const search = client.api.search;
 export const movie = client.api.movie;
 export const series = client.api.series;
-
-// TODO ? export crud

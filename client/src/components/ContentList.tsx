@@ -61,22 +61,24 @@ export default function ContentList({ category }: ContentListProps) {
     };
   }, [content]);
 
-  return (
-    <Masonry className="flex gap-4 w-full" breakpointCols={cols}>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : isError ? (
-        <div>Error...</div>
-      ) : content ? (
-        content.map((item) => {
-          if (item.media_type === "movie") {
-            return <MovieCard key={item.id} item={item as Movie} />;
-          }
-          return <SeriesCard key={item.id} item={item as Series} />;
-        })
-      ) : (
-        <div>No data</div>
-      )}
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : isError ? (
+    <div>Error...</div>
+  ) : content ? (
+    <Masonry
+      className="flex gap-4 w-fit"
+      breakpointCols={cols}
+      columnClassName="w-full"
+    >
+      {content.map((item: Movie | Series) => {
+        if (item.media_type === "movie") {
+          return <MovieCard key={item.id} item={item as Movie} />;
+        }
+        return <SeriesCard key={item.id} item={item as Series} />;
+      })}
     </Masonry>
+  ) : (
+    <div>No data</div>
   );
 }

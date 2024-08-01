@@ -1,3 +1,9 @@
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { type Series } from "@server-models/series.model";
 
 interface SeriesCardProps {
@@ -8,15 +14,25 @@ export default function SeriesCard({ item }: SeriesCardProps) {
   const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
 
   return (
-    <div>
-      <img src={posterUrl} alt="poster" />
-      <h1>{item.title}</h1>
-      <div>
-        <p>[ {item.first_air_date.split("-")[0]} ]</p>
-        <p>[ {item.number_of_seasons} seasons ]</p>
-      </div>
-      <p>{item.genres.join(", ")}</p>
-    </div>
+    <Card className="mb-4 sm:w-[300px] select-none">
+      <CardHeader className="p-4 max-sm:p-3">
+        <img src={posterUrl} alt="poster" />
+        <CardTitle className="font-Anton text-4xl max-sm:text-2xl sm:pt-1">
+          {item.title.toUpperCase()}
+        </CardTitle>
+        <div className="flex gap-1">
+          <CardDescription className="max-sm:text-xs">
+            [ {item.first_air_date.split("-")[0]} ]
+          </CardDescription>
+          <CardDescription className="max-sm:text-xs">
+            [ {item.number_of_seasons.toString()} seasons ]
+          </CardDescription>
+        </div>
+        <CardDescription className="max-sm:text-xs">
+          {item.genres.join(", ")}
+        </CardDescription>
+      </CardHeader>
+    </Card>
   );
 }
 
