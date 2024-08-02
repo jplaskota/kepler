@@ -6,6 +6,7 @@ import Masonry from "react-masonry-css";
 import { getContent } from "../services/content.services";
 import MovieCard from "./MovieCard";
 import SeriesCard from "./SeriesCard";
+import SkeletonContent from "./SkeletonContent";
 
 interface ContentListProps {
   category: string;
@@ -46,7 +47,8 @@ export default function ContentList({ category }: ContentListProps) {
       if (content && content.length >= maxCols) {
         return maxCols;
       }
-      return content ? content.length : 0;
+
+      return content ? content.length : maxCols;
     };
 
     const handleResize = () => {
@@ -62,22 +64,24 @@ export default function ContentList({ category }: ContentListProps) {
   }, [content]);
 
   return isLoading ? (
-    <div>Loading...</div>
+    <SkeletonContent cols={cols} />
   ) : isError ? (
     <div>Error...</div>
   ) : content ? (
-    <Masonry
-      className="flex gap-4 w-fit no-scrollbar"
-      breakpointCols={cols}
-      columnClassName="w-full"
-    >
-      {content.map((item: Movie | Series) => {
-        if (item.media_type === "movie") {
-          return <MovieCard key={item.id} item={item as Movie} />;
-        }
-        return <SeriesCard key={item.id} item={item as Series} />;
-      })}
-    </Masonry>
+    <>
+      <Masonry
+        className="flex gap-4 w-fit"
+        breakpointCols={cols}
+        columnClassName="w-full"
+      >
+        {content.map((item: Movie | Series) => {
+          if (item.media_type === "movie") {
+            return <MovieCard key={item.id} item={item as Movie} />;
+          }
+          return <SeriesCard key={item.id} item={item as Series} />;
+        })}
+      </Masonry>
+    </>
   ) : (
     <div>No data</div>
   );

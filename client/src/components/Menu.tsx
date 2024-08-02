@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -7,7 +8,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
 
 export default function Menu() {
   return (

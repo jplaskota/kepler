@@ -1,10 +1,11 @@
+import { Button } from "@/components/ui/button";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 
 export function Search() {
   const [open, setOpen] = useState(false);
 
+  // TODO: delete when not needed
   console.log(open);
 
   useEffect(() => {

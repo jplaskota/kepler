@@ -3,7 +3,7 @@ import logo_light from "../assets/logo_light.png";
 import CategoryBar from "./CategoryBar";
 import Menu from "./Menu";
 import { Search } from "./Search";
-import { Separator } from "./ui/separator";
+import { Separator } from "@/components/ui/separator";
 
 interface NavbarProps {
   category: string;

@@ -4,7 +4,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-} from "./ui/breadcrumb";
+} from "@/components/ui/breadcrumb";
 
 interface CategoryProps {
   category: string;
