@@ -15,22 +15,22 @@ export default function MovieCard({ item }: MovieCardProps) {
 
   return (
     <Card className="mb-4 sm:w-[300px] select-none">
-      <CardHeader className="p-4 max-sm:p-3 ">
+      <CardHeader className="p-3 sm:p-4 ">
         <img src={posterUrl} alt="poster" />
-        <CardTitle className="font-Anton text-4xl max-sm:text-2xl sm:pt-1">
+        <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
           {item.title.toUpperCase()}
         </CardTitle>
-        <div className="flex gap-1 max-sm:text-xs">
-          <CardDescription className="flex gap-2 max-sm:text-xs">
-            [ {item && item.release_date.split("-")[0]} ]
+          <div className="flex gap-1 max-sm:text-xs">
+            <CardDescription className="max-sm:text-xs">
+              [ {item && item.release_date.split("-")[0]} ]
+            </CardDescription>
+            <CardDescription className="max-sm:text-xs">
+              [ {item.runtime} min ]
+            </CardDescription>
+          </div>
+          <CardDescription className="max-sm:text-xs text-balance">
+            {item.genres.join(", ")}
           </CardDescription>
-          <CardDescription className="max-sm:text-xs">
-            [ {item.runtime} min ]
-          </CardDescription>
-        </div>
-        <CardDescription className="max-sm:text-xs text-balance">
-          {item.genres.join(", ")}
-        </CardDescription>
       </CardHeader>
     </Card>
   );

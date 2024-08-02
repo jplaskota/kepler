@@ -6,14 +6,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 
 export default function Menu() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={"outline"} className="w-20 select-none">
-          Menu
+        <Button variant={"outline"} size={"icon"}>
+          <HamburgerMenuIcon />
         </Button>
       </SheetTrigger>
       <SheetContent>

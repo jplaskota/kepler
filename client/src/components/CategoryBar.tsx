@@ -18,13 +18,13 @@ export default function Category({ setCategory, category }: CategoryProps) {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList className="sm:gap-4 font-FiraSans">
+      <BreadcrumbList className="gap-2 sm:gap-3 font-Montserrat text-sm">
         <BreadcrumbItem>
           <BreadcrumbLink
             onClick={() => handleClick("all")}
             className={cn(
               category === "all" && "text-primary",
-              "cursor-pointer text-base select-none"
+              "cursor-pointer select-none"
             )}
           >
             All
@@ -35,7 +35,7 @@ export default function Category({ setCategory, category }: CategoryProps) {
             onClick={() => handleClick("movie")}
             className={cn(
               category === "movie" && "text-primary",
-              "cursor-pointer text-base select-none"
+              "cursor-pointer select-none"
             )}
           >
             Movies
@@ -46,7 +46,7 @@ export default function Category({ setCategory, category }: CategoryProps) {
             onClick={() => handleClick("tv")}
             className={cn(
               category === "tv" && "text-primary",
-              "cursor-pointer text-base select-none"
+              "cursor-pointer select-none"
             )}
           >
             Series

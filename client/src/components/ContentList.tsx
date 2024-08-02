@@ -67,7 +67,7 @@ export default function ContentList({ category }: ContentListProps) {
     <div>Error...</div>
   ) : content ? (
     <Masonry
-      className="flex gap-4 w-fit"
+      className="flex gap-4 w-fit no-scrollbar"
       breakpointCols={cols}
       columnClassName="w-full"
     >

@@ -73,7 +73,7 @@ module.exports = {
       },
       fontFamily: {
         Anton: ['"Anton"', "sans-serif"],
-        FiraSans: ['"Fira Sans Extra Condensed"', "sans-serif"],
+        Montserrat: ['"Montserrat", "sans-serif"'],
       },
     },
   },

@@ -1,7 +1,8 @@
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import logo_dark from "../assets/logo_dark.png";
+import logo_light from "../assets/logo_light.png";
 import CategoryBar from "./CategoryBar";
 import Menu from "./Menu";
-import { Button } from "./ui/button";
+import { Search } from "./Search";
 import { Separator } from "./ui/separator";
 
 interface NavbarProps {
@@ -11,16 +12,18 @@ interface NavbarProps {
 
 export default function Navbar({ category, setCategory }: NavbarProps) {
   return (
-    <nav className="container justify-between sm:pl-10 sm:pr-10 flex h-14 items-center">
-      <div className="flex h-5 items-center gap-2.5 sm:gap-4">
-        <p className="text-xl select-none">Kepler</p>
+    <nav className="flex justify-between w-full sm:w-[] sm:max-w-[1600px] py-2 sticky top-0 bg-background items-center">
+      <div className="flex h-5 items-center gap-2 sm:gap-3">
+        <div className="flex gap-2 items-center">
+          <img src={logo_dark} alt="logo" className="h-6 hidden dark:block" />
+          <img src={logo_light} alt="logo" className="h-6 block dark:hidden" />
+          <p className="hidden sm:block text-xl select-none">Kepler</p>
+        </div>
         <Separator orientation="vertical" />
         <CategoryBar category={category} setCategory={setCategory} />
       </div>
-      <div className="flex items-center gap-3">
-        <Button variant={"outline"}>
-          <MagnifyingGlassIcon />
-        </Button>
+      <div className="flex items-center gap-2">
+        <Search />
         <Menu />
       </div>
     </nav>
