@@ -1,9 +1,11 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { get } from "lodash";
 import { z } from "zod";
 import type { Movie } from "../models/movie.model";
-import type { Series } from "../models/series.model";
+import { type SeriesNameSearchSchema } from "../models/series.model";
 import { getFormattedContent } from "../utils/getFormattedContent";
+import { searchByNameSchema } from "./../models/series.model";
 
 const api = Bun.env.TMDB_API_KEY;
 
@@ -60,12 +62,10 @@ const router = new Hono()
       }))
       .sort((a: Movie, b: Movie) => b.popularity - a.popularity);
 
-    const seriesPrepared: Series[] = seriesRes.results
-      .map((series: Series) => ({
-        ...series,
-        media_type: "tv",
-      }))
-      .sort((a: Series, b: Series) => b.popularity - a.popularity);
+    const seriesPrepared: SeriesNameSearchSchema[] = seriesRes.results.sort(
+      (a: SeriesNameSearchSchema, b: SeriesNameSearchSchema) =>
+        b.popularity - a.popularity
+    ) as SeriesNameSearchSchema[];
 
     return c.json({
       movies: moviesPrepared.slice(0, 5),
@@ -109,10 +109,7 @@ const router = new Hono()
     });
 
     const seriesPrepared: Series[] = seriesRes.results
-      .map((series: Series) => ({
-        ...series,
-        media_type: "tv",
-      }))
+      .map((series: Series) => getFormattedContent(series, "tv"))
       .sort((a: Series, b: Series) => b.popularity - a.popularity);
 
     return c.json(seriesPrepared.splice(0, 5));

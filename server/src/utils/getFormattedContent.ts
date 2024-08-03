@@ -1,37 +1,53 @@
 import _ from "lodash";
 import { movieSchema, type Movie } from "../models/movie.model";
-import { seriesSchema, type Series } from "../models/series.model";
+import {
+  searchByIdSchema,
+  type Series,
+  type SeriesIdSearchSchema,
+} from "../models/series.model";
+import { seriesSchema } from "./../models/series.model";
 
 export const getFormattedContent = (
-  json: unknown,
-  type: "movie" | "tv"
+  json: any,
+  type: "movie" | "tv" | undefined
 ): Movie | Series => {
   if (!json) throw new Error("No data");
 
-  if (type === "movie") {
+  if (type === "movie" || json.media_type === "movie") {
     const data = _.pick(json, Object.keys(movieSchema.shape)) as Movie;
 
     data.id = data.id.toString();
     data.genres = _.map(data.genres, "name");
-    data.media_type = type;
+    if (type) data.media_type = type;
 
     return data as Movie;
   }
 
-  if (type === "tv") {
-    const data = _.pick(json, Object.keys(seriesSchema.shape)) as Series;
+  if (type === "tv" || json.media_type === "tv") {
+    const data = _.pick(
+      json,
+      Object.keys(searchByIdSchema.shape)
+    ) as SeriesIdSearchSchema;
 
-    data.id = data.id.toString();
-    data.genres = _.map(data.genres, "name");
-    data.created_by = _.map(data.created_by, "name");
-    data.media_type = type;
+    const newData: Series = {
+      id: data.id,
+      name: data.name,
+      first_air_date: data.first_air_date,
+      overview: data.overview,
+      popularity: data.popularity,
+      poster_path: data.poster_path,
+      vote_average: data.vote_average,
+      genres: data.genres.map((genre) => genre.name),
+      created_by: data.created_by.map((creator) => creator.name),
+      seasons: data.seasons,
+    };
 
-    _.remove(data.seasons, (s) => s.air_date === null);
-    _.remove(data.seasons, (s) => s.name === "Specials");
+    if (newData.seasons) {
+      _.remove(newData.seasons, (s) => s.air_date === null);
+      _.remove(newData.seasons, (s) => s.name === "Specials");
+    }
 
-    data.number_of_seasons = data.seasons.length;
-
-    return data as Series;
+    return newData;
   }
 
   throw new Error("Invalid type");

@@ -59,7 +59,7 @@ export const fakeSeries: Series[] = [
   {
     id: "k0L5osn8SSmrNE55Czad4",
     tmdb_id: "76479",
-    title: "The Boys",
+    name: "The Boys",
     number_of_seasons: 5,
     number_of_episodes: 32,
     first_air_date: "2019-07-25",
@@ -133,7 +133,7 @@ export const fakeSeries: Series[] = [
   {
     id: "v7ivAU-B_lx9tvEw1L7ut",
     tmdb_id: "94605",
-    title: "Arcane",
+    name: "Arcane",
     number_of_seasons: 2,
     number_of_episodes: 9,
     first_air_date: "2021-11-06",

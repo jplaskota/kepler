@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
+import SearchModal from "./SearchModal";
 
 export function Search() {
   const [open, setOpen] = useState(false);
@@ -24,6 +25,7 @@ export function Search() {
       <Button variant={"outline"} size={"icon"} onClick={() => setOpen(true)}>
         <MagnifyingGlassIcon />
       </Button>
+      <SearchModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
