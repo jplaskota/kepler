@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { search } from "./../../../client/src/services/api.services";
-import { searchSeriesByName } from "./../../../client/src/services/search.services";
 
 const seasonSchema = z.object({
   air_date: z.string(),
@@ -24,28 +22,28 @@ const genreSchema = z.object({
 });
 
 // Search by name from TMDB
-export const searchByNameSchema = z.object({
+export const seriesSearchSchema = z.object({
   id: z.string(),
-  overview: z.string(),
+  name: z.string(),
+  first_air_date: z.string(),
   popularity: z.number(),
   poster_path: z.string(),
-  first_air_date: z.string(),
-  name: z.string(),
   vote_average: z.number(),
 });
 
 // Search by id from TMDB
-export const searchByIdSchema = z.object({
+export const seriesRawSchema = z.object({
   id: z.string(),
+  name: z.string(),
+  first_air_date: z.string(),
+  genres: z.array(genreSchema),
   overview: z.string(),
+  created_by: z.array(createdBySchema),
+  homepage: z.string(),
   popularity: z.number(),
   poster_path: z.string(),
-  first_air_date: z.string(),
-  name: z.string(),
-  vote_average: z.number(),
   seasons: z.array(seasonSchema),
-  genres: z.array(genreSchema),
-  created_by: z.array(createdBySchema),
+  vote_average: z.number(),
 });
 
 // My series schema
@@ -69,5 +67,5 @@ export const seriesSchema = z.object({
 });
 
 export type Series = z.infer<typeof seriesSchema>;
-export type SeriesNameSearchSchema = z.infer<typeof searchByNameSchema>;
-export type SeriesIdSearchSchema = z.infer<typeof searchByIdSchema>;
+export type SeriesSearch = z.infer<typeof seriesSearchSchema>;
+export type SeriesRaw = z.infer<typeof seriesRawSchema>;
