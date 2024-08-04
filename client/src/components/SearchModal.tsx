@@ -1,20 +1,9 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { searchByName } from "@/services/search.services";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Movie } from "@server-models/movie.model";
-import { Series } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import MovieCard from "./MovieCard";
-import SeriesCard from "./SeriesCard";
 
 interface SearchModalProps {
   open: boolean;
@@ -22,12 +11,13 @@ interface SearchModalProps {
 }
 
 export default function SearchModal({ open, onClose }: SearchModalProps) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    const { value } = event.target;
+    setInputValue(value);
 
     // Clear the debounce timer if it exists
     if (debounceTimer.current) {
@@ -36,8 +26,8 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
 
     // Set a new debounce timer
     debounceTimer.current = setTimeout(() => {
-      if (inputValue.trim()) {
-        setSearchValue(inputValue);
+      if (value.trim()) {
+        setSearchValue(value);
       } else {
         setSearchValue("");
       }
@@ -61,7 +51,11 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
   return createPortal(
     <div
       className="fixed inset-0 bg-black/70 backdrop-blur-sm z-10 flex justify-center items-center"
-      onClick={onClose}
+      onClick={() => {
+        inputValue.length > 0 && setInputValue("");
+        searchValue.length > 0 && setSearchValue("");
+        onClose();
+      }}
     >
       <div
         className="w-[90vw] max-w-lg h-fit flex flex-col gap-4"
@@ -84,11 +78,9 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
           </Card>
         ) : searchResults ? (
           <>
-            <p>
-              {searchResults.series.map((res) => {
-                return res.title;
-              })}
-            </p>
+            {searchResults.series.map((res) => {
+              return <p key={res.id}>{res.name}</p>;
+            })}
           </>
         ) : (
           <Card className="p-6 bg-background rounded-md"></Card>

@@ -6,9 +6,6 @@ import SearchModal from "./SearchModal";
 export function Search() {
   const [open, setOpen] = useState(false);
 
-  // TODO: delete when not needed
-  console.log(open);
-
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
