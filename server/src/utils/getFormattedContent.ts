@@ -1,54 +1,48 @@
-import _ from "lodash";
-import { movieSchema, type Movie } from "../models/movie.model";
+import { pick } from "lodash";
+import { nanoid } from "nanoid";
+// import { movieSchema, type Movie } from "../models/movie.model";
 import {
-  searchByIdSchema,
+  seriesRawSchema,
+  seriesSearchSchema,
   type Series,
-  type SeriesIdSearchSchema,
+  type SeriesRaw,
+  type SeriesSearch,
 } from "../models/series.model";
-import { seriesSchema } from "./../models/series.model";
 
-export const getFormattedContent = (
-  json: any,
-  type: "movie" | "tv" | undefined
-): Movie | Series => {
+// TODO movie functions
+
+// Series functions
+
+export const getSearchSeries = (json: any): SeriesSearch => {
   if (!json) throw new Error("No data");
 
-  if (type === "movie" || json.media_type === "movie") {
-    const data = _.pick(json, Object.keys(movieSchema.shape)) as Movie;
+  const data = pick(
+    json,
+    Object.keys(seriesSearchSchema.shape)
+  ) as SeriesSearch;
 
-    data.id = data.id.toString();
-    data.genres = _.map(data.genres, "name");
-    if (type) data.media_type = type;
+  return data;
+};
 
-    return data as Movie;
-  }
+export const getFormattedSeries = (json: any): Series => {
+  if (!json) throw new Error("No data");
 
-  if (type === "tv" || json.media_type === "tv") {
-    const data = _.pick(
-      json,
-      Object.keys(searchByIdSchema.shape)
-    ) as SeriesIdSearchSchema;
+  const series = pick(json, Object.keys(seriesRawSchema.shape)) as SeriesRaw;
 
-    const newData: Series = {
-      id: data.id,
-      name: data.name,
-      first_air_date: data.first_air_date,
-      overview: data.overview,
-      popularity: data.popularity,
-      poster_path: data.poster_path,
-      vote_average: data.vote_average,
-      genres: data.genres.map((genre) => genre.name),
-      created_by: data.created_by.map((creator) => creator.name),
-      seasons: data.seasons,
-    };
+  const newSeries: Series = {
+    ...series,
+    id: nanoid(),
+    tmdb_id: series.id,
+    number_of_episodes: series.seasons.reduce(
+      (acc, season) => acc + season.episode_count,
+      0
+    ),
+    number_of_seasons: series.seasons.length,
+    genres: series.genres.map((genre) => genre.name),
+    created_by: series.created_by.map((creator) => creator.name),
+    media_type: "tv",
+    added_date: Date.now(),
+  };
 
-    if (newData.seasons) {
-      _.remove(newData.seasons, (s) => s.air_date === null);
-      _.remove(newData.seasons, (s) => s.name === "Specials");
-    }
-
-    return newData;
-  }
-
-  throw new Error("Invalid type");
+  return newSeries;
 };
