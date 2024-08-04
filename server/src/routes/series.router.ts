@@ -1,11 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { omit } from "lodash";
-import { nanoid } from "nanoid";
 import { z } from "zod";
 import { idSchema } from "../models/crud.model";
 import { type Series, seriesSchema } from "../models/series.model";
 import { fakeSeries } from "../services/fakeContent";
+import { getFormattedSeries } from "../utils/getFormattedContent";
 
 const postSeriesSchema = seriesSchema
   .omit({
@@ -29,21 +28,16 @@ const router = new Hono()
     return c.json(content);
   })
   .post("/", zValidator("json", postSeriesSchema), (c) => {
-    const content = c.req.valid("json");
+    const series = c.req.valid("json");
 
-    const newContent: Series = {
-      id: nanoid(),
-      tmdb_id: content.id,
-      ...omit(content, "id"),
-      added_date: Date.now(),
-    };
+    const newSeries: Series = getFormattedSeries(series);
 
-    const parsedContent = seriesSchema.parse(newContent);
+    const parsedContent = seriesSchema.parse(newSeries);
     if (!parsedContent) return c.json({ error: "Invalid content" }, 400);
 
-    fakeSeries.push(newContent);
+    fakeSeries.push(newSeries);
 
-    return c.json(newContent, 201);
+    return c.json(newSeries, 201);
   })
   .delete("/id/:id", zValidator("param", idSchema), (c) => {
     const id = c.req.param("id") as string;
