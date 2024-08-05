@@ -31,14 +31,14 @@ export default function SearchResult({ results }: SearchResultProps) {
       className="w-fit h-fit flex flex-col overflow-y-auto gap-4"
     >
       <div className="w-fit max-w-[90vw] grid grid-cols-3 sm:grid-cols-4 gap-2">
-        {results.series.map((series) => {
-          return <SearchSeriesCard key={series.id} item={series} />;
+        {results.movies.map((movie) => {
+          return <SearchMovieCard key={movie.id} item={movie} />;
         })}
       </div>
       <Separator orientation="horizontal" />
       <div className="w-fit max-w-[90vw] grid grid-cols-3 sm:grid-cols-4 gap-2">
-        {results.movies.map((movie) => {
-          return <SearchMovieCard key={movie.id} item={movie} />;
+        {results.series.map((series) => {
+          return <SearchSeriesCard key={series.id} item={series} />;
         })}
       </div>
     </div>

@@ -85,11 +85,11 @@ export default function SearchModal({ onClose }: SearchModalProps) {
 
   return createPortal(
     <div
-      className="fixed inset-0 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center"
+      className="fixed inset-0 p-4 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center"
       onClick={() => onClose()}
     >
       <Card
-        className="w-fit max-w-[90vw] sm:min-w-[500px] sm:max-w-[1000px] h-fit max-h-[75vh] sm:max-h-[85vh] p-2 mt-4 flex flex-col gap-2 bg-background"
+        className="w-full sm:min-w-[500px] sm:max-w-[1000px] h-fit max-h-[75vh] sm:max-h-[85vh] p-4 flex flex-col gap-4 bg-background"
         onClick={(e) => e.stopPropagation()} // Prevent event propagation
       >
         <SearchBar
@@ -98,7 +98,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
           onClose={onClose}
         />
         {(searchValue.length > 0 || searchResults) &&
-          (isError ? (
+          (isError && !searchResults ? (
             errorInfo
           ) : searchResults &&
             (searchResults.series.length > 0 ||
@@ -116,3 +116,4 @@ export default function SearchModal({ onClose }: SearchModalProps) {
 // TODO series length and movie length
 // TODO masonry layout ?
 // FIXME width bug
+// TODO popup error

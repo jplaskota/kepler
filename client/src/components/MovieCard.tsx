@@ -6,6 +6,8 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/utils/utils";
 import { type Movie } from "@server-models/movie.model";
+import { useState } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 interface MovieCardProps {
   item: Movie;
@@ -13,14 +15,20 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ item }: MovieCardProps) {
+  const [load, setLoad] = useState<boolean>(false);
   const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
 
-  const search = false;
-
   return (
-    <Card className={cn(!search && "sm:w-[300px] mb-4", "select-none")}>
+    <Card className="sm:w-[300px] mb-4 select-none">
       <CardHeader className="p-3 sm:p-4 ">
-        <img src={posterUrl} alt="poster" />
+        {!load && <Skeleton className="aspect-[8/12] w-full" />}
+        <img
+          src={posterUrl}
+          alt="poster"
+          loading="lazy"
+          className={cn(!load && "h-0 w-0")}
+          onLoad={() => setLoad(true)}
+        />
         <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
           {item.title.toUpperCase()}
         </CardTitle>
@@ -28,17 +36,13 @@ export default function MovieCard({ item }: MovieCardProps) {
           <CardDescription className="max-sm:text-xs">
             [ {item && item.release_date.split("-")[0]} ]
           </CardDescription>
-          {!search && (
-            <CardDescription className="max-sm:text-xs">
-              [ {item.runtime} min ]
-            </CardDescription>
-          )}
-        </div>
-        {!search && (
-          <CardDescription className="max-sm:text-xs text-balance">
-            {item.genres.join(", ")}
+          <CardDescription className="max-sm:text-xs">
+            [ {item.runtime} min ]
           </CardDescription>
-        )}
+        </div>
+        <CardDescription className="max-sm:text-xs text-balance">
+          {item.genres.join(", ")}
+        </CardDescription>
       </CardHeader>
     </Card>
   );

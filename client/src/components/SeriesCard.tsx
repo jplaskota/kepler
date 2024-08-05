@@ -4,7 +4,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/utils/utils";
 import type { Series } from "@server-models/series.model";
+import { useState } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 interface SeriesCardProps {
   item: Series;
@@ -12,12 +15,20 @@ interface SeriesCardProps {
 }
 
 export default function SeriesCard({ item }: SeriesCardProps) {
+  const [load, setLoad] = useState<boolean>(false);
   const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
 
   return (
     <Card className="sm:w-[300px] mb-4 select-none">
       <CardHeader className="p-4 max-sm:p-3">
-        <img src={posterUrl} alt={`${item.name} poster`} />
+        {!load && <Skeleton className="aspect-[8/12] w-full" />}
+        <img
+          src={posterUrl}
+          alt="poster"
+          loading="lazy"
+          className={cn(!load && "h-0 w-0")}
+          onLoad={() => setLoad(true)}
+        />
         <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
           {item.name.toUpperCase()}
         </CardTitle>
@@ -29,7 +40,7 @@ export default function SeriesCard({ item }: SeriesCardProps) {
             [ {item.number_of_seasons} seasons ]
           </CardDescription>
         </div>
-        <CardDescription className="max-sm:text-xs">
+        <CardDescription className="max-sm:text-xs text-balance">
           {item.genres.join(", ")}
         </CardDescription>
       </CardHeader>

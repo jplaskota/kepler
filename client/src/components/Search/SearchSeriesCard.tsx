@@ -4,7 +4,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/utils/utils";
 import type { SeriesSearch } from "@server-models/series.model";
+import { useState } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 interface SeriesCardProps {
   item: SeriesSearch;
@@ -12,12 +15,20 @@ interface SeriesCardProps {
 }
 
 export default function SearchSeriesCard({ item }: SeriesCardProps) {
+  const [load, setLoad] = useState<boolean>(false);
   const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
 
   return (
     <Card className="select-none">
       <CardHeader className="p-2 sm:p-4">
-        <img src={posterUrl} alt={`${item.name} poster`} />
+        {!load && <Skeleton className="aspect-[8/12] w-full" />}
+        <img
+          src={posterUrl}
+          alt="poster"
+          loading="lazy"
+          className={cn(!load && "h-0 w-0")}
+          onLoad={() => setLoad(true)}
+        />
         <CardTitle className="font-Anton text-sm sm:text-2xl sm:pt-1">
           {item.name.toUpperCase()}
         </CardTitle>
