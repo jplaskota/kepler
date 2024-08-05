@@ -68,7 +68,7 @@ export default function ContentList({ category }: ContentListProps) {
   ) : isError ? (
     <div>Error...</div>
   ) : content ? (
-    <div className="scroll-smooth overflow-y-auto">
+    <div className="scroll-smooth overflow-y-auto no-scrollbar">
       <Masonry
         className="flex gap-4 px-4"
         breakpointCols={cols}

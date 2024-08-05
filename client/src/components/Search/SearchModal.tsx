@@ -114,7 +114,5 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   );
 }
 
-// TODO series length and movie length
 // TODO masonry layout ?
-// FIXME width bug
 // TODO popup error

@@ -22,6 +22,7 @@ export default function SearchBar({
         <div className="w-full flex items-center">
           <FiSearch className="ml-3" />
           <Input
+            name="title"
             type="text"
             value={inputValue}
             onChange={changeHandler}
