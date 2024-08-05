@@ -20,7 +20,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(import.meta.dir, "./src"),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 });

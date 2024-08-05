@@ -89,12 +89,13 @@ export default function SearchModal({ onClose }: SearchModalProps) {
       onClick={() => onClose()}
     >
       <Card
-        className="w-full sm:min-w-[500px] sm:max-w-[1000px] h-fit max-h-[75vh] sm:max-h-[85vh] p-4 flex flex-col gap-4 bg-background"
+        className="w-full sm:w-fit sm:min-w-[500px] sm:max-w-[1000px] h-fit max-h-[75vh] sm:max-h-[85vh] p-4 flex flex-col gap-4 bg-background"
         onClick={(e) => e.stopPropagation()} // Prevent event propagation
       >
         <SearchBar
           changeHandler={handleInputChange}
           inputValue={inputValue}
+          onClear={() => setInputValue("")}
           onClose={onClose}
         />
         {(searchValue.length > 0 || searchResults) &&
