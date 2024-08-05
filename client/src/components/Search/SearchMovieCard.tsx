@@ -16,7 +16,7 @@ interface MovieCardProps {
 
 export default function MovieCard({ item }: MovieCardProps) {
   const [load, setLoad] = useState<boolean>(false);
-  const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
+  const posterUrl = "image/t/p/original" + item.poster_path;
 
   return (
     <Card className="select-none">

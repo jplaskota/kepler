@@ -16,7 +16,7 @@ interface SeriesCardProps {
 
 export default function SearchSeriesCard({ item }: SeriesCardProps) {
   const [load, setLoad] = useState<boolean>(false);
-  const posterUrl = "https://image.tmdb.org/t/p/original" + item.poster_path;
+  const posterUrl = "image/t/p/original" + item.poster_path;
 
   return (
     <Card className="select-none">

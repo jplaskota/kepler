@@ -1,6 +1,6 @@
 import app from "./server";
 
-const port = Bun.env.PORT;
+const port = Bun.env.PORT || 3000;
 
 Bun.serve({
   port: port,
