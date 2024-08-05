@@ -1,6 +1,12 @@
-import { pick } from "lodash";
+import { pick, remove } from "lodash";
 import { nanoid } from "nanoid";
-// import { movieSchema, type Movie } from "../models/movie.model";
+import {
+  movieRawSchema,
+  movieSearchSchema,
+  type Movie,
+  type MovieRaw,
+  type MovieSearch,
+} from "../models/movie.model";
 import {
   seriesRawSchema,
   seriesSearchSchema,
@@ -9,7 +15,34 @@ import {
   type SeriesSearch,
 } from "../models/series.model";
 
-// TODO movie functions
+// Movie functions
+
+export const getSearchMovie = (json: any): MovieSearch => {
+  if (!json) throw new Error("No data");
+
+  const data = pick(json, Object.keys(movieSearchSchema.shape)) as MovieSearch;
+
+  return data;
+};
+
+export const getFormattedMovie = (json: any): Movie => {
+  if (!json) throw new Error("No data");
+
+  const movie = pick(json, Object.keys(movieRawSchema.shape)) as MovieRaw;
+
+  remove(movie.genres, (genre) => genre.name === "" || genre.name === null);
+
+  const newMovie: Movie = {
+    ...movie,
+    id: nanoid(),
+    tmdb_id: movie.id,
+    genres: movie.genres.map((genre) => genre.name),
+    media_type: "movie",
+    added_date: Date.now(),
+  };
+
+  return newMovie;
+};
 
 // Series functions
 
@@ -29,6 +62,11 @@ export const getFormattedSeries = (json: any): Series => {
 
   const series = pick(json, Object.keys(seriesRawSchema.shape)) as SeriesRaw;
 
+  remove(
+    series.seasons,
+    (season) => season.name === "Specials" || season.air_date === null
+  );
+
   const newSeries: Series = {
     ...series,
     id: nanoid(),
@@ -46,3 +84,5 @@ export const getFormattedSeries = (json: any): Series => {
 
   return newSeries;
 };
+
+// TODO new seasons with null air_date ?

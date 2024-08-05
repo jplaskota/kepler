@@ -1,12 +1,14 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
-import type { Movie } from "../models/movie.model";
 import {
+  getFormattedMovie,
   getFormattedSeries,
+  getSearchMovie,
   getSearchSeries,
 } from "../utils/getFormattedContent";
-import type { SeriesRaw, SeriesSearch } from "./../models/series.model";
+import type { Movie, MovieRaw, MovieSearch } from "./../models/movie.model";
+import type { Series, SeriesRaw, SeriesSearch } from "./../models/series.model";
 
 const api = Bun.env.TMDB_API_KEY;
 
@@ -33,6 +35,7 @@ const router = new Hono()
     return c.json(results);
   })
   .get("/title/:title", async (c) => {
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const movieRes = await fetch(
@@ -57,21 +60,20 @@ const router = new Hono()
       return res.json();
     });
 
-    const moviesPrepared: Movie[] = movieRes.results
-      .map((movie: Movie) => ({
-        ...movie,
-        media_type: "movie",
-      }))
-      .sort((a: Movie, b: Movie) => b.popularity - a.popularity);
+    const moviesPrepared: MovieSearch[] = movieRes.results
+      .map((movie: MovieRaw) => getSearchMovie(movie))
+      .sort((a: MovieSearch, b: Movie) => b.popularity - a.popularity);
 
     const seriesPrepared: SeriesSearch[] = seriesRes.results
-      .map((res: any) => getSearchSeries(res))
+      .map((res: SeriesRaw) => getSearchSeries(res))
       .sort((a: SeriesSearch, b: SeriesSearch) => b.popularity - a.popularity);
 
-    return c.json({
-      movies: moviesPrepared.slice(0, 5),
-      series: seriesPrepared.slice(0, 5),
-    });
+    const data = {
+      movies: moviesPrepared.slice(0, 6),
+      series: seriesPrepared.slice(0, 6),
+    };
+
+    return c.json(data);
   })
   .get("/movie/title/:title", async (c) => {
     const searchName = c.req.param("title").split(" ").join("+") as string;
@@ -92,8 +94,10 @@ const router = new Hono()
         ...movie,
         media_type: "movie",
       }))
-      .sort((a: Movie, b: Movie) => b.popularity - a.popularity);
-    return c.json(moviesPrepared.splice(0, 5));
+      .sort((a: Movie, b: Movie) => b.popularity - a.popularity)
+      .splice(0, 5);
+
+    return c.json(moviesPrepared);
   })
   .get("/series/title/:title", async (c) => {
     const searchName = c.req.param("title").split(" ").join("+") as string;
@@ -111,14 +115,14 @@ const router = new Hono()
 
     const seriesPrepared: SeriesRaw[] = seriesRes.results
       .map((series: SeriesRaw) => getSearchSeries(series))
-      .sort((a: SeriesRaw, b: SeriesRaw) => b.popularity - a.popularity);
+      .sort((a: SeriesRaw, b: SeriesRaw) => b.popularity - a.popularity)
+      .splice(0, 5);
 
-    return c.json(seriesPrepared.splice(0, 5));
+    return c.json(seriesPrepared);
   });
 
 export default router;
 
 // TODO add pagination
-// TODO need to return only list of movies/series
-// TODO need to return list of lists of movies/series in another route
+// TODO improve rest of the code with new types
 // FIXME series sometimes have to many seasons
