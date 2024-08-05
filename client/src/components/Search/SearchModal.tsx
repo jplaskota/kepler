@@ -1,15 +1,12 @@
 import { Card, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { searchByName } from "@/services/search.services";
-import { LoopIcon } from "@radix-ui/react-icons";
 import { MovieSearch } from "@server-models/movie.model";
 import { SeriesSearch } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import SearchMovieCard from "./SearchMovieCard";
-import SearchSeriesCard from "./SearchSeriesCard";
-import { Separator } from "./ui/separator";
+import SearchBar from "./SearchBar";
+import SearchResult from "./SearchResult";
 
 interface SearchModalProps {
   onClose: () => void;
@@ -20,6 +17,18 @@ type SearchResults = {
   series: SeriesSearch[];
 };
 
+const errorInfo = (
+  <Card className="p-6 bg-background rounded-md">
+    <div className="flex justify-center items-center">error</div>
+  </Card>
+);
+
+const noResults = (
+  <Card className="p-6 flex justify-center">
+    <CardDescription>Nothing found</CardDescription>
+  </Card>
+);
+
 export default function SearchModal({ onClose }: SearchModalProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
@@ -27,6 +36,10 @@ export default function SearchModal({ onClose }: SearchModalProps) {
     null
   );
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Get the portal root element
+  const portalRoot = document.getElementById("portal")!;
 
   // Handle input change with debounce
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +62,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   };
 
   // Search by name using the debounced input value
-  const { isLoading, isError, data } = useQuery({
+  const { isError, data } = useQuery({
     queryKey: ["search", { searchValue }],
     queryFn: () => searchByName(searchValue),
     enabled: searchValue.length > 0,
@@ -59,63 +72,40 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   useEffect(() => {
     if (data) {
       setSearchResults(data as SearchResults);
-    }
-  }, [data]);
 
-  const portalRoot = document.getElementById("portal")!;
+      // Scroll to the top of the search results
+      if (searchContainerRef.current) {
+        searchContainerRef.current.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [data, searchResults]);
 
   return createPortal(
     <div
       className="fixed inset-0 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center"
-      onClick={() => {
-        inputValue.length > 0 && setInputValue("");
-        searchValue.length > 0 && setSearchValue("");
-        onClose();
-      }}
+      onClick={() => onClose()}
     >
       <Card
-        className="w-[90vw] sm:w-[1000px] h-fit max-h-[80vh] sm:max-h-[85vh] p-4 bg-background my-4 flex flex-col gap-4"
+        className="w-fit max-w-[90vw] sm:min-w-[500px] sm:max-w-[1000px] h-fit max-h-[75vh] sm:max-h-[85vh] p-2 mt-4 flex flex-col gap-2 bg-background"
         onClick={(e) => e.stopPropagation()} // Prevent event propagation
       >
-        <Input
-          placeholder="Search..."
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          className="bg-background text-xl py-5"
-          autoFocus
+        <SearchBar
+          changeHandler={handleInputChange}
+          inputValue={inputValue}
+          onClose={onClose}
         />
         {(searchValue.length > 0 || searchResults) &&
-          (isLoading ? (
-            <Card className="p-6 bg-background rounded-md">
-              <div className="flex justify-center items-center">
-                <LoopIcon />
-              </div>
-            </Card>
-          ) : isError ? (
-            <Card className="p-6 bg-background rounded-md">
-              <div className="flex justify-center items-center">error</div>
-            </Card>
+          (isError ? (
+            errorInfo
           ) : searchResults &&
-            searchResults.series.length > 0 &&
-            searchResults.movies.length > 0 ? (
-            <div className="w-fit h-fit flex flex-col overflow-y-auto gap-4">
-              <div className="w-fit max-w-[90vw] grid grid-cols-3 sm:grid-cols-4 gap-2">
-                {searchResults.series.map((series) => {
-                  return <SearchSeriesCard key={series.id} item={series} />;
-                })}
-              </div>
-              <Separator orientation="horizontal" />
-              <div className="w-fit max-w-[90vw] grid grid-cols-3 sm:grid-cols-4 gap-2">
-                {searchResults.movies.map((movie) => {
-                  return <SearchMovieCard key={movie.id} item={movie} />;
-                })}
-              </div>
-            </div>
+            (searchResults.series.length > 0 ||
+              searchResults.movies.length > 0) ? (
+            <SearchResult results={searchResults} />
           ) : (
-            <Card className="p-6 flex justify-center">
-              <CardDescription>Nothing found</CardDescription>
-            </Card>
+            noResults
           ))}
       </Card>
     </div>,

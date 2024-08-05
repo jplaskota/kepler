@@ -3,7 +3,7 @@ import logo_dark from "../assets/logo_dark.png";
 import logo_light from "../assets/logo_light.png";
 import CategoryBar from "./CategoryBar";
 import Menu from "./Menu";
-import { Search } from "./Search";
+import { Search } from "./Search/Search";
 
 interface NavbarProps {
   category: string;
