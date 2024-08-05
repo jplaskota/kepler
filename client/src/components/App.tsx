@@ -6,11 +6,9 @@ export default function App() {
   const [category, setCategory] = useState("all");
 
   return (
-    <div className="w-100 px-4 flex flex-col items-center min-h-screen bg-background">
+    <div className="fixed w-dvw h-dvh flex flex-col items-center bg-background overflow-hidden">
       <Navbar category={category} setCategory={setCategory} />
       <ContentList category={category}></ContentList>
     </div>
   );
 }
-
-// TODO add skeleton loader

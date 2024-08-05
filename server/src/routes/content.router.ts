@@ -1,13 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { idSchema } from "../models/crud.model";
-import { type Movie } from "../models/movie.model";
-import { type Series } from "../models/series.model";
+import type { Movie } from "../models/movie.model";
+import type { Series } from "../models/series.model";
 import { fakeMovies, fakeSeries } from "../services/fakeContent";
 import { searchByName } from "../utils/searchByName";
 
 const router = new Hono()
-  .get("/", (c) => {
+  .get("/", async (c) => {
     const allContent: (Movie | Series)[] = [...fakeMovies, ...fakeSeries].sort(
       (a, b) => b.added_date - a.added_date
     );

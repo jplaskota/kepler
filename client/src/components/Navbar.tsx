@@ -1,9 +1,9 @@
+import { Separator } from "@/components/ui/separator";
 import logo_dark from "../assets/logo_dark.png";
 import logo_light from "../assets/logo_light.png";
 import CategoryBar from "./CategoryBar";
 import Menu from "./Menu";
 import { Search } from "./Search";
-import { Separator } from "@/components/ui/separator";
 
 interface NavbarProps {
   category: string;
@@ -12,7 +12,7 @@ interface NavbarProps {
 
 export default function Navbar({ category, setCategory }: NavbarProps) {
   return (
-    <nav className="flex justify-between w-full sm:w-[] sm:max-w-[1600px] py-2 sticky top-0 bg-background items-center">
+    <nav className="flex justify-between w-full sm:max-w-[1600px] px-4 py-2 bg-background items-center">
       <div className="flex h-5 items-center gap-2 sm:gap-3">
         <div className="flex gap-2 items-center">
           <img src={logo_dark} alt="logo" className="h-6 hidden dark:block" />

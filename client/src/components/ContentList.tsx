@@ -68,9 +68,9 @@ export default function ContentList({ category }: ContentListProps) {
   ) : isError ? (
     <div>Error...</div>
   ) : content ? (
-    <>
+    <div className="scroll-smooth overflow-y-auto">
       <Masonry
-        className="flex gap-4 w-fit"
+        className="flex gap-4 px-4"
         breakpointCols={cols}
         columnClassName="w-full"
       >
@@ -81,7 +81,7 @@ export default function ContentList({ category }: ContentListProps) {
           return <SeriesCard key={item.id} item={item as Series} />;
         })}
       </Masonry>
-    </>
+    </div>
   ) : (
     <div>No data</div>
   );
