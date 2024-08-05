@@ -12,8 +12,14 @@ export function Search() {
         e.preventDefault();
         setOpen((open) => !open);
       }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+      }
     };
+
     document.addEventListener("keydown", down);
+
     return () => document.removeEventListener("keydown", down);
   }, []);
 
@@ -22,7 +28,7 @@ export function Search() {
       <Button variant={"outline"} size={"icon"} onClick={() => setOpen(true)}>
         <MagnifyingGlassIcon />
       </Button>
-      <SearchModal open={open} onClose={() => setOpen(false)} />
+      {open && <SearchModal onClose={() => setOpen(false)} />}
     </>
   );
 }
