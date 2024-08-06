@@ -13,7 +13,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       "/image": {
-        target: "https://image.tmdb.org",
+        target: "https://image.tmdb.org/t/p/original",
         changeOrigin: true,
       },
     },
