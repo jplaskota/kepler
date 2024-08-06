@@ -15,19 +15,19 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ item }: MovieCardProps) {
-  const [load, setLoad] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
   return (
     <Card className="sm:w-[300px] mb-4 select-none">
       <CardHeader className="p-3 sm:p-4 ">
-        {!load && <Skeleton className="aspect-[8/12] w-full" />}
+        {loading && <Skeleton className="aspect-[8/12] w-full" />}
         <img
           src={posterUrl}
           alt="poster"
           loading="lazy"
-          className={cn(!load && "h-0 w-0")}
-          onLoad={() => setLoad(true)}
+          className={cn(loading && "h-0 w-0", "w-full")}
+          onLoad={() => setLoading(false)}
         />
         <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
           {item.title.toUpperCase()}
