@@ -16,7 +16,7 @@ interface MovieCardProps {
 
 export default function MovieCard({ item }: MovieCardProps) {
   const [load, setLoad] = useState<boolean>(false);
-  const posterUrl = "image/t/p/original" + item.poster_path;
+  const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
   return (
     <Card className="sm:w-[300px] mb-4 select-none">
