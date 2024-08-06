@@ -18,7 +18,7 @@ export default function SearchBar({
 }: SearchBarProps) {
   return (
     <div className="flex items-center gap-2">
-      <Card className="w-full flex items-center gap-2">
+      <Card className="w-full rounded-lg flex items-center gap-2">
         <div className="w-full flex items-center">
           <FiSearch className="ml-3" />
           <Input

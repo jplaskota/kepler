@@ -15,19 +15,19 @@ interface SeriesCardProps {
 }
 
 export default function SearchSeriesCard({ item }: SeriesCardProps) {
-  const [load, setLoad] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
   return (
     <Card className="select-none">
       <CardHeader className="p-2 sm:p-4">
-        {!load && <Skeleton className="aspect-[8/12] w-full" />}
+        {loading && <Skeleton className="aspect-[8/12] w-full" />}
         <img
           src={posterUrl}
           alt="poster"
-          loading="lazy"
-          className={cn(!load && "h-0 w-0")}
-          onLoad={() => setLoad(true)}
+          loading="eager"
+          className={cn(loading && "h-0 w-0")}
+          onLoad={() => setLoading(false)}
         />
         <CardTitle className="font-Anton text-sm sm:text-2xl sm:pt-1">
           {item.name.toUpperCase()}
