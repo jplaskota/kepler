@@ -1,7 +1,5 @@
 import { Card, CardDescription } from "@/components/ui/card";
 import { searchByName } from "@/services/search.services";
-import { MovieSearch } from "@server-models/movie.model";
-import { SeriesSearch } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -12,11 +10,6 @@ import SearchResult from "./SearchResult";
 interface SearchModalProps {
   onClose: () => void;
 }
-
-type Results = {
-  movies: MovieSearch[];
-  series: SeriesSearch[];
-};
 
 const noResults = (
   <Card className="p-6 flex justify-center">
@@ -29,7 +22,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
-  const [content, setContent] = useState<Results | null>(null);
+  const [content, setContent] = useState<typeof data>(undefined);
   const [dataStatus, setDataStatus] = useState<"success" | "noFound" | null>(
     null
   );
@@ -38,7 +31,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   const portalRoot = document.getElementById("portal")!;
 
   // Search by name using the debounced input value
-  const { isError, data } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ["search", { searchValue }],
     queryFn: () => searchByName(searchValue),
     enabled: searchValue.length > 0,
@@ -100,6 +93,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
           inputValue={inputValue}
           onClear={() => setInputValue("")}
           onClose={onClose}
+          isLoading={isLoading}
         />
         {dataStatus === "success" && content && (
           <SearchResult results={content} />

@@ -1,4 +1,4 @@
-import { FiSearch, FiX } from "react-icons/fi";
+import { FiRotateCw, FiSearch, FiX } from "react-icons/fi";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
@@ -8,6 +8,7 @@ interface SearchBarProps {
   inputValue: string;
   onClose: () => void;
   onClear: () => void;
+  isLoading: boolean;
 }
 
 export default function SearchBar({
@@ -15,18 +16,23 @@ export default function SearchBar({
   inputValue,
   onClose,
   onClear,
+  isLoading,
 }: SearchBarProps) {
   return (
     <div className="flex items-center gap-2">
       <Card className="w-full rounded-lg flex items-center gap-2">
         <div className="w-full flex items-center">
-          <FiSearch className="ml-3" />
+          {isLoading ? (
+            <FiRotateCw className="ml-3 animate-spin" />
+          ) : (
+            <FiSearch className="ml-3" />
+          )}
           <Input
             name="title"
             type="text"
             value={inputValue}
             onChange={changeHandler}
-            className=" bg-background text-xl border-0 font-Montserrat focus-visible:ring-0"
+            className="bg-background text-xl border-0 font-Montserrat focus-visible:ring-0"
             autoFocus
           />
         </div>
