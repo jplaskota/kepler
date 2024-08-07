@@ -25,7 +25,7 @@ export default function SearchSeriesCard({ item }: SeriesCardProps) {
         <img
           src={posterUrl}
           alt="poster"
-          loading="eager"
+          loading="lazy"
           className={cn(loading && "h-0 w-0")}
           onLoad={() => setLoading(false)}
         />

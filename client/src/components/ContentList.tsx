@@ -1,7 +1,8 @@
 import { type Movie } from "@server-models/movie.model";
 import { type Series } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useEffect, useState } from "react";
+import { debounce } from "lodash";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { getContent } from "../services/content.services";
 import { CategoryContext } from "../store/category.context";
@@ -12,47 +13,32 @@ export default function ContentList() {
   const { category } = useContext(CategoryContext);
   const [cols, setCols] = useState<number>(2);
 
+  const queryFn = useCallback(() => getContent(category), [category]);
+
   const {
     isLoading,
     isError,
     data: content,
   } = useQuery({
     queryKey: ["content", { category }],
-    queryFn: () => getContent(category),
+    queryFn,
   });
 
   useEffect(() => {
     const calculateCols = () => {
       const width = window.innerWidth;
-      let maxCols;
 
-      switch (true) {
-        case width > 1700:
-          maxCols = 5;
-          break;
-        case width <= 1700 && width > 1300:
-          maxCols = 4;
-          break;
-        case width <= 1300 && width > 1000:
-          maxCols = 3;
-          break;
-        default:
-          maxCols = 2;
-          break;
-      }
+      const maxCols =
+        width > 1700 ? 5 : width > 1300 ? 4 : width > 1000 ? 3 : 2;
 
-      if (content && content.length >= maxCols) {
-        return maxCols;
-      }
-
-      return content ? content.length : maxCols;
+      return content && content.length < maxCols ? content.length : maxCols;
     };
 
-    const handleResize = () => {
+    const handleResize = debounce(() => {
       setCols(calculateCols());
-    };
+    }, 300); // Adjust debounce time as needed
 
-    handleResize();
+    setCols(calculateCols());
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -60,25 +46,31 @@ export default function ContentList() {
     };
   }, [content]);
 
-  return isLoading ? (
-    <SkeletonContent cols={cols} />
-  ) : isError ? (
-    <div>Error...</div>
-  ) : content ? (
-    <div className="scroll-smooth overflow-y-auto no-scrollbar">
-      <Masonry
-        className="flex gap-4 px-4"
-        breakpointCols={cols}
-        columnClassName="w-full"
-      >
-        {content.map((item: Movie | Series) => (
-          <ContentCard key={item.id} item={item} />
-        ))}
-      </Masonry>
-    </div>
-  ) : (
-    <div>No data</div>
+  return (
+    <>
+      {isLoading ? (
+        <SkeletonContent cols={cols} />
+      ) : isError ? (
+        <div className="text-center text-red-500">
+          Error loading content. Please try again later.
+        </div>
+      ) : content && content.length > 0 ? (
+        <div className="scroll-smooth overflow-y-auto no-scrollbar">
+          <Masonry
+            className="flex gap-4 px-4"
+            breakpointCols={cols}
+            columnClassName="w-full"
+          >
+            {content.map((item: Movie | Series) => (
+              <ContentCard key={item.id} item={item} />
+            ))}
+          </Masonry>
+        </div>
+      ) : (
+        <div className="text-center">
+          No content available in this category.
+        </div>
+      )}
+    </>
   );
 }
-
-// TODO del masonry layout

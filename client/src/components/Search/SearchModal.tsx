@@ -1,7 +1,8 @@
 import { Card, CardDescription } from "@/components/ui/card";
 import { searchByName } from "@/services/search.services";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { debounce } from "lodash";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { toast } from "sonner";
 import SearchBar from "./SearchBar";
@@ -18,7 +19,6 @@ const noResults = (
 );
 
 export default function SearchModal({ onClose }: SearchModalProps) {
-  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
@@ -37,20 +37,21 @@ export default function SearchModal({ onClose }: SearchModalProps) {
     enabled: searchValue.length > 0,
   });
 
-  // Handle input change with debounce
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle input change with debounce using lodash
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleInputChange = useCallback(
+    debounce((value: string) => {
+      setSearchValue(value.trim());
+    }, 500),
+    []
+  );
+
+  const handleInputValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { value } = event.target;
     setInputValue(value);
-
-    // Clear the debounce timer if it exists
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
-
-    // Set a new debounce timer
-    debounceTimer.current = setTimeout(() => {
-      setSearchValue(value.trim());
-    }, 500);
+    handleInputChange(value);
   };
 
   // Handle errors
@@ -60,6 +61,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
     }
   }, [isError]);
 
+  // Handle data changes and scroll to the top of the search results
   useEffect(() => {
     // Scroll to the top of the search results
     if (searchContainerRef.current) {
@@ -69,6 +71,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
       });
     }
 
+    // Set the data status
     if (data && (data.movies.length > 0 || data.series.length > 0)) {
       setDataStatus("success");
       setContent(data);
@@ -89,7 +92,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
         onClick={(e) => e.stopPropagation()} // Prevent event propagation
       >
         <SearchBar
-          changeHandler={handleInputChange}
+          changeHandler={handleInputValueChange}
           inputValue={inputValue}
           onClear={() => setInputValue("")}
           onClose={onClose}
