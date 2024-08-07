@@ -5,8 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { getContent } from "../services/content.services";
 import { CategoryContext } from "../store/category.context";
-import MovieCard from "./MovieCard";
-import SeriesCard from "./SeriesCard";
+import ContentCard from "./ContentCard";
 import SkeletonContent from "./SkeletonContent";
 
 export default function ContentList() {
@@ -72,12 +71,9 @@ export default function ContentList() {
         breakpointCols={cols}
         columnClassName="w-full"
       >
-        {content.map((item: Movie | Series) => {
-          if (item.media_type === "movie") {
-            return <MovieCard key={item.id} item={item as Movie} />;
-          }
-          return <SeriesCard key={item.id} item={item as Series} />;
-        })}
+        {content.map((item: Movie | Series) => (
+          <ContentCard key={item.id} item={item} />
+        ))}
       </Masonry>
     </div>
   ) : (
