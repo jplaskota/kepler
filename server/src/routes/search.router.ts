@@ -28,14 +28,13 @@ const router = new Hono()
 
       const json = await res.json();
 
-      // if (type === "movie") return getFormattedMovie(json);
-      return getFormattedSeries(json);
+      if (type === "movie") return getFormattedMovie(json);
+      return getFormattedSeries(json as SeriesRaw);
     });
 
     return c.json(results);
   })
   .get("/title/:title", async (c) => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const movieRes = await fetch(

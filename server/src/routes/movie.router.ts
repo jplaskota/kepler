@@ -1,20 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { omit } from "lodash";
-import { nanoid } from "nanoid";
-import { z } from "zod";
 import { idSchema } from "../models/crud.model";
-import { type Movie, movieSchema } from "../models/movie.model";
+import {
+  type Movie,
+  movieSchema,
+  movieViewSchema,
+} from "../models/movie.model";
 import { fakeMovies } from "../services/fakeContent";
-
-const postMovieSchema = movieSchema
-  .omit({
-    tmdb_id: true,
-    added_date: true,
-  })
-  .extend({
-    id: z.string().min(1, { message: "Id is required" }),
-  });
+import { getPostMovie } from "../utils/getFormattedContent";
 
 const router = new Hono()
   .get("/", (c) => {
@@ -28,15 +21,13 @@ const router = new Hono()
 
     return c.json(content);
   })
-  .post("/", zValidator("json", postMovieSchema), (c) => {
-    const content = c.req.valid("json");
+  .post("/", zValidator("json", movieViewSchema), (c) => {
+    const movie = c.req.valid("json");
 
-    const newContent: Movie = {
-      id: nanoid(),
-      tmdb_id: content.id,
-      ...omit(content, "id"),
-      added_date: Date.now(),
-    };
+    if (fakeMovies.some((c) => c.tmdb_id === movie.id))
+      return c.text("Already exists", 409);
+
+    const newContent: Movie = getPostMovie(movie);
 
     const parsedContent = movieSchema.parse(newContent);
     if (!parsedContent) return c.json({ error: "Invalid content" }, 400);
@@ -52,9 +43,7 @@ const router = new Hono()
     if (index === -1) return c.notFound();
 
     const deletedContent = fakeMovies.splice(index, 1)[0];
-    return c.json({
-      deleted_content: deletedContent,
-    });
+    return c.json(deletedContent);
   });
 
 export default router;

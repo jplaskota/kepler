@@ -12,6 +12,7 @@ export const movieSearchSchema = z.object({
   popularity: z.number(),
   poster_path: z.string(),
   vote_average: z.number(),
+  media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
 });
 
 export const movieRawSchema = z.object({
@@ -43,6 +44,17 @@ export const movieSchema = z.object({
   added_date: z.number().positive({ message: "Invalid date" }),
 });
 
+export const movieViewSchema = movieSchema
+  .omit({
+    id: true,
+    tmdb_id: true,
+    added_date: true,
+  })
+  .extend({
+    id: z.string().min(1, { message: "Id is required" }),
+  });
+
 export type Movie = z.infer<typeof movieSchema>;
 export type MovieSearch = z.infer<typeof movieSearchSchema>;
 export type MovieRaw = z.infer<typeof movieRawSchema>;
+export type MovieView = z.infer<typeof movieViewSchema>;

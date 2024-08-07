@@ -2,9 +2,13 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
 import { idSchema } from "../models/crud.model";
-import { type Series, seriesSchema } from "../models/series.model";
+import {
+  type Series,
+  seriesSchema,
+  seriesViewSchema,
+} from "../models/series.model";
 import { fakeSeries } from "../services/fakeContent";
-import { getFormattedSeries } from "../utils/getFormattedContent";
+import { getPostSeries } from "../utils/getFormattedContent";
 
 const postSeriesSchema = seriesSchema
   .omit({
@@ -27,10 +31,13 @@ const router = new Hono()
 
     return c.json(content);
   })
-  .post("/", zValidator("json", postSeriesSchema), (c) => {
+  .post("/", zValidator("json", seriesViewSchema), (c) => {
     const series = c.req.valid("json");
 
-    const newSeries: Series = getFormattedSeries(series);
+    if (fakeSeries.some((c) => c.tmdb_id === series.id))
+      return c.text("Already exists", 409);
+
+    const newSeries: Series = getPostSeries(series);
 
     const parsedContent = seriesSchema.parse(newSeries);
     if (!parsedContent) return c.json({ error: "Invalid content" }, 400);
@@ -48,9 +55,7 @@ const router = new Hono()
     if (index === -1) return c.notFound();
 
     const deletedContent = fakeSeries.splice(index, 1)[0];
-    return c.json({
-      deleted_content: deletedContent,
-    });
+    return c.json(deletedContent);
   });
 
 export default router;
