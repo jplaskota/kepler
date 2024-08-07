@@ -1,27 +1,22 @@
-import { cn } from "@/utils/utils";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
+import { CategoryContext } from "@/store/category.context";
+import { cn } from "@/utils/utils";
+import { useContext } from "react";
 
-interface CategoryProps {
-  category: string;
-  setCategory: (cat: string) => void;
-}
-
-export default function Category({ setCategory, category }: CategoryProps) {
-  const handleClick = (cat: string) => {
-    setCategory(cat);
-  };
+export default function CategoryBer() {
+  const { category, updateCategory } = useContext(CategoryContext);
 
   return (
     <Breadcrumb>
       <BreadcrumbList className="gap-2 sm:gap-4 font-Montserrat text-sm">
         <BreadcrumbItem>
           <BreadcrumbLink
-            onClick={() => handleClick("all")}
+            onClick={() => updateCategory("all")}
             className={cn(
               category === "all" && "text-primary",
               "cursor-pointer select-none"
@@ -32,7 +27,7 @@ export default function Category({ setCategory, category }: CategoryProps) {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink
-            onClick={() => handleClick("movie")}
+            onClick={() => updateCategory("movie")}
             className={cn(
               category === "movie" && "text-primary",
               "cursor-pointer select-none"
@@ -43,7 +38,7 @@ export default function Category({ setCategory, category }: CategoryProps) {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink
-            onClick={() => handleClick("tv")}
+            onClick={() => updateCategory("tv")}
             className={cn(
               category === "tv" && "text-primary",
               "cursor-pointer select-none"
