@@ -49,3 +49,4 @@ export default function MovieCard({ item }: MovieCardProps) {
 }
 
 // TODO movie page with more info
+// TODO one line category

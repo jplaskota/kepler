@@ -49,3 +49,4 @@ export default function SeriesCard({ item }: SeriesCardProps) {
 }
 
 // TODO series page with more info
+// TODO one line category

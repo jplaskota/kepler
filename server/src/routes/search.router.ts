@@ -11,6 +11,7 @@ import type { Movie, MovieRaw, MovieSearch } from "./../models/movie.model";
 import type { Series, SeriesRaw, SeriesSearch } from "./../models/series.model";
 
 const api = Bun.env.TMDB_API_KEY;
+const url = "https://api.themoviedb.org/3";
 
 const searchByIdSchema = z.object({
   type: z.enum(["movie", "tv"]),
@@ -38,10 +39,7 @@ const router = new Hono()
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const movieRes = await fetch(
-      "https://api.themoviedb.org/3/search/movie?query=" +
-        searchName +
-        "&api_key=" +
-        api
+      url + "/search/movie?query=" + searchName + "&api_key=" + api
     ).then((res) => {
       if (!res.ok)
         throw new Error("Network response was not ok (Fetch movie by name)");
@@ -49,10 +47,7 @@ const router = new Hono()
     });
 
     const seriesRes = await fetch(
-      "https://api.themoviedb.org/3/search/tv?query=" +
-        searchName +
-        "&api_key=" +
-        api
+      url + "/search/tv?query=" + searchName + "&api_key=" + api
     ).then((res) => {
       if (!res.ok)
         throw new Error("Network response was not ok (Fetch series by name)");
@@ -78,10 +73,7 @@ const router = new Hono()
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const movieRes = await fetch(
-      "https://api.themoviedb.org/3/search/movie?query=" +
-        searchName +
-        "&api_key=" +
-        api
+      url + "/search/movie?query=" + searchName + "&api_key=" + api
     ).then((res) => {
       if (!res.ok)
         throw new Error("Network response was not ok (Fetch movie by name)");
@@ -102,10 +94,7 @@ const router = new Hono()
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const seriesRes = await fetch(
-      "https://api.themoviedb.org/3/search/tv?query=" +
-        searchName +
-        "&api_key=" +
-        api
+      url + "/search/tv?query=" + searchName + "&api_key=" + api
     ).then((res) => {
       if (!res.ok)
         throw new Error("Network response was not ok (Fetch series by name)");
@@ -122,6 +111,6 @@ const router = new Hono()
 
 export default router;
 
-// TODO add pagination
-// TODO improve rest of the code with new types
+// TODO tests
+// TODO add pagination option
 // FIXME series sometimes have to many seasons

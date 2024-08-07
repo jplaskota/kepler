@@ -39,5 +39,3 @@ export default function MovieCard({ item }: MovieCardProps) {
     </Card>
   );
 }
-
-// TODO movie page with more info

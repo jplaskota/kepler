@@ -39,5 +39,3 @@ export default function SearchSeriesCard({ item }: SeriesCardProps) {
     </Card>
   );
 }
-
-// TODO series page with more info

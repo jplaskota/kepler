@@ -49,4 +49,5 @@ const router = new Hono()
 export default router;
 
 //TODO tests
-//TODO full json data fetch inside or outside post request ?
+// TODO add pagination option
+

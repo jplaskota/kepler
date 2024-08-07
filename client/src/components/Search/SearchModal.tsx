@@ -104,5 +104,3 @@ export default function SearchModal({ onClose }: SearchModalProps) {
     portalRoot
   );
 }
-
-// TODO masonry layout ?
