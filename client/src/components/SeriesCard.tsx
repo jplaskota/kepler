@@ -19,7 +19,7 @@ export default function SeriesCard({ item }: SeriesCardProps) {
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
   return (
-    <Card className="sm:w-[300px] mb-4 select-none">
+    <Card className="sm:w-[300px] mb-4 select-none animate-fade-in">
       <CardHeader className="p-3 sm:p-4">
         {loading && <Skeleton className="aspect-[8/12] w-full" />}
         <img

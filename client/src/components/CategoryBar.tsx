@@ -18,7 +18,7 @@ export default function Category({ setCategory, category }: CategoryProps) {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList className="gap-2 sm:gap-3 font-Montserrat text-sm">
+      <BreadcrumbList className="gap-2 sm:gap-4 font-Montserrat text-sm">
         <BreadcrumbItem>
           <BreadcrumbLink
             onClick={() => handleClick("all")}

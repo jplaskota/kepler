@@ -81,7 +81,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
 
   return createPortal(
     <div
-      className="fixed inset-0 p-4 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center"
+      className="fixed inset-0 p-4 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center animate-fade-in-up"
       onClick={() => onClose()}
     >
       <Card

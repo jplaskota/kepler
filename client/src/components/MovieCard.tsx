@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/utils/utils";
-import { type Movie } from "@server-models/movie.model";
+import type { Movie } from "@server-models/movie.model";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
@@ -19,8 +19,8 @@ export default function MovieCard({ item }: MovieCardProps) {
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
   return (
-    <Card className="sm:w-[300px] mb-4 select-none">
-      <CardHeader className="p-3 sm:p-4 ">
+    <Card className="sm:w-[300px] mb-4 select-none animate-fade-in">
+      <CardHeader className="p-3 sm:p-4">
         {loading && <Skeleton className="aspect-[8/12] w-full" />}
         <img
           src={posterUrl}

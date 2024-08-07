@@ -35,10 +35,12 @@ export default function SearchBar({
             className="bg-background text-xl border-0 font-Montserrat focus-visible:ring-0"
             autoFocus
           />
+          <div>
+            <Button onClick={() => onClear()} variant="secondary" size="icon">
+              <FiX />
+            </Button>
+          </div>
         </div>
-        <Button onClick={() => onClear()} variant="secondary">
-          <FiX />
-        </Button>
       </Card>
       <Button onClick={() => onClose()} className="h-full sm:hidden">
         Close

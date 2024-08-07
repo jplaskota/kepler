@@ -13,7 +13,7 @@ interface NavbarProps {
 export default function Navbar({ category, setCategory }: NavbarProps) {
   return (
     <nav className="flex justify-between w-full sm:max-w-[1600px] px-4 py-2 bg-background items-center">
-      <div className="flex h-5 items-center gap-2 sm:gap-3">
+      <div className="flex h-5 items-center gap-2.5 sm:gap-3">
         <div className="flex gap-2 items-center">
           <img src={logo_dark} alt="logo" className="h-6 hidden dark:block" />
           <img src={logo_light} alt="logo" className="h-6 block dark:hidden" />
