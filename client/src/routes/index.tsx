@@ -5,6 +5,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-export default function Index() {
+function Index() {
   return <ContentList />;
 }

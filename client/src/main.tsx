@@ -31,4 +31,3 @@ if (!rootElement.innerHTML) {
   );
 }
 
-// TODO query devtools

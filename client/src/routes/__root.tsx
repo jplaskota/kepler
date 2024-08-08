@@ -9,9 +9,9 @@ export const Route = createRootRoute({
   component: Container,
 });
 
-export default function Container() {
+function Container() {
   return (
-    <div className="w-dvw flex flex-col items-center bg-background">
+    <div className="w-full flex flex-col items-center bg-background">
       <CategoryProvider>
         <Navbar />
         <Outlet />
@@ -24,3 +24,4 @@ export default function Container() {
 }
 
 // TODO tanstack router devtools
+// TODO query devtools
