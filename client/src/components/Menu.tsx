@@ -30,12 +30,6 @@ export default function Menu() {
             <Link to="/about" disabled={location.pathname === "/about"}>
               About
             </Link>
-            <Link to="/movie/$id" params={{ id: "475557" }}>
-              Test movie
-            </Link>
-            <Link to="/series/$id" params={{ id: "76479" }}>
-              Test series
-            </Link>
           </SheetDescription>
         </SheetHeader>
       </SheetContent>

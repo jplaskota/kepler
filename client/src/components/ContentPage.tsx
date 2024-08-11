@@ -1,3 +1,4 @@
+import { cn } from "@/utils/utils";
 import type { Movie } from "@server-models/movie.model";
 import type { Series } from "@server-models/series.model";
 import { useState } from "react";
@@ -39,9 +40,9 @@ export default function ContentPage({ item }: ContentPageProps) {
         {loading && <Skeleton className="aspect-[8/12] w-full" />}
         <img
           src={posterUrl}
-          loading="lazy"
           alt="poster"
-          className="w-full rounded-md max-h-full"
+          loading="lazy"
+          className={cn(loading && "h-0 w-0", "w-full rounded-md")}
           onLoad={() => setLoading(false)}
         />
         <div className="flex flex-col gap-3">
