@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
 interface ContentCardProps {
-  item: Series | Movie;
+  item: Movie | Series;
 }
 
 export default function ContentCard({ item }: ContentCardProps) {

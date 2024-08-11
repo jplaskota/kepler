@@ -1,9 +1,9 @@
+import ContentPage from "@/components/ContentPage";
 import { searchById } from "@/services/search.services";
 import type { Movie } from "@server-models/movie.model";
 import { createFileRoute } from "@tanstack/react-router";
-import MoviePage from "../components/MoviePage";
 
-export const Route = createFileRoute("/movie/$id")({
+export const Route = createFileRoute("/search/movie/$id")({
   component: Movie,
   loader: async ({ params }) => await searchById(params.id, "movie"),
 });
@@ -11,5 +11,5 @@ export const Route = createFileRoute("/movie/$id")({
 function Movie() {
   const data = Route.useLoaderData();
 
-  return <MoviePage item={data as Movie} />;
+  return <ContentPage item={data as Movie} />;
 }

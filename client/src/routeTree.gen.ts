@@ -12,11 +12,12 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
+import { Route as IdImport } from './routes/$id'
 import { Route as IndexImport } from './routes/index'
-import { Route as SeriesIdImport } from './routes/series.$id'
-import { Route as MovieIdImport } from './routes/movie.$id'
 import { Route as SearchSeriesTitleImport } from './routes/search/series.$title'
+import { Route as SearchSeriesIdImport } from './routes/search/series.$id'
 import { Route as SearchMoviesTitleImport } from './routes/search/movies.$title'
+import { Route as SearchMovieIdImport } from './routes/search/movie.$id'
 
 // Create/Update Routes
 
@@ -25,18 +26,13 @@ const AboutRoute = AboutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const IdRoute = IdImport.update({
+  path: '/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SeriesIdRoute = SeriesIdImport.update({
-  path: '/series/$id',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const MovieIdRoute = MovieIdImport.update({
-  path: '/movie/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -45,8 +41,18 @@ const SearchSeriesTitleRoute = SearchSeriesTitleImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SearchSeriesIdRoute = SearchSeriesIdImport.update({
+  path: '/search/series/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const SearchMoviesTitleRoute = SearchMoviesTitleImport.update({
   path: '/search/movies/$title',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SearchMovieIdRoute = SearchMovieIdImport.update({
+  path: '/search/movie/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -61,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/$id': {
+      id: '/$id'
+      path: '/$id'
+      fullPath: '/$id'
+      preLoaderRoute: typeof IdImport
+      parentRoute: typeof rootRoute
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -68,18 +81,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/movie/$id': {
-      id: '/movie/$id'
-      path: '/movie/$id'
-      fullPath: '/movie/$id'
-      preLoaderRoute: typeof MovieIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/series/$id': {
-      id: '/series/$id'
-      path: '/series/$id'
-      fullPath: '/series/$id'
-      preLoaderRoute: typeof SeriesIdImport
+    '/search/movie/$id': {
+      id: '/search/movie/$id'
+      path: '/search/movie/$id'
+      fullPath: '/search/movie/$id'
+      preLoaderRoute: typeof SearchMovieIdImport
       parentRoute: typeof rootRoute
     }
     '/search/movies/$title': {
@@ -87,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/search/movies/$title'
       fullPath: '/search/movies/$title'
       preLoaderRoute: typeof SearchMoviesTitleImport
+      parentRoute: typeof rootRoute
+    }
+    '/search/series/$id': {
+      id: '/search/series/$id'
+      path: '/search/series/$id'
+      fullPath: '/search/series/$id'
+      preLoaderRoute: typeof SearchSeriesIdImport
       parentRoute: typeof rootRoute
     }
     '/search/series/$title': {
@@ -103,10 +116,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  IdRoute,
   AboutRoute,
-  MovieIdRoute,
-  SeriesIdRoute,
+  SearchMovieIdRoute,
   SearchMoviesTitleRoute,
+  SearchSeriesIdRoute,
   SearchSeriesTitleRoute,
 })
 
@@ -119,27 +133,31 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/$id",
         "/about",
-        "/movie/$id",
-        "/series/$id",
+        "/search/movie/$id",
         "/search/movies/$title",
+        "/search/series/$id",
         "/search/series/$title"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/$id": {
+      "filePath": "$id.tsx"
+    },
     "/about": {
       "filePath": "about.tsx"
     },
-    "/movie/$id": {
-      "filePath": "movie.$id.tsx"
-    },
-    "/series/$id": {
-      "filePath": "series.$id.tsx"
+    "/search/movie/$id": {
+      "filePath": "search/movie.$id.tsx"
     },
     "/search/movies/$title": {
       "filePath": "search/movies.$title.tsx"
+    },
+    "/search/series/$id": {
+      "filePath": "search/series.$id.tsx"
     },
     "/search/series/$title": {
       "filePath": "search/series.$title.tsx"

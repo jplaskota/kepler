@@ -1,6 +1,7 @@
-import { type Movie } from "@server-models/movie.model";
-import { type Series } from "@server-models/series.model";
+import type { Movie } from "@server-models/movie.model";
+import type { Series } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { debounce } from "lodash";
 import { useCallback, useContext, useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
@@ -61,9 +62,20 @@ export default function ContentList() {
             breakpointCols={cols}
             columnClassName="w-full"
           >
-            {content.map((item: Movie | Series) => (
-              <ContentCard key={item.id} item={item} />
-            ))}
+            {content.map((item: Movie | Series) => {
+              if (item.media_type === "movie") {
+                return (
+                  <Link key={item.id} to={"/$id"} params={{ id: item.id }}>
+                    <ContentCard item={item as Movie} />
+                  </Link>
+                );
+              }
+              return (
+                <Link key={item.id} to={"/$id"} params={{ id: item.id }}>
+                  <ContentCard item={item as Series} />
+                </Link>
+              );
+            })}
           </Masonry>
         </div>
       ) : (
