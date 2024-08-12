@@ -43,6 +43,7 @@ export default function ContentCard({ item }: ContentCardProps) {
           loading="lazy"
           className={cn(loading && "h-0 w-0", "w-full rounded-md")}
           onLoad={() => setLoading(false)}
+          crossOrigin="anonymous"
         />
         <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
           {title.toUpperCase()}

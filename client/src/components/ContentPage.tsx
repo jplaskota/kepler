@@ -44,6 +44,7 @@ export default function ContentPage({ item }: ContentPageProps) {
           loading="lazy"
           className={cn(loading && "h-0 w-0", "w-full rounded-md")}
           onLoad={() => setLoading(false)}
+          crossOrigin="anonymous"
         />
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-2">
