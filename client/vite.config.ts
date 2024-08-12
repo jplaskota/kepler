@@ -13,8 +13,9 @@ export default defineConfig({
         changeOrigin: true,
       },
       "/image": {
-        target: "https://image.tmdb.org/t/p/w300",
+        target: "https://image.tmdb.org/t/p/w500",
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/image/, ""),
       },
     },
   },
