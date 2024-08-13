@@ -14,8 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IdImport } from './routes/$id'
 import { Route as IndexImport } from './routes/index'
-import { Route as SearchSeriesTitleImport } from './routes/search/series.$title'
-import { Route as SearchMoviesTitleImport } from './routes/search/movies.$title'
+import { Route as SearchIdImport } from './routes/search/$id'
 
 // Create/Update Routes
 
@@ -34,13 +33,8 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const SearchSeriesTitleRoute = SearchSeriesTitleImport.update({
-  path: '/search/series/$title',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SearchMoviesTitleRoute = SearchMoviesTitleImport.update({
-  path: '/search/movies/$title',
+const SearchIdRoute = SearchIdImport.update({
+  path: '/search/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -69,18 +63,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/search/movies/$title': {
-      id: '/search/movies/$title'
-      path: '/search/movies/$title'
-      fullPath: '/search/movies/$title'
-      preLoaderRoute: typeof SearchMoviesTitleImport
-      parentRoute: typeof rootRoute
-    }
-    '/search/series/$title': {
-      id: '/search/series/$title'
-      path: '/search/series/$title'
-      fullPath: '/search/series/$title'
-      preLoaderRoute: typeof SearchSeriesTitleImport
+    '/search/$id': {
+      id: '/search/$id'
+      path: '/search/$id'
+      fullPath: '/search/$id'
+      preLoaderRoute: typeof SearchIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -92,8 +79,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   IdRoute,
   AboutRoute,
-  SearchMoviesTitleRoute,
-  SearchSeriesTitleRoute,
+  SearchIdRoute,
 })
 
 /* prettier-ignore-end */
@@ -107,8 +93,7 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/$id",
         "/about",
-        "/search/movies/$title",
-        "/search/series/$title"
+        "/search/$id"
       ]
     },
     "/": {
@@ -120,11 +105,8 @@ export const routeTree = rootRoute.addChildren({
     "/about": {
       "filePath": "about.tsx"
     },
-    "/search/movies/$title": {
-      "filePath": "search/movies.$title.tsx"
-    },
-    "/search/series/$title": {
-      "filePath": "search/series.$title.tsx"
+    "/search/$id": {
+      "filePath": "search/$id.tsx"
     }
   }
 }
