@@ -65,13 +65,21 @@ export default function ContentList() {
             {content.map((item: Movie | Series) => {
               if (item.media_type === "movie") {
                 return (
-                  <Link key={item.id} to={"/$id"} params={{ id: item.id }}>
+                  <Link
+                    key={item.id}
+                    to={"/bookmarks/$id"}
+                    params={{ id: item.id }}
+                  >
                     <ContentCard item={item as Movie} />
                   </Link>
                 );
               }
               return (
-                <Link key={item.id} to={"/$id"} params={{ id: item.id }}>
+                <Link
+                  key={item.id}
+                  to={"/bookmarks/$id"}
+                  params={{ id: item.id }}
+                >
                   <ContentCard item={item as Series} />
                 </Link>
               );

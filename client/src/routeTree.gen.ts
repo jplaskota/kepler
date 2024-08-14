@@ -12,9 +12,11 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
-import { Route as IdImport } from './routes/$id'
+import { Route as UserImport } from './routes/$user'
 import { Route as IndexImport } from './routes/index'
+import { Route as SearchTitleImport } from './routes/search/$title'
 import { Route as SearchIdImport } from './routes/search/$id'
+import { Route as BookmarksIdImport } from './routes/bookmarks/$id'
 
 // Create/Update Routes
 
@@ -23,8 +25,8 @@ const AboutRoute = AboutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const IdRoute = IdImport.update({
-  path: '/$id',
+const UserRoute = UserImport.update({
+  path: '/$user',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -33,8 +35,18 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SearchTitleRoute = SearchTitleImport.update({
+  path: '/search/$title',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const SearchIdRoute = SearchIdImport.update({
   path: '/search/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BookmarksIdRoute = BookmarksIdImport.update({
+  path: '/bookmarks/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -49,11 +61,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/$id': {
-      id: '/$id'
-      path: '/$id'
-      fullPath: '/$id'
-      preLoaderRoute: typeof IdImport
+    '/$user': {
+      id: '/$user'
+      path: '/$user'
+      fullPath: '/$user'
+      preLoaderRoute: typeof UserImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -63,11 +75,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/bookmarks/$id': {
+      id: '/bookmarks/$id'
+      path: '/bookmarks/$id'
+      fullPath: '/bookmarks/$id'
+      preLoaderRoute: typeof BookmarksIdImport
+      parentRoute: typeof rootRoute
+    }
     '/search/$id': {
       id: '/search/$id'
       path: '/search/$id'
       fullPath: '/search/$id'
       preLoaderRoute: typeof SearchIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/search/$title': {
+      id: '/search/$title'
+      path: '/search/$title'
+      fullPath: '/search/$title'
+      preLoaderRoute: typeof SearchTitleImport
       parentRoute: typeof rootRoute
     }
   }
@@ -77,9 +103,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  IdRoute,
+  UserRoute,
   AboutRoute,
+  BookmarksIdRoute,
   SearchIdRoute,
+  SearchTitleRoute,
 })
 
 /* prettier-ignore-end */
@@ -91,22 +119,30 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/$id",
+        "/$user",
         "/about",
-        "/search/$id"
+        "/bookmarks/$id",
+        "/search/$id",
+        "/search/$title"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/$id": {
-      "filePath": "$id.tsx"
+    "/$user": {
+      "filePath": "$user.tsx"
     },
     "/about": {
       "filePath": "about.tsx"
     },
+    "/bookmarks/$id": {
+      "filePath": "bookmarks/$id.tsx"
+    },
     "/search/$id": {
       "filePath": "search/$id.tsx"
+    },
+    "/search/$title": {
+      "filePath": "search/$title.tsx"
     }
   }
 }
