@@ -18,7 +18,10 @@ export const getSeriesById = async (id: string) => {
 export const postSeries = async (data: Series) => {
   const results = await series
     .$post({
-      json: data,
+      json: {
+        ...data,
+        id: data.id.toString(),
+      },
     })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to post Series");
@@ -42,3 +45,5 @@ export const deleteSeriesById = async (id: string) => {
 
   return results;
 };
+
+// TODO id is number, not string ???

@@ -1,4 +1,4 @@
-import { type Movie } from "@server-models/movie.model";
+import { type MovieView } from "@server-models/movie.model";
 import { movie } from "./api.services";
 
 export const getMovieById = async (id: string) => {
@@ -15,10 +15,13 @@ export const getMovieById = async (id: string) => {
   return results;
 };
 
-export const postMovie = async (data: Movie) => {
+export const postMovie = async (data: MovieView) => {
   const results = await movie
     .$post({
-      json: data,
+      json: {
+        ...data,
+        id: data.id.toString(),
+      },
     })
     .then((res) => {
       if (!res.ok) throw new Error("Failed to post Movie");
@@ -42,3 +45,5 @@ export const deleteMovieById = async (id: string) => {
 
   return results;
 };
+
+// TODO id is number, not string ???

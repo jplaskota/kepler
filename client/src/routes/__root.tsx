@@ -1,9 +1,9 @@
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import CategoryProvider from "@/store/category.context";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+// import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({
   component: Container,
@@ -17,8 +17,8 @@ function Container() {
         <Outlet />
       </CategoryProvider>
       <Toaster />
-      <TanStackRouterDevtools />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <TanStackRouterDevtools /> */}
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </div>
   );
 }
