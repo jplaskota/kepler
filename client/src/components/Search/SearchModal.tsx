@@ -22,7 +22,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
-  const [content, setContent] = useState<typeof data>(undefined);
+  const [content, setContent] = useState<typeof data>();
   const [dataStatus, setDataStatus] = useState<"success" | "noFound" | null>(
     null
   );
@@ -84,7 +84,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
 
   return createPortal(
     <div
-      className="fixed inset-0 p-4 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center animate-fade-in-up"
+      className="fixed inset-0 py-16 px-4 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center animate-fade-in-up"
       onClick={() => onClose()}
     >
       <Card
@@ -107,3 +107,5 @@ export default function SearchModal({ onClose }: SearchModalProps) {
     portalRoot
   );
 }
+
+// TODO search input position

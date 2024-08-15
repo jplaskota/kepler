@@ -7,6 +7,7 @@ import {
 import { cn } from "@/utils/utils";
 import type { Movie } from "@server-models/movie.model";
 import type { Series } from "@server-models/series.model";
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
@@ -34,31 +35,33 @@ export default function ContentCard({ item }: ContentCardProps) {
   const genres = item.genres.join(", ");
 
   return (
-    <Card className="sm:w-[300px] rounded-xl mb-4 select-none animate-fade-in">
-      <CardHeader className="p-2 sm:p-3">
-        {loading && <Skeleton className="aspect-[8/12] w-full" />}
-        <img
-          src={posterUrl}
-          alt="poster"
-          loading="lazy"
-          className={cn(loading && "h-0 w-0", "w-full rounded-md")}
-          onLoad={() => setLoading(false)}
-          crossOrigin="anonymous"
-        />
-        <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
-          {title.toUpperCase()}
-        </CardTitle>
-        <div className="flex gap-1 max-sm:text-xs">
-          <CardDescription className="max-sm:text-xs">
-            [ {releaseDate.split("-")[0]} ]
-          </CardDescription>
-          <CardDescription className="max-sm:text-xs">
-            [ {additionalInfo} ]
-          </CardDescription>
-        </div>
-        <CardDescription className="max-sm:text-xs">{genres}</CardDescription>
-      </CardHeader>
-    </Card>
+    <Link to="/bookmarks/$id" params={{ id: item.id }}>
+      <Card className="sm:w-[300px] rounded-xl mb-4 select-none animate-fade-in">
+        <CardHeader className="p-2 sm:p-3">
+          {loading && <Skeleton className="aspect-[8/12] w-full" />}
+          <img
+            src={posterUrl}
+            alt="poster"
+            loading="lazy"
+            className={cn(loading && "h-0 w-0", "w-full rounded-md")}
+            onLoad={() => setLoading(false)}
+            crossOrigin="anonymous"
+          />
+          <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
+            {title.toUpperCase()}
+          </CardTitle>
+          <div className="flex gap-1 max-sm:text-xs">
+            <CardDescription className="max-sm:text-xs">
+              [ {releaseDate.split("-")[0]} ]
+            </CardDescription>
+            <CardDescription className="max-sm:text-xs">
+              [ {additionalInfo} ]
+            </CardDescription>
+          </div>
+          <CardDescription className="max-sm:text-xs">{genres}</CardDescription>
+        </CardHeader>
+      </Card>
+    </Link>
   );
 }
 

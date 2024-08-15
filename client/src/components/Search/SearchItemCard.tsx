@@ -7,6 +7,7 @@ import {
 import { cn } from "@/utils/utils";
 import type { MovieSearch } from "@server-models/movie.model";
 import type { SeriesSearch } from "@server-models/series.model";
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 
@@ -32,23 +33,31 @@ export default function SearchItemCard({ item }: MovieCardProps) {
       : (item as MovieSearch).release_date;
 
   return (
-    <Card className="select-none">
-      <CardHeader className="p-2 sm:p-4">
-        {loading && <Skeleton className="aspect-[8/12] w-full" />}
-        <img
-          src={posterUrl}
-          alt="poster"
-          loading="eager"
-          className={cn(loading && "h-0 w-0")}
-          onLoad={() => setLoading(false)}
-        />
-        <CardTitle className="font-Anton text-sm sm:text-2xl sm:pt-1">
-          {title.toUpperCase()}
-        </CardTitle>
-        <CardDescription className="max-sm:text-xs">
-          [ {releaseDate.split("-")[0]} ]
-        </CardDescription>
-      </CardHeader>
-    </Card>
+    <Link
+      to={"/search/$id"}
+      params={{ id: item.id }}
+      search={{
+        mediaType: item.media_type,
+      }}
+    >
+      <Card className="select-none">
+        <CardHeader className="p-2 sm:p-4">
+          {loading && <Skeleton className="aspect-[8/12] w-full" />}
+          <img
+            src={posterUrl}
+            alt="poster"
+            loading="eager"
+            className={cn(loading && "h-0 w-0")}
+            onLoad={() => setLoading(false)}
+          />
+          <CardTitle className="font-Anton text-sm sm:text-2xl sm:pt-1">
+            {title.toUpperCase()}
+          </CardTitle>
+          <CardDescription className="max-sm:text-xs">
+            [ {releaseDate.split("-")[0]} ]
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </Link>
   );
 }
