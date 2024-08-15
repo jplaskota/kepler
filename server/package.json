@@ -3,8 +3,7 @@
   "version": "0.0.2",
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
-    "nanoid": "^5.0.7",
-    "zod": "^3.23.8"
+    "nanoid": "^5.0.7"
   },
   "scripts": {
     "dev": "bun run --hot src/index.ts"
