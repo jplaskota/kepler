@@ -1,10 +1,11 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import { logger } from "hono/logger";
-import contentRouter from "./routes/content.router";
-import movieRouter from "./routes/movie.router";
-import searchRouter from "./routes/search.router";
-import seriesRouter from "./routes/series.router";
+import { authRoute } from "./routes/auth.route";
+import { contentRoute } from "./routes/content.route";
+import { movieRoute } from "./routes/movie.route";
+import { searchRoute } from "./routes/search.route";
+import { seriesRoute } from "./routes/series.route";
 
 const app = new Hono();
 app.use("/api/*", logger());
@@ -14,10 +15,11 @@ app.get("*", serveStatic({ path: "../client/dist/index.html" }));
 
 const apiRoutes = app
   .basePath("/api")
-  .route("/content", contentRouter)
-  .route("/movie", movieRouter)
-  .route("/series", seriesRouter)
-  .route("/search", searchRouter);
+  .route("/content", contentRoute)
+  .route("/movie", movieRoute)
+  .route("/series", seriesRoute)
+  .route("/search", searchRoute)
+  .route("/", authRoute);
 
 app.notFound((c) => c.text("Not found", 404));
 

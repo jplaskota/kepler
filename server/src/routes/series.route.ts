@@ -19,7 +19,7 @@ const postSeriesSchema = seriesSchema
     id: z.string().min(1, { message: "id is required" }),
   });
 
-const router = new Hono()
+export const seriesRoute = new Hono()
   .get("/", (c) => {
     return c.json(fakeSeries);
   })
@@ -57,7 +57,5 @@ const router = new Hono()
     const deletedContent = fakeSeries.splice(index, 1)[0];
     return c.json(deletedContent);
   });
-
-export default router;
 
 //TODO tests

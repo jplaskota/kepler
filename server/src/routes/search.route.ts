@@ -17,7 +17,7 @@ const searchByIdSchema = z.object({
   type: z.enum(["movie", "tv"]),
 });
 
-const router = new Hono()
+export const searchRoute = new Hono()
   .get("/id/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
     const id = c.req.param("id") as string;
     const type = c.req.query("type") as "movie" | "tv";
@@ -108,8 +108,6 @@ const router = new Hono()
 
     return c.json(seriesPrepared);
   });
-
-export default router;
 
 // TODO tests
 // TODO add pagination option

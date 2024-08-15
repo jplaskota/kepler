@@ -9,7 +9,7 @@ import {
 import { fakeMovies } from "../services/fakeContent";
 import { getPostMovie } from "../utils/getFormattedContent";
 
-const router = new Hono()
+export const movieRoute = new Hono()
   .get("/", (c) => {
     return c.json(fakeMovies);
   })
@@ -45,8 +45,6 @@ const router = new Hono()
     const deletedContent = fakeMovies.splice(index, 1)[0];
     return c.json(deletedContent);
   });
-
-export default router;
 
 //TODO tests
 // TODO add pagination option

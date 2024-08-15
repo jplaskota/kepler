@@ -6,7 +6,7 @@ import type { Series } from "../models/series.model";
 import { fakeMovies, fakeSeries } from "../services/fakeContent";
 import { searchByName } from "../utils/searchByName";
 
-const router = new Hono()
+export const contentRoute = new Hono()
   .get("/", async (c) => {
     const allContent: (Movie | Series)[] = [...fakeMovies, ...fakeSeries].sort(
       (a, b) => b.added_date - a.added_date
@@ -31,8 +31,6 @@ const router = new Hono()
 
     return c.json(content);
   });
-
-export default router;
 
 // TODO tests
 // TODO del redirect in get/id
