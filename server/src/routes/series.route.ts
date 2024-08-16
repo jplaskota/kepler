@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
+import { getUser } from "../kinde";
 import { idSchema } from "../models/crud.model";
 import {
   type Series,
@@ -20,10 +21,10 @@ const postSeriesSchema = seriesSchema
   });
 
 export const seriesRoute = new Hono()
-  .get("/", (c) => {
+  .get("/", getUser, (c) => {
     return c.json(fakeSeries);
   })
-  .get("/id/:id", zValidator("param", idSchema), (c) => {
+  .get("/id/:id", getUser, zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
     const content = fakeSeries.find((content) => content.id === id) as Series;
 
@@ -31,7 +32,7 @@ export const seriesRoute = new Hono()
 
     return c.json(content);
   })
-  .post("/", zValidator("json", seriesViewSchema), (c) => {
+  .post("/", getUser, zValidator("json", seriesViewSchema), (c) => {
     const series = c.req.valid("json");
 
     if (fakeSeries.some((c) => c.tmdb_id === series.id))
@@ -46,7 +47,7 @@ export const seriesRoute = new Hono()
 
     return c.json(newSeries, 201);
   })
-  .delete("/id/:id", zValidator("param", idSchema), (c) => {
+  .delete("/id/:id", getUser, zValidator("param", idSchema), (c) => {
     const id = c.req.param("id") as string;
     const index = fakeSeries.findIndex(
       (content) => content.id === id

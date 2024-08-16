@@ -12,11 +12,12 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
-import { Route as UserImport } from './routes/$user'
-import { Route as IndexImport } from './routes/index'
-import { Route as SearchTitleImport } from './routes/search/$title'
-import { Route as SearchIdImport } from './routes/search/$id'
-import { Route as BookmarksIdImport } from './routes/bookmarks/$id'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
+import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedIdImport } from './routes/_authenticated/$id'
+import { Route as AuthenticatedSearchTitleImport } from './routes/_authenticated/search/$title'
+import { Route as AuthenticatedSearchIdImport } from './routes/_authenticated/search/$id'
 
 // Create/Update Routes
 
@@ -25,47 +26,45 @@ const AboutRoute = AboutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UserRoute = UserImport.update({
-  path: '/$user',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const SearchTitleRoute = SearchTitleImport.update({
+const AuthenticatedProfileRoute = AuthenticatedProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedIdRoute = AuthenticatedIdImport.update({
+  path: '/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedSearchTitleRoute = AuthenticatedSearchTitleImport.update({
   path: '/search/$title',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const SearchIdRoute = SearchIdImport.update({
+const AuthenticatedSearchIdRoute = AuthenticatedSearchIdImport.update({
   path: '/search/$id',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const BookmarksIdRoute = BookmarksIdImport.update({
-  path: '/bookmarks/$id',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/$user': {
-      id: '/$user'
-      path: '/$user'
-      fullPath: '/$user'
-      preLoaderRoute: typeof UserImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -75,26 +74,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/bookmarks/$id': {
-      id: '/bookmarks/$id'
-      path: '/bookmarks/$id'
-      fullPath: '/bookmarks/$id'
-      preLoaderRoute: typeof BookmarksIdImport
-      parentRoute: typeof rootRoute
+    '/_authenticated/$id': {
+      id: '/_authenticated/$id'
+      path: '/$id'
+      fullPath: '/$id'
+      preLoaderRoute: typeof AuthenticatedIdImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/search/$id': {
-      id: '/search/$id'
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/search/$id': {
+      id: '/_authenticated/search/$id'
       path: '/search/$id'
       fullPath: '/search/$id'
-      preLoaderRoute: typeof SearchIdImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedSearchIdImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/search/$title': {
-      id: '/search/$title'
+    '/_authenticated/search/$title': {
+      id: '/_authenticated/search/$title'
       path: '/search/$title'
       fullPath: '/search/$title'
-      preLoaderRoute: typeof SearchTitleImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedSearchTitleImport
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
@@ -102,12 +115,14 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  UserRoute,
+  AuthenticatedRoute: AuthenticatedRoute.addChildren({
+    AuthenticatedIdRoute,
+    AuthenticatedProfileRoute,
+    AuthenticatedIndexRoute,
+    AuthenticatedSearchIdRoute,
+    AuthenticatedSearchTitleRoute,
+  }),
   AboutRoute,
-  BookmarksIdRoute,
-  SearchIdRoute,
-  SearchTitleRoute,
 })
 
 /* prettier-ignore-end */
@@ -118,31 +133,42 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/$user",
-        "/about",
-        "/bookmarks/$id",
-        "/search/$id",
-        "/search/$title"
+        "/_authenticated",
+        "/about"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/$user": {
-      "filePath": "$user.tsx"
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/$id",
+        "/_authenticated/profile",
+        "/_authenticated/",
+        "/_authenticated/search/$id",
+        "/_authenticated/search/$title"
+      ]
     },
     "/about": {
       "filePath": "about.tsx"
     },
-    "/bookmarks/$id": {
-      "filePath": "bookmarks/$id.tsx"
+    "/_authenticated/$id": {
+      "filePath": "_authenticated/$id.tsx",
+      "parent": "/_authenticated"
     },
-    "/search/$id": {
-      "filePath": "search/$id.tsx"
+    "/_authenticated/profile": {
+      "filePath": "_authenticated/profile.tsx",
+      "parent": "/_authenticated"
     },
-    "/search/$title": {
-      "filePath": "search/$title.tsx"
+    "/_authenticated/": {
+      "filePath": "_authenticated/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/search/$id": {
+      "filePath": "_authenticated/search/$id.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/search/$title": {
+      "filePath": "_authenticated/search/$title.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

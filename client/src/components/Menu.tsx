@@ -23,9 +23,12 @@ export default function Menu() {
       <SheetContent className="flex">
         <SheetHeader>
           <SheetTitle>Navigation</SheetTitle>
-          <SheetDescription className="flex flex-col gap-2 items-start">
+          <SheetDescription className="flex flex-col gap-2 items-start select-none">
             <Link to="/" disabled={location.pathname === "/"}>
               Home
+            </Link>
+            <Link to="/profile" disabled={location.pathname === "/profile"}>
+              Profile
             </Link>
             <Link to="/about" disabled={location.pathname === "/about"}>
               About

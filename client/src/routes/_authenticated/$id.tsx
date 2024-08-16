@@ -4,7 +4,7 @@ import { Movie } from "@server-models/movie.model";
 import { Series } from "@server-models/series.model";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/bookmarks/$id")({
+export const Route = createFileRoute("/_authenticated/$id")({
   component: Bookmark,
   loader: async ({ params }) => await getContentById(params.id),
 });

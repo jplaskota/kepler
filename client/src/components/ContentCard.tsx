@@ -35,7 +35,7 @@ export default function ContentCard({ item }: ContentCardProps) {
   const genres = item.genres.join(", ");
 
   return (
-    <Link to="/bookmarks/$id" params={{ id: item.id }}>
+    <Link to="/$id" params={{ id: item.id }}>
       <Card className="sm:w-[300px] rounded-xl mb-4 select-none animate-fade-in">
         <CardHeader className="p-2 sm:p-3">
           {loading && <Skeleton className="aspect-[8/12] w-full" />}

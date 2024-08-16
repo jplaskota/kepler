@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { getUser } from "../kinde";
 import { idSchema } from "../models/crud.model";
 import {
   type Movie,
@@ -10,10 +11,10 @@ import { fakeMovies } from "../services/fakeContent";
 import { getPostMovie } from "../utils/getFormattedContent";
 
 export const movieRoute = new Hono()
-  .get("/", (c) => {
+  .get("/", getUser, (c) => {
     return c.json(fakeMovies);
   })
-  .get("/id/:id", zValidator("param", idSchema), (c) => {
+  .get("/id/:id", getUser, zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
     const content = fakeMovies.find((content) => content.id === id) as Movie;
 
@@ -21,7 +22,7 @@ export const movieRoute = new Hono()
 
     return c.json(content);
   })
-  .post("/", zValidator("json", movieViewSchema), (c) => {
+  .post("/", getUser, zValidator("json", movieViewSchema), (c) => {
     const movie = c.req.valid("json");
 
     if (fakeMovies.some((c) => c.tmdb_id === movie.id))
@@ -36,7 +37,7 @@ export const movieRoute = new Hono()
 
     return c.json(newContent, 201);
   })
-  .delete("/id/:id", zValidator("param", idSchema), (c) => {
+  .delete("/id/:id", getUser, zValidator("param", idSchema), (c) => {
     const id = c.req.param("id");
     const index = fakeMovies.findIndex((content) => content.id === id);
 

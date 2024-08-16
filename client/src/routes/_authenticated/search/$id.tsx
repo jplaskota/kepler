@@ -7,7 +7,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback } from "react";
 
-export const Route = createFileRoute("/search/$id")({
+export const Route = createFileRoute("/_authenticated/search/$id")({
   validateSearch: mediaTypeSchema,
   component: Search,
 });

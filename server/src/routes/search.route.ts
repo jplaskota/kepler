@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
+import { getUser } from "../kinde";
 import {
   getFormattedMovie,
   getFormattedSeries,
@@ -18,24 +19,30 @@ const searchByIdSchema = z.object({
 });
 
 export const searchRoute = new Hono()
-  .get("/id/:id{[0-9]+}", zValidator("query", searchByIdSchema), async (c) => {
-    const id = c.req.param("id") as string;
-    const type = c.req.query("type") as "movie" | "tv";
+  .get(
+    "/id/:id{[0-9]+}",
+    getUser,
+    zValidator("query", searchByIdSchema),
+    async (c) => {
+      const id = c.req.param("id") as string;
+      const type = c.req.query("type") as "movie" | "tv";
 
-    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${api}`;
+      const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${api}`;
 
-    const results = await fetch(url).then(async (res) => {
-      if (!res.ok) throw new Error("Network response was not ok (Fetch by id)");
+      const results = await fetch(url).then(async (res) => {
+        if (!res.ok)
+          throw new Error("Network response was not ok (Fetch by id)");
 
-      const json = await res.json();
+        const json = await res.json();
 
-      if (type === "movie") return getFormattedMovie(json);
-      return getFormattedSeries(json as SeriesRaw);
-    });
+        if (type === "movie") return getFormattedMovie(json);
+        return getFormattedSeries(json as SeriesRaw);
+      });
 
-    return c.json(results);
-  })
-  .get("/title/:title", async (c) => {
+      return c.json(results);
+    }
+  )
+  .get("/title/:title", getUser, async (c) => {
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const movieRes = await fetch(
@@ -69,7 +76,7 @@ export const searchRoute = new Hono()
 
     return c.json(data);
   })
-  .get("/movie/title/:title", async (c) => {
+  .get("/movie/title/:title", getUser, async (c) => {
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const movieRes = await fetch(
@@ -90,7 +97,7 @@ export const searchRoute = new Hono()
 
     return c.json(moviesPrepared);
   })
-  .get("/series/title/:title", async (c) => {
+  .get("/series/title/:title", getUser, async (c) => {
     const searchName = c.req.param("title").split(" ").join("+") as string;
 
     const seriesRes = await fetch(
