@@ -14,7 +14,6 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedIdImport } from './routes/_authenticated/$id'
 import { Route as AuthenticatedSearchTitleImport } from './routes/_authenticated/search/$title'
 import { Route as AuthenticatedSearchIdImport } from './routes/_authenticated/search/$id'
@@ -33,11 +32,6 @@ const AuthenticatedRoute = AuthenticatedImport.update({
 
 const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   path: '/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
-const AuthenticatedProfileRoute = AuthenticatedProfileImport.update({
-  path: '/profile',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
@@ -81,13 +75,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIdImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
@@ -117,7 +104,6 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   AuthenticatedRoute: AuthenticatedRoute.addChildren({
     AuthenticatedIdRoute,
-    AuthenticatedProfileRoute,
     AuthenticatedIndexRoute,
     AuthenticatedSearchIdRoute,
     AuthenticatedSearchTitleRoute,
@@ -141,7 +127,6 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/$id",
-        "/_authenticated/profile",
         "/_authenticated/",
         "/_authenticated/search/$id",
         "/_authenticated/search/$title"
@@ -152,10 +137,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_authenticated/$id": {
       "filePath": "_authenticated/$id.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/profile": {
-      "filePath": "_authenticated/profile.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/": {
