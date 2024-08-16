@@ -1,10 +1,5 @@
 import { z } from "zod";
 
-const genreSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-});
-
 export const movieSearchSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -13,6 +8,11 @@ export const movieSearchSchema = z.object({
   poster_path: z.string(),
   vote_average: z.number(),
   media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
+});
+
+const genreSchema = z.object({
+  id: z.number(),
+  name: z.string(),
 });
 
 export const movieRawSchema = z.object({
@@ -24,12 +24,12 @@ export const movieRawSchema = z.object({
   overview: z.string(),
   homepage: z.string(),
   poster_path: z.string(),
-  popularity: z.number(),
-  vote_average: z.number(),
+  popularity: z.string(),
+  vote_average: z.string(),
 });
 
 export const movieSchema = z.object({
-  id: z.string().nanoid({ message: "Invalid id" }),
+  id: z.string().uuid({ message: "Invalid id" }),
   tmdb_id: z.string(),
   title: z.string().min(1, { message: "Title is required" }),
   runtime: z.number(),
@@ -38,10 +38,11 @@ export const movieSchema = z.object({
   overview: z.string(),
   homepage: z.string(),
   poster_path: z.string(),
-  popularity: z.number(),
-  vote_average: z.number(),
+  popularity: z.string(),
+  vote_average: z.string(),
   media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
-  added_date: z.number().positive({ message: "Invalid date" }),
+  added_date: z.date().optional(),
+  user_id: z.string().min(1, { message: "User id is required" }),
 });
 
 export const movieViewSchema = movieSchema
@@ -49,6 +50,7 @@ export const movieViewSchema = movieSchema
     id: true,
     tmdb_id: true,
     added_date: true,
+    user_id: true,
   })
   .extend({
     id: z.string().min(1, { message: "Id is required" }),

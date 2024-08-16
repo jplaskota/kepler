@@ -6,7 +6,7 @@ END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "movies_table" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"tmdb_id" text,
+	"tmdb_id" text NOT NULL,
 	"title" text NOT NULL,
 	"runtime" integer,
 	"release_date" text,
@@ -17,13 +17,13 @@ CREATE TABLE IF NOT EXISTS "movies_table" (
 	"popularity" integer,
 	"vote_average" integer,
 	"media_type" "media_type",
-	"added_date" timestamp,
+	"added_date" timestamp DEFAULT now() NOT NULL,
 	"user_id" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "seasons_table" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"series_id" uuid,
+	"series_id" uuid NOT NULL,
 	"air_date" text,
 	"episode_count" integer,
 	"name" text,

@@ -8,7 +8,18 @@ const seasonSchema = z.object({
   overview: z.string(),
   poster_path: z.string(),
   season_number: z.number(),
-  vote_average: z.number(),
+  vote_average: z.string(),
+});
+
+// Search by name from TMDB
+export const seriesSearchSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  first_air_date: z.string(),
+  popularity: z.string(),
+  poster_path: z.string(),
+  vote_average: z.string(),
+  media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
 });
 
 const createdBySchema = z.object({
@@ -21,17 +32,6 @@ const genreSchema = z.object({
   name: z.string(),
 });
 
-// Search by name from TMDB
-export const seriesSearchSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  first_air_date: z.string(),
-  popularity: z.number(),
-  poster_path: z.string(),
-  vote_average: z.number(),
-  media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
-});
-
 // Search by id from TMDB
 export const seriesRawSchema = z.object({
   id: z.string(),
@@ -41,17 +41,17 @@ export const seriesRawSchema = z.object({
   overview: z.string(),
   created_by: z.array(createdBySchema),
   homepage: z.string(),
-  popularity: z.number(),
+  popularity: z.string(),
   poster_path: z.string(),
   seasons: z.array(seasonSchema),
-  vote_average: z.number(),
+  vote_average: z.string(),
 });
 
 // My series schema
 export const seriesSchema = z.object({
-  id: z.string().nanoid({ message: "Invalid id" }),
+  id: z.string().uuid({ message: "Invalid id" }),
   tmdb_id: z.string().min(1, { message: "TMDB id is required" }),
-  name: z.string().min(1, { message: "Title is required" }),
+  title: z.string().min(1, { message: "Title is required" }),
   number_of_seasons: z.number(),
   number_of_episodes: z.number(),
   first_air_date: z.string(),
@@ -59,12 +59,13 @@ export const seriesSchema = z.object({
   overview: z.string(),
   created_by: z.array(z.string()),
   homepage: z.string(),
-  popularity: z.number(),
+  popularity: z.string(),
   poster_path: z.string(),
   seasons: z.array(seasonSchema),
-  vote_average: z.number(),
+  vote_average: z.string(),
   media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
-  added_date: z.number().positive({ message: "Invalid date" }),
+  added_date: z.date().optional(),
+  user_id: z.string().min(1, { message: "User id is required" }),
 });
 
 export const seriesViewSchema = seriesSchema
@@ -72,6 +73,7 @@ export const seriesViewSchema = seriesSchema
     id: true,
     tmdb_id: true,
     added_date: true,
+    user_id: true,
   })
   .extend({
     id: z.string().min(1, { message: "Id is required" }),
@@ -81,3 +83,5 @@ export type Series = z.infer<typeof seriesSchema>;
 export type SeriesSearch = z.infer<typeof seriesSearchSchema>;
 export type SeriesRaw = z.infer<typeof seriesRawSchema>;
 export type SeriesView = z.infer<typeof seriesViewSchema>;
+
+// numeric type in db need to be string to avoid precision loss

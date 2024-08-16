@@ -1,0 +1,1 @@
+ALTER TABLE "seasons_table" ALTER COLUMN "vote_average" SET DATA TYPE numeric(5, 3);

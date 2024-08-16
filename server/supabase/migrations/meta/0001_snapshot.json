@@ -1,6 +1,6 @@
 {
-  "id": "debf29f0-ff3f-44f8-af81-48b2df2e8c21",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "a49cf3a6-5043-471c-bf60-d5b71a91da01",
+  "prevId": "debf29f0-ff3f-44f8-af81-48b2df2e8c21",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -61,17 +61,17 @@
           "name": "poster_path",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "popularity": {
           "name": "popularity",
-          "type": "integer",
+          "type": "numeric(6, 3)",
           "primaryKey": false,
           "notNull": false
         },
         "vote_average": {
           "name": "vote_average",
-          "type": "integer",
+          "type": "numeric(5, 3)",
           "primaryKey": false,
           "notNull": false
         },
@@ -248,17 +248,17 @@
           "name": "poster_path",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "popularity": {
           "name": "popularity",
-          "type": "integer",
+          "type": "numeric(6, 3)",
           "primaryKey": false,
           "notNull": false
         },
         "vote_average": {
           "name": "vote_average",
-          "type": "integer",
+          "type": "numeric(5, 3)",
           "primaryKey": false,
           "notNull": false
         },
