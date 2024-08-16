@@ -29,7 +29,7 @@ export default function ContentPage({ item }: ContentPageProps) {
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
   // Determine the title and other properties based on the type
-  const title = isSeries ? (item as Series).name : (item as Movie).title,
+  const title = isSeries ? (item as Series).title : (item as Movie).title,
     releaseDate = isSeries
       ? (item as Series).first_air_date
       : (item as Movie).release_date,
@@ -105,7 +105,7 @@ export default function ContentPage({ item }: ContentPageProps) {
                 <div className="flex gap-2 text-md sm:text-xl font-montserrat">
                   <p>[ {releaseDate.split("-")[0]} ]</p>
                   <p>[ {additionalInfo} ]</p>
-                  <p>[ {voteAverage.toFixed(1)} ]</p>
+                  <p>[ {parseFloat(voteAverage).toFixed(1)} ]</p>
                 </div>
               </div>
               <Separator />

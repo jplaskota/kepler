@@ -21,6 +21,8 @@ export const postMovie = async (data: MovieView) => {
       json: {
         ...data,
         id: data.id.toString(),
+        vote_average: data.vote_average.toString(),
+        popularity: data.popularity.toString(),
       },
     })
     .then((res) => {

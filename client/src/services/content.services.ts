@@ -47,6 +47,8 @@ export const getContentById = async (id: string) => {
     })
     .then((res) => res.json());
 
+  console.log(results);
+
   return results;
 };
 

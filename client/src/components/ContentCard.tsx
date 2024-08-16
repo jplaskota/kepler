@@ -25,7 +25,7 @@ export default function ContentCard({ item }: ContentCardProps) {
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
   // Determine the title and other properties based on the type
-  const title = isSeries ? (item as Series).name : (item as Movie).title;
+  const title = isSeries ? (item as Series).title : (item as Movie).title;
   const releaseDate = isSeries
     ? (item as Series).first_air_date
     : (item as Movie).release_date;

@@ -21,6 +21,12 @@ export const postSeries = async (data: Series) => {
       json: {
         ...data,
         id: data.id.toString(),
+        vote_average: data.vote_average.toString(),
+        popularity: data.popularity.toString(),
+        seasons: data.seasons.map((season) => ({
+          ...season,
+          vote_average: season.vote_average.toString(),
+        })),
       },
     })
     .then((res) => {
