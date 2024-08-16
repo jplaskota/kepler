@@ -1,6 +1,8 @@
 import { zValidator } from "@hono/zod-validator";
+import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { z } from "zod";
+import { db } from "../db";
+import { seasonsTable, seriesTable } from "../db/schema/series.schema";
 import { getUser } from "../kinde";
 import { idSchema } from "../models/crud.model";
 import {
@@ -8,55 +10,90 @@ import {
   seriesSchema,
   seriesViewSchema,
 } from "../models/series.model";
-import { fakeSeries } from "../services/fakeContent";
 import { getPostSeries } from "../utils/getFormattedContent";
 
-const postSeriesSchema = seriesSchema
-  .omit({
-    tmdb_id: true,
-    added_date: true,
-  })
-  .extend({
-    id: z.string().min(1, { message: "id is required" }),
-  });
-
 export const seriesRoute = new Hono()
-  .get("/", getUser, (c) => {
-    return c.json(fakeSeries);
+  .get("/", getUser, async (c) => {
+    const userId = c.var.user.id;
+
+    const series = await db
+      .select()
+      .from(seriesTable)
+      .where(eq(seriesTable.user_id, userId));
+
+    if (!series.length) return c.notFound();
+
+    return c.json(series);
   })
-  .get("/id/:id", getUser, zValidator("param", idSchema), (c) => {
+  .get("/id/:id", getUser, zValidator("param", idSchema), async (c) => {
     const id = c.req.param("id");
-    const content = fakeSeries.find((content) => content.id === id) as Series;
+    const userId = c.var.user.id;
 
-    if (!content) return c.notFound();
+    const series = await db
+      .select()
+      .from(seriesTable)
+      .where(and(eq(seriesTable.user_id, userId), eq(seriesTable.id, id)));
 
-    return c.json(content);
+    if (!series.length) return c.notFound();
+
+    return c.json(series[0]);
   })
-  .post("/", getUser, zValidator("json", seriesViewSchema), (c) => {
+  .post("/", getUser, zValidator("json", seriesViewSchema), async (c) => {
     const series = c.req.valid("json");
+    const userId = c.var.user.id;
 
-    if (fakeSeries.some((c) => c.tmdb_id === series.id))
-      return c.text("Already exists", 409);
+    const existingContent = await db
+      .select()
+      .from(seriesTable)
+      .where(
+        and(eq(seriesTable.user_id, userId), eq(seriesTable.tmdb_id, series.id))
+      );
 
-    const newSeries: Series = getPostSeries(series);
+    if (existingContent.length) return c.text("Already exists", 409);
 
-    const parsedContent = seriesSchema.parse(newSeries);
-    if (!parsedContent) return c.json({ error: "Invalid content" }, 400);
+    const newContent: Series = getPostSeries(series, userId);
 
-    fakeSeries.push(newSeries);
+    const parsedContent = seriesSchema.parse(newContent) as Series;
+    if (!parsedContent) return c.json({ error: "Invalid content" }, 403);
 
-    return c.json(newSeries, 201);
+    const seasons = parsedContent.seasons.map((season) => {
+      return {
+        ...season,
+        series_id: parsedContent.id,
+      };
+    });
+
+    const results = db.transaction(async (trx) => {
+      const resultsSeries = await trx
+        .insert(seriesTable)
+        .values(parsedContent)
+        .returning();
+
+      const resultsSeasons = await trx
+        .insert(seasonsTable)
+        .values(seasons)
+        .returning();
+
+      return {
+        series: resultsSeries,
+        seasons: resultsSeasons,
+      };
+    });
+
+    return c.json(results);
   })
-  .delete("/id/:id", getUser, zValidator("param", idSchema), (c) => {
+  .delete("/id/:id", getUser, zValidator("param", idSchema), async (c) => {
     const id = c.req.param("id") as string;
-    const index = fakeSeries.findIndex(
-      (content) => content.id === id
-    ) as number;
+    const userId = c.var.user.id;
 
-    if (index === -1) return c.notFound();
+    const deleteSeries = await db
+      .delete(seriesTable)
+      .where(and(eq(seriesTable.user_id, userId), eq(seriesTable.id, id)))
+      .returning();
 
-    const deletedContent = fakeSeries.splice(index, 1)[0];
-    return c.json(deletedContent);
+    if (!deleteSeries.length) return c.notFound();
+
+    return c.json(deleteSeries);
   });
 
 //TODO tests

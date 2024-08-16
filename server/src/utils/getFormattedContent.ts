@@ -1,5 +1,4 @@
 import { pick, remove } from "lodash";
-import { nanoid } from "nanoid";
 import {
   movieRawSchema,
   movieSearchSchema,
@@ -44,16 +43,16 @@ export const getFormattedMovie = (json: any): MovieView => {
   return newMovie;
 };
 
-export const getPostMovie = (json: any): Movie => {
+export const getPostMovie = (json: any, userId: string): Movie => {
   if (!json) throw new Error("No data");
 
   const movie = json as MovieView;
 
   const newMovie: Movie = {
     ...movie,
-    id: nanoid(),
+    id: crypto.randomUUID(),
     tmdb_id: movie.id,
-    added_date: Date.now(),
+    user_id: userId,
   };
 
   return newMovie;
@@ -87,6 +86,7 @@ export const getFormattedSeries = (json: any): SeriesView => {
 
   const newSeries: SeriesView = {
     ...series,
+    title: series.name,
     number_of_episodes: series.seasons.reduce(
       (acc, season) => acc + season.episode_count,
       0
@@ -100,16 +100,16 @@ export const getFormattedSeries = (json: any): SeriesView => {
   return newSeries;
 };
 
-export const getPostSeries = (json: any): Series => {
+export const getPostSeries = (json: any, userId: string): Series => {
   if (!json) throw new Error("No data");
 
   const series = json as SeriesView;
 
   const newSeries: Series = {
     ...series,
-    id: nanoid(),
+    id: crypto.randomUUID(),
     tmdb_id: series.id,
-    added_date: Date.now(),
+    user_id: userId,
   };
 
   return newSeries;

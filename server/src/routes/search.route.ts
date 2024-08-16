@@ -8,8 +8,8 @@ import {
   getSearchMovie,
   getSearchSeries,
 } from "../utils/getFormattedContent";
-import type { Movie, MovieRaw, MovieSearch } from "./../models/movie.model";
-import type { Series, SeriesRaw, SeriesSearch } from "./../models/series.model";
+import type { MovieRaw, MovieSearch } from "./../models/movie.model";
+import type { SeriesRaw, SeriesSearch } from "./../models/series.model";
 
 const api = Bun.env.TMDB_API_KEY;
 const url = "https://api.themoviedb.org/3";
@@ -63,11 +63,13 @@ export const searchRoute = new Hono()
 
     const moviesPrepared: MovieSearch[] = movieRes.results
       .map((movie: MovieRaw) => getSearchMovie(movie))
-      .sort((a: MovieSearch, b: Movie) => b.popularity - a.popularity);
+      .sort((a: MovieSearch, b: MovieSearch) => +b.popularity - +a.popularity);
 
     const seriesPrepared: SeriesSearch[] = seriesRes.results
       .map((res: SeriesRaw) => getSearchSeries(res))
-      .sort((a: SeriesSearch, b: SeriesSearch) => b.popularity - a.popularity);
+      .sort(
+        (a: SeriesSearch, b: SeriesSearch) => +b.popularity - +a.popularity
+      );
 
     const data = {
       movies: moviesPrepared.slice(0, 6),
@@ -87,12 +89,12 @@ export const searchRoute = new Hono()
       return res.json();
     });
 
-    const moviesPrepared: Movie[] = movieRes.results
-      .map((movie: Movie) => ({
+    const moviesPrepared: MovieRaw[] = movieRes.results
+      .map((movie: MovieRaw) => ({
         ...movie,
         media_type: "movie",
       }))
-      .sort((a: Movie, b: Movie) => b.popularity - a.popularity)
+      .sort((a: MovieRaw, b: MovieRaw) => +b.popularity - +a.popularity)
       .splice(0, 5);
 
     return c.json(moviesPrepared);
@@ -110,7 +112,7 @@ export const searchRoute = new Hono()
 
     const seriesPrepared: SeriesRaw[] = seriesRes.results
       .map((series: SeriesRaw) => getSearchSeries(series))
-      .sort((a: SeriesRaw, b: SeriesRaw) => b.popularity - a.popularity)
+      .sort((a: SeriesRaw, b: SeriesRaw) => +b.popularity - +a.popularity)
       .splice(0, 5);
 
     return c.json(seriesPrepared);

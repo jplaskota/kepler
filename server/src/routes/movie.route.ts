@@ -1,5 +1,8 @@
 import { zValidator } from "@hono/zod-validator";
+import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
+import { db } from "../db";
+import { moviesTable } from "../db/schema/movie.schema";
 import { getUser } from "../kinde";
 import { idSchema } from "../models/crud.model";
 import {
@@ -7,44 +10,68 @@ import {
   movieSchema,
   movieViewSchema,
 } from "../models/movie.model";
-import { fakeMovies } from "../services/fakeContent";
 import { getPostMovie } from "../utils/getFormattedContent";
 
 export const movieRoute = new Hono()
-  .get("/", getUser, (c) => {
-    return c.json(fakeMovies);
+  .get("/", getUser, async (c) => {
+    const userId = c.var.user.id;
+
+    const movies = await db
+      .select()
+      .from(moviesTable)
+      .where(eq(moviesTable.user_id, userId));
+
+    if (!movies.length) return c.notFound();
+
+    return c.json(movies);
   })
-  .get("/id/:id", getUser, zValidator("param", idSchema), (c) => {
+  .get("/id/:id", getUser, zValidator("param", idSchema), async (c) => {
     const id = c.req.param("id");
-    const content = fakeMovies.find((content) => content.id === id) as Movie;
+    const userId = c.var.user.id;
 
-    if (!content) return c.notFound();
+    const movie = await db
+      .select()
+      .from(moviesTable)
+      .where(and(eq(moviesTable.user_id, userId), eq(moviesTable.tmdb_id, id)));
 
-    return c.json(content);
+    if (!movie.length) return c.notFound();
+
+    return c.json(movie);
   })
-  .post("/", getUser, zValidator("json", movieViewSchema), (c) => {
+  .post("/", getUser, zValidator("json", movieViewSchema), async (c) => {
     const movie = c.req.valid("json");
+    const userId = c.var.user.id;
 
-    if (fakeMovies.some((c) => c.tmdb_id === movie.id))
-      return c.text("Already exists", 409);
+    const existingContent = await db
+      .select()
+      .from(moviesTable)
+      .where(
+        and(eq(moviesTable.user_id, userId), eq(moviesTable.tmdb_id, movie.id))
+      );
 
-    const newContent: Movie = getPostMovie(movie);
+    if (existingContent.length) return c.text("Already exists", 409);
+
+    const newContent: Movie = getPostMovie(movie, userId);
 
     const parsedContent = movieSchema.parse(newContent);
     if (!parsedContent) return c.json({ error: "Invalid content" }, 400);
 
-    fakeMovies.push(newContent);
+    const result = await db.insert(moviesTable).values([newContent]);
 
-    return c.json(newContent, 201);
+    return c.json(result, 201);
   })
-  .delete("/id/:id", getUser, zValidator("param", idSchema), (c) => {
+  .delete("/id/:id", getUser, zValidator("param", idSchema), async (c) => {
     const id = c.req.param("id");
-    const index = fakeMovies.findIndex((content) => content.id === id);
+    const userId = c.var.user.id;
 
-    if (index === -1) return c.notFound();
+    const deleteMovie = await db
+      .delete(moviesTable)
+      .where(and(eq(moviesTable.user_id, userId), eq(moviesTable.id, id)))
+      .returning();
 
-    const deletedContent = fakeMovies.splice(index, 1)[0];
-    return c.json(deletedContent);
+    if (!deleteMovie.length) return c.notFound();
+
+    return c.json(deleteMovie);
   });
 
 //TODO tests
