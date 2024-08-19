@@ -10,9 +10,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { userQueryOptions } from "@/services/auth.services";
+import {
+  QuestionMarkCircleIcon as HelpIcon,
+  HomeIcon,
+  ArrowLeftEndOnRectangleIcon as Logout,
+  Bars3Icon as MenuIcon,
+} from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "@tanstack/react-router";
-import { FiHelpCircle, FiHome, FiLogOut, FiMenu } from "react-icons/fi";
 import { Separator } from "./ui/separator";
 
 export default function Menu() {
@@ -46,7 +51,7 @@ export default function Menu() {
   const LogoutBtn = (
     <a href="/api/logout">
       <Button variant="secondary" className="flex gap-2">
-        <FiLogOut />
+        <Logout className="w-4 h-4" />
         <p>Sign out</p>
       </Button>
     </a>
@@ -67,7 +72,7 @@ export default function Menu() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant={"outline"} size={"icon"}>
-          <FiMenu />
+          <MenuIcon className="w-4 h-4" />
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col justify-between font-thin">
@@ -79,7 +84,7 @@ export default function Menu() {
               disabled={location.pathname === "/"}
               className="flex items-center gap-2 hover:text-neutral-50 transition-colors"
             >
-              <FiHome />
+              <HomeIcon className="w-4 h-4" />
               <p className="text-xl">Home</p>
             </Link>
             <Link
@@ -87,7 +92,7 @@ export default function Menu() {
               disabled={location.pathname === "/about"}
               className="flex items-center gap-2 hover:text-neutral-50 transition-colors"
             >
-              <FiHelpCircle />
+              <HelpIcon className="w-4 h-4" />
               <p className="text-xl">About</p>
             </Link>
           </SheetDescription>

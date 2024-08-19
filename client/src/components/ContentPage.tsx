@@ -1,11 +1,11 @@
 import { deleteMovieById, postMovie } from "@/services/movie.services";
 import { deleteSeriesById, postSeries } from "@/services/series.services";
 import { cn } from "@/utils/utils";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { Movie } from "@server-models/movie.model";
 import type { Series } from "@server-models/series.model";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { FiPlus, FiTrash } from "react-icons/fi";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -88,12 +88,12 @@ export default function ContentPage({ item }: ContentPageProps) {
             <nav className="flex gap-2 items-center sm:gap-4">
               <Button>Archive</Button>
               <Button variant="destructive" size="icon" onClick={handleDelete}>
-                <FiTrash />
+                <TrashIcon className="w-4 h-4" />
               </Button>
             </nav>
           ) : (
             <Button size="icon" onClick={handleAdd}>
-              <FiPlus />
+              <PlusIcon className="w-4 h-4" />
             </Button>
           )}
           <article>

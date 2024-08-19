@@ -1,4 +1,8 @@
-import { FiRotateCw, FiSearch, FiX } from "react-icons/fi";
+import {
+  XMarkIcon as CloseIcon,
+  ArrowPathIcon as RotateIcon,
+  MagnifyingGlassIcon as SearchIcon,
+} from "@heroicons/react/24/outline";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
@@ -23,9 +27,9 @@ export default function SearchBar({
       <Card className="w-full rounded-lg flex items-center gap-2">
         <div className="w-full flex items-center">
           {isLoading ? (
-            <FiRotateCw className="ml-3 animate-spin" />
+            <RotateIcon className="ml-3 animate-spin w-4 h-4" />
           ) : (
-            <FiSearch className="ml-3" />
+            <SearchIcon className="ml-3 w-4 h-4" />
           )}
           <Input
             name="title"
@@ -37,7 +41,7 @@ export default function SearchBar({
           />
           <div>
             <Button onClick={() => onClear()} variant="secondary" size="icon">
-              <FiX />
+              <CloseIcon className="w-4 h-4" />
             </Button>
           </div>
         </div>

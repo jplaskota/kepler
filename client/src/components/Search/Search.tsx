@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FiSearch } from "react-icons/fi";
+import { MagnifyingGlassIcon as SearchIcon } from "@heroicons/react/24/outline";
 
 import { useEffect, useState } from "react";
 import SearchModal from "./SearchModal";
@@ -27,7 +27,7 @@ export function Search() {
   return (
     <>
       <Button variant={"outline"} size={"icon"} onClick={() => setOpen(true)}>
-        <FiSearch />
+        <SearchIcon className="w-4 h-4" />
       </Button>
       {open && <SearchModal onClose={() => setOpen(false)} />}
     </>
