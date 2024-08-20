@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { db } from "../db";
-import { moviesTable } from "../db/schema/movie.schema";
+import { InsertMoviesSchema, moviesTable } from "../db/schema/movie.schema";
 import { getUser } from "../kinde";
 import { idSchema } from "../models/crud.model";
 import {
@@ -38,7 +38,7 @@ export const movieRoute = new Hono()
 
     return c.json(movie);
   })
-  .post("/", getUser, zValidator("json", movieViewSchema), async (c) => {
+  .post("/", getUser, zValidator("json", InsertMoviesSchema), async (c) => {
     const movie = c.req.valid("json");
     const userId = c.var.user.id;
 
@@ -46,7 +46,10 @@ export const movieRoute = new Hono()
       .select()
       .from(moviesTable)
       .where(
-        and(eq(moviesTable.user_id, userId), eq(moviesTable.tmdb_id, movie.id))
+        and(
+          eq(moviesTable.user_id, userId),
+          eq(moviesTable.tmdb_id, movie.tmdb_id)
+        )
       );
 
     if (existingContent.length) return c.text("Already exists", 409);
@@ -74,5 +77,5 @@ export const movieRoute = new Hono()
     return c.json(deleteMovie);
   });
 
-//TODO tests
+// TODO tests
 // TODO add pagination option

@@ -7,6 +7,8 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const mediaEnum = pgEnum("media_type", ["movie", "tv"]);
 
@@ -27,5 +29,9 @@ export const moviesTable = pgTable("movies_table", {
   user_id: text("user_id").notNull(),
 });
 
-export type InsertMovies = typeof moviesTable.$inferInsert;
-export type SelectMovies = typeof moviesTable.$inferSelect;
+export const InsertMoviesSchema = createInsertSchema(moviesTable, {
+  genres: z.array(z.string()),
+});
+export const SelectMoviesSchema = createSelectSchema(moviesTable, {
+  genres: z.array(z.string()),
+});

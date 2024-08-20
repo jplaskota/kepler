@@ -8,6 +8,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 const seriesEnum = pgEnum("media_type", ["movie", "tv"]);
 
@@ -46,8 +47,8 @@ export const seasonsTable = pgTable("seasons_table", {
   vote_average: numeric("vote_average", { precision: 5, scale: 3 }),
 });
 
-export type InsertSeries = typeof seriesTable.$inferInsert;
-export type SelectSeasons = typeof seasonsTable.$inferSelect;
+export const InsertSeries = createInsertSchema(seriesTable);
+export const SelectSeries = createSelectSchema(seriesTable);
 
-export type InsertSeasons = typeof seasonsTable.$inferInsert;
-export type SelectSeries = typeof seriesTable.$inferSelect;
+export const SelectSeasons = createSelectSchema(seasonsTable);
+export const InsertSeasons = createInsertSchema(seasonsTable);
