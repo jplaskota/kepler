@@ -1,4 +1,3 @@
-// import { userQueryOptions } from "@/services/auth.services";
 import { userQueryOptions } from "@/services/auth.services";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
