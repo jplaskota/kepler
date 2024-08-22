@@ -9,12 +9,15 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
+// Define the enum for media types
 const seriesEnum = pgEnum("media_type", ["movie", "tv"]);
 
+// Create the series table
 export const seriesTable = pgTable("series_table", {
   id: uuid("id").primaryKey().defaultRandom(),
-  tmdb_id: text("tmdb_id").notNull(),
+  tmdb_id: text("tmdb_id").notNull().unique(), // Add unique constraint
   title: text("title").notNull(),
   number_of_seasons: integer("number_of_seasons"),
   number_of_episodes: integer("number_of_episodes"),
@@ -31,11 +34,12 @@ export const seriesTable = pgTable("series_table", {
   user_id: text("user_id").notNull(),
 });
 
+// Create the seasons table
 export const seasonsTable = pgTable("seasons_table", {
   id: serial("id").primaryKey(),
-  series_id: uuid("series_id")
+  series_id: text("series_id")
     .notNull()
-    .references(() => seriesTable.id, {
+    .references(() => seriesTable.tmdb_id, {
       onDelete: "cascade",
     }),
   air_date: text("air_date"),
@@ -47,8 +51,12 @@ export const seasonsTable = pgTable("seasons_table", {
   vote_average: numeric("vote_average", { precision: 5, scale: 3 }),
 });
 
-export const InsertSeries = createInsertSchema(seriesTable);
-export const SelectSeries = createSelectSchema(seriesTable);
+// Create the insert and select schemas for series and seasons
+export const InsertSeriesSchema = createInsertSchema(seriesTable, {
+  genres: z.array(z.string()),
+  created_by: z.array(z.string()),
+});
+export const SelectSeriesSchema = createSelectSchema(seriesTable);
 
-export const SelectSeasons = createSelectSchema(seasonsTable);
-export const InsertSeasons = createInsertSchema(seasonsTable);
+export const SelectSeasonsSchema = createSelectSchema(seasonsTable);
+export const InsertSeasonsSchema = createInsertSchema(seasonsTable);
