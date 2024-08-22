@@ -1,4 +1,5 @@
 import { type Series } from "@server-models/series.model";
+import { omit } from "lodash";
 import { series } from "./api.services";
 
 export const getSeriesById = async (id: string) => {
@@ -15,16 +16,20 @@ export const getSeriesById = async (id: string) => {
   return results;
 };
 
-export const postSeries = async (data: Series) => {
+export const postSeries = async (data: Series, userId: string) => {
   const results = await series
     .$post({
       json: {
-        ...data,
-        id: data.id.toString(),
-        vote_average: data.vote_average.toString(),
-        popularity: data.popularity.toString(),
+        series: {
+          ...omit(data, ["id"]),
+          tmdb_id: data.id.toString(),
+          vote_average: data.vote_average.toString(),
+          popularity: data.popularity.toString(),
+          user_id: userId,
+        },
         seasons: data.seasons.map((season) => ({
           ...season,
+          series_id: data.id.toString(),
           vote_average: season.vote_average.toString(),
         })),
       },
