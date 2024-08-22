@@ -5,12 +5,6 @@ import { db } from "../db";
 import { InsertMoviesSchema, moviesTable } from "../db/schema/movie.schema";
 import { getUser } from "../kinde";
 import { idSchema } from "../models/crud.model";
-import {
-  type Movie,
-  movieSchema,
-  movieViewSchema,
-} from "../models/movie.model";
-import { getPostMovie } from "../utils/getFormattedContent";
 
 export const movieRoute = new Hono()
   .get("/", getUser, async (c) => {
@@ -54,12 +48,7 @@ export const movieRoute = new Hono()
 
     if (existingContent.length) return c.text("Already exists", 409);
 
-    const newContent: Movie = getPostMovie(movie, userId);
-
-    const parsedContent = movieSchema.parse(newContent);
-    if (!parsedContent) return c.json({ error: "Invalid content" }, 400);
-
-    const result = await db.insert(moviesTable).values([newContent]);
+    const result = await db.insert(moviesTable).values([movie]);
 
     return c.json(result, 201);
   })
