@@ -1,9 +1,11 @@
+import { userQueryOptions } from "@/services/auth.services";
 import { deleteMovieById, postMovie } from "@/services/movie.services";
 import { deleteSeriesById, postSeries } from "@/services/series.services";
 import { cn } from "@/utils/utils";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { Movie } from "@server-models/movie.model";
 import type { Series } from "@server-models/series.model";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,6 +21,7 @@ interface ContentPageProps {
 export default function ContentPage({ item }: ContentPageProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate({ from: "/search/$id" });
+  const { data } = useQuery(userQueryOptions);
 
   const isBookmarked = !!item.tmdb_id;
 
@@ -44,16 +47,20 @@ export default function ContentPage({ item }: ContentPageProps) {
     homepage = isSeries ? (item as Series).homepage : (item as Movie).homepage;
 
   const handleAdd = () => {
-    if (item.media_type === "movie") {
-      postMovie(item as Movie).then(() => {
-        toast.success("Movie added to your list");
-        navigate({ to: "/" });
-      });
+    if (data) {
+      if (item.media_type === "movie") {
+        postMovie(item as Movie, data.user.id).then(() => {
+          toast.success("Movie added to your list");
+          navigate({ to: "/" });
+        });
+      } else {
+        postSeries(item as Series, data.user.id).then(() => {
+          toast.success("Series added to your list");
+          navigate({ to: "/" });
+        });
+      }
     } else {
-      postSeries(item as Series).then(() => {
-        toast.success("Series added to your list");
-        navigate({ to: "/" });
-      });
+      toast.error("You must be logged in to add to your list");
     }
   };
 
