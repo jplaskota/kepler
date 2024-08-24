@@ -2,7 +2,6 @@ import { pick, remove } from "lodash";
 import {
   movieRawSchema,
   movieSearchSchema,
-  type Movie,
   type MovieRaw,
   type MovieSearch,
   type MovieView,
@@ -10,7 +9,6 @@ import {
 import {
   seriesRawSchema,
   seriesSearchSchema,
-  type Series,
   type SeriesRaw,
   type SeriesSearch,
   type SeriesView,
@@ -38,21 +36,6 @@ export const getFormattedMovie = (json: any): MovieView => {
     ...movie,
     genres: movie.genres.map((genre) => genre.name),
     media_type: "movie",
-  };
-
-  return newMovie;
-};
-
-export const getPostMovie = (json: any, userId: string): Movie => {
-  if (!json) throw new Error("No data");
-
-  const movie = json as MovieView;
-
-  const newMovie: Movie = {
-    ...movie,
-    id: crypto.randomUUID(),
-    tmdb_id: movie.id,
-    user_id: userId,
   };
 
   return newMovie;
@@ -95,21 +78,6 @@ export const getFormattedSeries = (json: any): SeriesView => {
     genres: series.genres.map((genre) => genre.name),
     created_by: series.created_by.map((creator) => creator.name),
     media_type: "tv",
-  };
-
-  return newSeries;
-};
-
-export const getPostSeries = (json: any, userId: string): Series => {
-  if (!json) throw new Error("No data");
-
-  const series = json as SeriesView;
-
-  const newSeries: Series = {
-    ...series,
-    id: crypto.randomUUID(),
-    tmdb_id: series.id,
-    user_id: userId,
   };
 
   return newSeries;
