@@ -25,10 +25,7 @@ export default function Menu() {
 
   const { data } = useQuery(userQueryOptions);
 
-  const fallback =
-    data &&
-    data?.user.given_name[0].toUpperCase() +
-      data?.user.family_name[0].toUpperCase();
+  const fallback = data?.user?.given_name?.[0]?.toUpperCase();
 
   const profile = (
     <>
