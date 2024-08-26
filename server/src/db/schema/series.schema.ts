@@ -27,7 +27,7 @@ export const seriesTable = pgTable("series_table", {
   created_by: text("created_by").array(),
   homepage: text("homepage"),
   poster_path: text("poster_path").notNull(),
-  popularity: numeric("popularity", { precision: 6, scale: 3 }),
+  popularity: numeric("popularity", { precision: 7, scale: 2 }),
   vote_average: numeric("vote_average", { precision: 5, scale: 3 }),
   media_type: seriesEnum("media_type"),
   added_date: timestamp("added_date").notNull().defaultNow(),

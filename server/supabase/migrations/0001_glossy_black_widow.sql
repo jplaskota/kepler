@@ -1,0 +1,1 @@
+ALTER TABLE "movies_table" ALTER COLUMN "popularity" SET DATA TYPE numeric(7, 2);

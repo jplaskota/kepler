@@ -1,0 +1,1 @@
+ALTER TABLE "series_table" ALTER COLUMN "popularity" SET DATA TYPE numeric(7, 2);
