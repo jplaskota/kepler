@@ -1,6 +1,7 @@
+import { queryOptions } from "@tanstack/react-query";
 import { content, movie, series } from "./api.services";
 
-export const getContent = async (type?: string) => {
+const getContentFn = async (type?: string) => {
   if (type === "movie") {
     const results = await movie
       .$get()
@@ -35,6 +36,13 @@ export const getContent = async (type?: string) => {
 
   return results;
 };
+
+export const getContent = (type: string) =>
+  queryOptions({
+    queryKey: ["get-content", type],
+    queryFn: () => getContentFn(type),
+    staleTime: 1000 * 60 * 10,
+  });
 
 export const getContentById = async (id: string) => {
   const results = await content.id[":id"]

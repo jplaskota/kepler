@@ -2,8 +2,8 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import CategoryProvider from "@/store/category.context";
 import type { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 // need to be type to avoid error
@@ -24,7 +24,7 @@ function Root() {
       </CategoryProvider>
       <Toaster />
       {/* <TanStackRouterDevtools /> */}
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </div>
   );
 }

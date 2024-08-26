@@ -2,7 +2,7 @@ import type { Movie } from "@server-models/movie.model";
 import type { Series } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { getContent } from "../services/content.services";
 import { CategoryContext } from "../store/category.context";
@@ -13,16 +13,7 @@ export default function ContentList() {
   const { category } = useContext(CategoryContext);
   const [cols, setCols] = useState<number>(2);
 
-  const queryFn = useCallback(() => getContent(category), [category]);
-
-  const {
-    isLoading,
-    isError,
-    data: content,
-  } = useQuery({
-    queryKey: ["content", { category }],
-    queryFn,
-  });
+  const { isLoading, isError, data: content } = useQuery(getContent(category));
 
   useEffect(() => {
     const calculateCols = () => {
