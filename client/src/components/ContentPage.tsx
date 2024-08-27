@@ -5,7 +5,7 @@ import { cn } from "@/utils/utils";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { Movie } from "@server-models/movie.model";
 import type { Series } from "@server-models/series.model";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -22,6 +22,9 @@ export default function ContentPage({ item }: ContentPageProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate({ from: "/search/$id" });
   const { data } = useQuery(userQueryOptions);
+
+  // FIXME from context does not work
+  const queryClient = useQueryClient();
 
   const isBookmarked = !!item.tmdb_id;
 
@@ -51,11 +54,17 @@ export default function ContentPage({ item }: ContentPageProps) {
       if (item.media_type === "movie") {
         postMovie(item as Movie, data.user.id).then(() => {
           toast.success("Movie added to your list");
+          queryClient.refetchQueries({
+            queryKey: ["get-content"],
+          });
           navigate({ to: "/" });
         });
       } else {
         postSeries(item as Series, data.user.id).then(() => {
           toast.success("Series added to your list");
+          queryClient.refetchQueries({
+            queryKey: ["get-content"],
+          });
           navigate({ to: "/" });
         });
       }
@@ -68,11 +77,17 @@ export default function ContentPage({ item }: ContentPageProps) {
     if (item.media_type === "movie") {
       deleteMovieById(item.id).then(() => {
         toast.success("Movie deleted");
+        queryClient.refetchQueries({
+          queryKey: ["get-content"],
+        });
         navigate({ to: "/" });
       });
     } else {
       deleteSeriesById(item.id).then(() => {
         toast.success("Series deleted");
+        queryClient.refetchQueries({
+          queryKey: ["get-content"],
+        });
         navigate({ to: "/" });
       });
     }

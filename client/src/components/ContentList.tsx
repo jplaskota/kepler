@@ -13,7 +13,15 @@ export default function ContentList() {
   const { category } = useContext(CategoryContext);
   const [cols, setCols] = useState<number>(2);
 
-  const { isLoading, isError, data: content } = useQuery(getContent(category));
+  const {
+    isLoading,
+    isError,
+    data: content,
+  } = useQuery({
+    queryKey: ["get-content", category],
+    queryFn: () => getContent(category),
+    staleTime: 1000 * 60 * 10,
+  });
 
   useEffect(() => {
     const calculateCols = () => {
