@@ -54,17 +54,6 @@ export default function Menu() {
     </a>
   );
 
-  const LoginBtn = (
-    <div className="flex gap-2">
-      <a href="/api/login">
-        <Button variant="ghost">Sign in</Button>
-      </a>
-      <a href="/api/register">
-        <Button variant="secondary">Sign up</Button>
-      </a>
-    </div>
-  );
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -94,7 +83,7 @@ export default function Menu() {
             </Link>
           </SheetDescription>
         </SheetHeader>
-        <SheetFooter>{data ? LogoutBtn : LoginBtn}</SheetFooter>
+        <SheetFooter>{data && LogoutBtn}</SheetFooter>
       </SheetContent>
     </Sheet>
   );

@@ -22,9 +22,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const [content, setContent] = useState<typeof data>();
-  const [dataStatus, setDataStatus] = useState<"success" | "noFound" | null>(
-    null
-  );
+  const [searchStatus, setSearchStatus] = useState<boolean>(true);
 
   // Get the portal root element
   const portalRoot = document.getElementById("portal")!;
@@ -64,11 +62,11 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   useEffect(() => {
     // Set the data status
     if (data && (data.movies.length > 0 || data.series.length > 0)) {
-      setDataStatus("success");
+      setSearchStatus(true);
       setContent(data);
     } else {
       if (data) {
-        setDataStatus("noFound");
+        setSearchStatus(false);
       }
     }
   }, [data]);
@@ -88,10 +86,10 @@ export default function SearchModal({ onClose }: SearchModalProps) {
           onClose={onClose}
           isLoading={isLoading}
         />
-        {dataStatus === "success" && content && (
+        {content && searchStatus && (
           <SearchResult results={content} onClose={onClose} />
         )}
-        {dataStatus === "noFound" && noResults}
+        {!searchStatus && noResults}
       </Card>
     </div>,
     portalRoot

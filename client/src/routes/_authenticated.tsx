@@ -27,9 +27,8 @@ function Component() {
 
 function Login() {
   return (
-    <div>
-      You have to login <br />
-      <a href="/api/login">Login!</a>
-    </div>
+    <p>
+      You need to be logged in <br />
+    </p>
   );
 }
