@@ -9,9 +9,10 @@ interface SearchResultProps {
     movies: MovieSearch[];
     series: SeriesSearch[];
   };
+  onClose: () => void;
 }
 
-export default function SearchResult({ results }: SearchResultProps) {
+export default function SearchResult({ results, onClose }: SearchResultProps) {
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   // Scroll to the top of the search results
@@ -25,12 +26,12 @@ export default function SearchResult({ results }: SearchResultProps) {
 
   // Construct movies
   const movies = results.movies.map((movie) => (
-    <SearchItemCard key={movie.id} item={movie} />
+    <SearchItemCard key={movie.id} item={movie} onClose={onClose} />
   ));
 
   // Construct series
   const series = results.series.map((series) => (
-    <SearchItemCard key={series.id} item={series} />
+    <SearchItemCard key={series.id} item={series} onClose={onClose} />
   ));
 
   return (

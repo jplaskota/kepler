@@ -2,7 +2,7 @@ import { Card, CardDescription } from "@/components/ui/card";
 import { searchByName } from "@/services/search.services";
 import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { toast } from "sonner";
 import SearchBar from "./SearchBar";
@@ -19,7 +19,6 @@ const noResults = (
 );
 
 export default function SearchModal({ onClose }: SearchModalProps) {
-  const searchContainerRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const [content, setContent] = useState<typeof data>();
@@ -63,14 +62,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
 
   // Handle data changes and scroll to the top of the search results
   useEffect(() => {
-    // Scroll to the top of the search results
-    if (searchContainerRef.current) {
-      searchContainerRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-
     // Set the data status
     if (data && (data.movies.length > 0 || data.series.length > 0)) {
       setDataStatus("success");
@@ -94,12 +85,11 @@ export default function SearchModal({ onClose }: SearchModalProps) {
         <SearchBar
           changeHandler={handleInputValueChange}
           inputValue={inputValue}
-          onClear={() => setInputValue("")}
           onClose={onClose}
           isLoading={isLoading}
         />
         {dataStatus === "success" && content && (
-          <SearchResult results={content} />
+          <SearchResult results={content} onClose={onClose} />
         )}
         {dataStatus === "noFound" && noResults}
       </Card>

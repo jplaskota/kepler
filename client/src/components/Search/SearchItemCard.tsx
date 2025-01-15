@@ -13,9 +13,10 @@ import { Skeleton } from "../ui/skeleton";
 
 interface MovieCardProps {
   item: MovieSearch | SeriesSearch;
+  onClose: () => void;
 }
 
-export default function SearchItemCard({ item }: MovieCardProps) {
+export default function SearchItemCard({ item, onClose }: MovieCardProps) {
   const [loading, setLoading] = useState<boolean>(true);
 
   // Check if the item is a Series or a Movie
@@ -40,7 +41,7 @@ export default function SearchItemCard({ item }: MovieCardProps) {
         mediaType: item.media_type,
       }}
     >
-      <Card className="select-none">
+      <Card className="select-none" onClick={() => onClose()}>
         <CardHeader className="p-2 sm:p-4">
           {loading && <Skeleton className="aspect-[8/12] w-full" />}
           <img

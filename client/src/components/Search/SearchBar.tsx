@@ -11,7 +11,6 @@ interface SearchBarProps {
   changeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   inputValue: string;
   onClose: () => void;
-  onClear: () => void;
   isLoading: boolean;
 }
 
@@ -19,7 +18,6 @@ export default function SearchBar({
   changeHandler,
   inputValue,
   onClose,
-  onClear,
   isLoading,
 }: SearchBarProps) {
   return (
@@ -40,7 +38,7 @@ export default function SearchBar({
             autoFocus
           />
           <div>
-            <Button onClick={() => onClear()} variant="secondary" size="icon">
+            <Button onClick={() => onClose()} variant="secondary" size="icon">
               <CloseIcon className="w-4 h-4" />
             </Button>
           </div>
