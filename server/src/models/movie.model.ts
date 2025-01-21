@@ -1,62 +1,69 @@
 import { z } from "zod";
 
-export const movieSearchSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  release_date: z.string(),
-  popularity: z.number(),
-  poster_path: z.string(),
-  vote_average: z.number(),
-  media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
+const actorSchema = z.object({
+  id: z.string().nonempty({ message: "Invalid actor id" }),
+  original_name: z.string(),
+  character: z.string(),
+  profile_path: z.string(),
+  order: z.number(),
 });
 
-const genreSchema = z.object({
+export const MovieDetailedSchema = z.object({
+  _id: z.string().uuid({ message: "Invalid movie id" }).optional(),
+  id: z.string().nonempty({ message: "Invalid tmdb id" }),
+  imdb_id: z.string().nonempty({ message: "Invalid imdb id" }),
+  title: z.string().min(1, { message: "Title is required" }),
+  release_date: z.string(),
+  runtime: z.number(),
+  director: z.string(), // * OMDB
+  origin_country: z.array(z.string()),
+  genres: z.array(z.string()),
+  actors: z.array(actorSchema),
+  overview: z.string(),
+  poster_path: z.string(),
+  backdrop_path: z.string(),
+  imdb_rating: z.string(), // * OMDB
+  metascore: z.string(), // * OMDB
+  rotten_tomatoes: z.string(), // * OMDB
+  vote_average: z.number(),
+  popularity: z.number(),
+  added_date: z.date().optional(),
+  media_type: z.enum(["movie", "series"], { message: "Invalid media type" }),
+});
+
+const genresSchema = z.object({
   id: z.number(),
   name: z.string(),
 });
 
-export const movieRawSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  runtime: z.number(),
-  release_date: z.string(),
-  genres: z.array(genreSchema),
-  overview: z.string(),
-  homepage: z.string(),
-  poster_path: z.string(),
-  popularity: z.string(),
-  vote_average: z.string(),
+export const MovieRawDetailedSchema = MovieDetailedSchema.omit({
+  genres: true,
+}).extend({
+  genres: z.array(genresSchema),
 });
 
-export const movieSchema = z.object({
-  id: z.string().uuid({ message: "Invalid id" }),
-  tmdb_id: z.string(),
-  title: z.string().min(1, { message: "Title is required" }),
-  runtime: z.number(),
-  release_date: z.string(),
-  genres: z.array(z.string()),
-  overview: z.string(),
-  homepage: z.string(),
-  poster_path: z.string(),
-  popularity: z.string(),
-  vote_average: z.string(),
-  media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
-  added_date: z.date().optional(),
-  user_id: z.string().min(1, { message: "User id is required" }),
+export const MovieCardSchema = MovieDetailedSchema.pick({
+  _id: true,
+  id: true,
+  imdb_id: true,
+  title: true,
+  runtime: true,
+  release_date: true,
+  genres: true,
+  poster_path: true,
+  vote_average: true,
+  popularity: true,
+  added_date: true,
+  media_type: true,
 });
 
-export const movieViewSchema = movieSchema
-  .omit({
-    id: true,
-    tmdb_id: true,
-    added_date: true,
-    user_id: true,
-  })
-  .extend({
-    id: z.string().min(1, { message: "Id is required" }),
-  });
+export const MovieRawCardSchema = MovieCardSchema.omit({
+  genres: true,
+}).extend({
+  genre_ids: z.array(z.number()),
+});
 
-export type Movie = z.infer<typeof movieSchema>;
-export type MovieSearch = z.infer<typeof movieSearchSchema>;
-export type MovieRaw = z.infer<typeof movieRawSchema>;
-export type MovieView = z.infer<typeof movieViewSchema>;
+export type TMovieDetailed = z.infer<typeof MovieDetailedSchema>;
+export type TMovieRawDetailed = z.infer<typeof MovieRawDetailedSchema>;
+export type TMovieCard = z.infer<typeof MovieCardSchema>;
+export type TMovieRawCard = z.infer<typeof MovieRawCardSchema>;
