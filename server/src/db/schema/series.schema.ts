@@ -7,7 +7,8 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 const mediaEnum = pgEnum("media_type", ["movie", "tv"]);
 
@@ -26,7 +27,7 @@ export const Series = pgTable(
     vote_average: integer("vote_average").notNull(),
     popularity: integer("popularity").notNull(),
     added_date: timestamp("added_date").notNull().defaultNow(),
-    media_type: mediaEnum("media_type"),
+    media_type: mediaEnum("media_type").notNull().default("tv"),
     user_id: text("user_id").notNull(),
   },
   (series) => {
@@ -36,5 +37,7 @@ export const Series = pgTable(
   }
 );
 
-export const insertMediaSchema = createInsertSchema(Series);
-export const selectMediaSchema = createSelectSchema(Series);
+export const insertSeriesSchema = createInsertSchema(Series, {
+  genres: z.array(z.string()),
+});
+
