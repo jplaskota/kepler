@@ -2,7 +2,6 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import { logger } from "hono/logger";
 import { authRoute } from "./routes/auth.route";
-import { contentRoute } from "./routes/content.route";
 import { movieRoute } from "./routes/movie.route";
 import { searchRoute } from "./routes/search.route";
 import { seriesRoute } from "./routes/series.route";
@@ -15,7 +14,6 @@ app.get("*", serveStatic({ path: "../client/dist/index.html" }));
 
 const apiRoutes = app
   .basePath("/api")
-  .route("/content", contentRoute)
   .route("/movie", movieRoute)
   .route("/series", seriesRoute)
   .route("/search", searchRoute)
