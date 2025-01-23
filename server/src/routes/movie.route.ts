@@ -18,19 +18,19 @@ export const movieRoute = new Hono()
 
     return c.json(movies);
   })
-  // .get("/id/:id", getUser, async (c) => {
-  //   const id = c.req.param("id");
-  //   const userId = c.var.user.id;
+  .get("/detailed/:id", getUser, async (c) => {
+    const id = c.req.param("id");
+    const userId = c.var.user.id;
 
-  //   const movie = await db
-  //     .select()
-  //     .from(Movies)
-  //     .where(and(eq(Movies.user_id, userId), eq(Movies._id, id)));
+    const movieExist = await db
+      .select()
+      .from(Movies)
+      .where(and(eq(Movies.user_id, userId), eq(Movies.id, id)));
 
-  //   if (!movie.length) return c.notFound();
+    if (!movieExist.length) return c.notFound();
 
-  //   return c.json(movie);
-  // })
+    return c.json("movie details");
+  })
   .post("/", getUser, zValidator("json", insertMoviesSchema), async (c) => {
     const movie = c.req.valid("json");
     const userId = c.var.user.id;

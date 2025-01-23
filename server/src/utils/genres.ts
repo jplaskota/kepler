@@ -1,4 +1,4 @@
-export const MovieGenres = [
+const MovieGenres = [
   {
     id: 28,
     name: "Action",
@@ -77,7 +77,7 @@ export const MovieGenres = [
   },
 ];
 
-export const SeriesGenres = [
+const SeriesGenres = [
   {
     id: 10759,
     name: "Action & Adventure",
@@ -143,3 +143,11 @@ export const SeriesGenres = [
     name: "Western",
   },
 ];
+
+export const MovieGenresMap = new Map(
+  MovieGenres.map((genre) => [genre.id, genre.name])
+);
+
+export const SeriesGenresMap = new Map(
+  SeriesGenres.map((genre) => [genre.id, genre.name])
+);
