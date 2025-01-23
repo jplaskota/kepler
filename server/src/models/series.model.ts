@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const actorSchema = z.object({
+export const SeriesActorSchema = z.object({
   id: z.string().nonempty({ message: "Invalid actor id" }),
   original_name: z.string(),
   character: z.string(),
@@ -8,7 +8,7 @@ const actorSchema = z.object({
   order: z.number(),
 });
 
-const seasonSchema = z.object({
+export const SeriesSeasonSchema = z.object({
   id: z.number(),
   air_date: z.string(),
   episode_count: z.number(),
@@ -16,9 +16,9 @@ const seasonSchema = z.object({
   season_number: z.number(),
 });
 
-export const SeriesDetailedSchema = z.object({
+export const SeriesSchema = z.object({
   _id: z.string().uuid({ message: "Invalid id" }).optional(),
-  id: z.string().min(1, { message: "TMDB id is required" }),
+  id: z.number().min(1, { message: "TMDB id is required" }), // TMDB id
   imdb_id: z.string().nonempty({ message: "Invalid imdb id" }),
   name: z.string().min(1, { message: "Title is required" }),
   first_air_date: z.string(),
@@ -26,18 +26,22 @@ export const SeriesDetailedSchema = z.object({
   created_by: z.array(z.string()),
   origin_country: z.array(z.string()),
   genres: z.array(z.string()),
-  actors: z.array(actorSchema),
+  actors: z.array(SeriesActorSchema),
   overview: z.string(),
-  poster_path: z.string(),
-  backdrop_path: z.string(),
-  imdb_rating: z.string(), // * OMDB
-  metascore: z.string(), // * OMDB
-  rotten_tomatoes: z.string(), // * OMDB
-  seasons: z.array(seasonSchema),
+  poster_path: z.string().nullable(), // poster path sometimes is null
+  backdrop_path: z.string().optional(),
+  imdb_rating: z.string().optional(), // * OMDB
+  rotten_tomatoes: z.string().optional(), // * OMDB
+  seasons: z.array(SeriesSeasonSchema),
   vote_average: z.number(),
   popularity: z.number(),
   added_date: z.date().optional(),
   media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
+});
+
+export const SeriesSearchSchema = SeriesSchema.omit({
+  _id: true,
+  added_date: true,
 });
 
 const genresSchema = z.object({
@@ -45,37 +49,47 @@ const genresSchema = z.object({
   name: z.string(),
 });
 
-export const SeriesRawDetailedSchema = SeriesDetailedSchema.omit({
+export const SeriesSearchTMDBSchema = SeriesSearchSchema.omit({
+  actors: true,
+  imdb_rating: true,
+  rotten_tomatoes: true,
+  seasons: true,
+  media_type: true,
   genres: true,
 }).extend({
   genres: z.array(genresSchema),
-  external_ids: z.object({
-    imdb_id: z.string(),
-  }),
 });
 
-export const SeriesCardSchema = SeriesDetailedSchema.pick({
+export const SeriesCardSchema = SeriesSchema.pick({
   _id: true,
-  id: true,
-  imdb_id: true,
+  id: true, // TMDB id
   name: true,
+  poster_path: true,
   first_air_date: true,
   number_of_seasons: true,
-  genres: true,
-  poster_path: true,
   vote_average: true,
   popularity: true,
-  added_date: true,
+  media_type: true,
+  genres: true,
+});
+
+export const SeriesSearchCardSchema = SeriesCardSchema.omit({
+  _id: true,
+  number_of_seasons: true,
   media_type: true,
 });
 
-export const SeriesRawCardSchema = SeriesCardSchema.omit({
+export const SeriesSearchCardTMDBSchema = SeriesSearchCardSchema.omit({
   genres: true,
 }).extend({
   genre_ids: z.array(z.number()),
 });
 
-export type TSeriesDetailed = z.infer<typeof SeriesDetailedSchema>;
-export type TSeriesRawDetailed = z.infer<typeof SeriesRawDetailedSchema>;
+export type TSeries = z.infer<typeof SeriesSchema>;
+export type TSeriesSearch = z.infer<typeof SeriesSearchSchema>;
+export type TSeriesSearchTMDB = z.infer<typeof SeriesSearchTMDBSchema>;
 export type TSeriesCard = z.infer<typeof SeriesCardSchema>;
-export type TSeriesRawCard = z.infer<typeof SeriesRawCardSchema>;
+export type TSeriesSearchCard = z.infer<typeof SeriesSearchCardSchema>;
+export type TSeriesSearchCardTMDB = z.infer<typeof SeriesSearchCardTMDBSchema>;
+
+// TODO optional or nullable ?
