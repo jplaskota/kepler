@@ -9,12 +9,7 @@
     "postgres": "^3.4.5"
   },
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:push": "supabase db push",
-    "db:reset": "supabase db reset",
-    "db:seed": "supabase db seed"
+    "dev": "bun run --hot src/index.ts"
   },
   "devDependencies": {
     "drizzle-kit": "^0.24.2"
