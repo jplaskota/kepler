@@ -10,14 +10,14 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-const mediaEnum = pgEnum("media_type", ["movie", "tv"]);
+export const mediaEnum = pgEnum("media_type", ["movie", "tv"]);
 
 // Create the movies table ( Home card only )
 export const Movies = pgTable(
   "movies",
   {
     _id: uuid("id").primaryKey().defaultRandom(),
-    id: text("id").notNull(),
+    id: text("tmdb_id").notNull(),
     title: text("title").notNull(),
     runtime: integer("runtime").notNull(),
     release_date: text("release_date").notNull(),
@@ -31,7 +31,7 @@ export const Movies = pgTable(
   },
   (movies) => {
     return {
-      userIdIndex: index("name_idx").on(movies.user_id),
+      userIdIndex: index("movies_idx").on(movies.user_id),
     };
   }
 );
