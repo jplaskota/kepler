@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const MovieActorSchema = z.object({
-  id: z.string().nonempty({ message: "Invalid actor id" }),
+  id: z.number({ message: "Invalid actor id" }),
   original_name: z.string(),
   character: z.string(),
-  profile_path: z.string(),
+  profile_path: z.string().nullable(),
   order: z.number(),
 });
 
@@ -16,14 +16,15 @@ export const MovieSchema = z.object({
   release_date: z.string(),
   runtime: z.number(),
   director: z.string(), // * OMDB
+  rated: z.string(), // * OMDB
   origin_country: z.array(z.string()),
   genres: z.array(z.string()),
   actors: z.array(MovieActorSchema),
   overview: z.string(),
-  poster_path: z.string().nullable(), // poster path sometimes is null
-  backdrop_path: z.string(),
-  imdb_rating: z.string().optional(), // * OMDB
-  rotten_tomatoes: z.string().optional(), // * OMDB
+  poster_path: z.string().nullable(), // sometimes is null
+  backdrop_path: z.string().nullable(), // sometimes is null
+  imdb_rating: z.string().optional(), // * OMDB | sometimes is null
+  rotten_tomatoes: z.string().optional(), // * OMDB | sometimes is null
   vote_average: z.number(),
   popularity: z.number(),
   added_date: z.date(),
@@ -35,20 +36,21 @@ export const MovieSearchSchema = MovieSchema.omit({
   added_date: true,
 });
 
-const genresSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-});
-
 export const MovieSearchTMDBSchema = MovieSearchSchema.omit({
   director: true,
+  rated: true,
   actors: true,
   imdb_rating: true,
   rotten_tomatoes: true,
   media_type: true,
   genres: true,
 }).extend({
-  genres: z.array(genresSchema),
+  genres: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+    })
+  ),
 });
 
 export const MovieCardSchema = MovieSchema.pick({
@@ -76,11 +78,23 @@ export const MovieSearchCardTMDBSchema = MovieSearchCardSchema.omit({
   genre_ids: z.array(z.number()),
 });
 
+export const MovieSearchOMDBSchema = z.object({
+  Rated: z.string(),
+  Director: z.string(),
+  Ratings: z.array(
+    z.object({
+      Source: z.string(),
+      Value: z.string(),
+    })
+  ),
+});
+
 export type TMovie = z.infer<typeof MovieSchema>;
 export type TMovieSearch = z.infer<typeof MovieSearchSchema>;
 export type TMovieSearchTMDB = z.infer<typeof MovieSearchTMDBSchema>;
 export type TMovieCard = z.infer<typeof MovieCardSchema>;
 export type TMovieSearchCard = z.infer<typeof MovieSearchCardSchema>;
 export type TMovieSearchCardTMDB = z.infer<typeof MovieSearchCardTMDBSchema>;
+export type TMovieSearchOMDB = z.infer<typeof MovieSearchOMDBSchema>;
 
 // TODO optional or nullable ?
