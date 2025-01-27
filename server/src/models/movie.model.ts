@@ -11,7 +11,6 @@ export const MovieActorSchema = z.object({
 export const MovieSchema = z.object({
   _id: z.string().uuid({ message: "Invalid movie id" }),
   id: z.number({ message: "Invalid tmdb id" }), // TMDB id
-  imdb_id: z.string().nonempty({ message: "Invalid imdb id" }),
   title: z.string().min(1, { message: "Title is required" }),
   release_date: z.string(),
   runtime: z.number(),
@@ -45,6 +44,7 @@ export const MovieSearchTMDBSchema = MovieSearchSchema.omit({
   media_type: true,
   genres: true,
 }).extend({
+  imdb_id: z.string(),
   genres: z.array(
     z.object({
       id: z.number(),
