@@ -18,7 +18,6 @@ export const Series = pgTable(
   {
     _id: uuid("id").primaryKey().defaultRandom(),
     id: text("tmdb_id").notNull(),
-    imdb_id: text("imdb_id").notNull(),
     name: text("name").notNull(),
     first_air_date: text("release_date").notNull(),
     genres: text("genres").array().notNull(),

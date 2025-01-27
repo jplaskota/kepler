@@ -18,7 +18,6 @@ export const Movies = pgTable(
   {
     _id: uuid("id").primaryKey().defaultRandom(),
     id: text("id").notNull(),
-    imdb_id: text("imdb_id").notNull(),
     title: text("title").notNull(),
     runtime: integer("runtime").notNull(),
     release_date: text("release_date").notNull(),
