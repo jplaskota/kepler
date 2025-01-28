@@ -1,4 +1,6 @@
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+import { Movies as MoviesTable } from "../db/schema/movies.schema";
 
 export const MovieActorSchema = z.object({
   id: z.number({ message: "Invalid actor id" }),
@@ -8,9 +10,10 @@ export const MovieActorSchema = z.object({
   order: z.number(),
 });
 
+// Search + DB
 export const MovieSchema = z.object({
-  _id: z.string().uuid({ message: "Invalid movie id" }),
-  id: z.number({ message: "Invalid tmdb id" }), // TMDB id
+  _id: z.string().uuid({ message: "Invalid movie id" }), // when added to db
+  tmdb_id: z.number({ message: "Invalid tmdb id" }), // TMDB id
   title: z.string().min(1, { message: "Title is required" }),
   release_date: z.string(),
   runtime: z.number(),
@@ -24,9 +27,9 @@ export const MovieSchema = z.object({
   backdrop_path: z.string().nullable(), // sometimes is null
   imdb_rating: z.string().optional(), // * OMDB | sometimes is null
   rotten_tomatoes: z.string().optional(), // * OMDB | sometimes is null
-  vote_average: z.number(),
-  popularity: z.number(),
-  added_date: z.date(),
+  vote_average: z.string(),
+  popularity: z.string(),
+  added_date: z.date().nullable(), // when added to db
   media_type: z.enum(["movie", "series"], { message: "Invalid media type" }),
 });
 
@@ -35,7 +38,7 @@ export const MovieSearchSchema = MovieSchema.omit({
   added_date: true,
 });
 
-export const MovieSearchTMDBSchema = MovieSearchSchema.omit({
+export const MovieTMDBSchema = MovieSearchSchema.omit({
   director: true,
   rated: true,
   actors: true,
@@ -43,7 +46,9 @@ export const MovieSearchTMDBSchema = MovieSearchSchema.omit({
   rotten_tomatoes: true,
   media_type: true,
   genres: true,
+  tmdb_id: true,
 }).extend({
+  id: z.number(),
   imdb_id: z.string(),
   genres: z.array(
     z.object({
@@ -51,34 +56,11 @@ export const MovieSearchTMDBSchema = MovieSearchSchema.omit({
       name: z.string(),
     })
   ),
+  vote_average: z.number().transform((val) => val.toFixed(1)),
+  popularity: z.number().transform((val) => val.toFixed(1)),
 });
 
-export const MovieCardSchema = MovieSchema.pick({
-  _id: true,
-  id: true, // TMDB id
-  title: true,
-  poster_path: true,
-  release_date: true,
-  runtime: true,
-  vote_average: true,
-  popularity: true,
-  media_type: true,
-  genres: true,
-});
-
-export const MovieSearchCardSchema = MovieCardSchema.omit({
-  _id: true,
-  runtime: true,
-  media_type: true,
-});
-
-export const MovieSearchCardTMDBSchema = MovieSearchCardSchema.omit({
-  genres: true,
-}).extend({
-  genre_ids: z.array(z.number()),
-});
-
-export const MovieSearchOMDBSchema = z.object({
+export const MovieOMDBSchema = z.object({
   Rated: z.string(),
   Director: z.string(),
   Ratings: z.array(
@@ -89,12 +71,40 @@ export const MovieSearchOMDBSchema = z.object({
   ),
 });
 
+export const MovieSearchTMDBSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  popularity: z.number().transform((val) => val.toFixed(1)),
+  vote_average: z.number().transform((val) => val.toFixed(1)),
+  poster_path: z.string().nullable(),
+  release_date: z.string(),
+  genre_ids: z.array(z.number()),
+});
+
+export const MovieSearchCardSchema = z.object({
+  tmdb_id: z.number(),
+  title: z.string(),
+  popularity: z.string(),
+  poster_path: z.string().nullable(),
+  release_date: z.string(),
+  vote_average: z.string(),
+  genres: z.array(z.string()),
+  media_type: z.enum(["movie", "series"]),
+});
+
+export const SelectMoviesSchema = createSelectSchema(MoviesTable, {
+  genres: z.array(z.string()),
+});
+export const InsertMoviesSchema = createInsertSchema(MoviesTable, {
+  genres: z.array(z.string()),
+});
+
 export type TMovie = z.infer<typeof MovieSchema>;
 export type TMovieSearch = z.infer<typeof MovieSearchSchema>;
-export type TMovieSearchTMDB = z.infer<typeof MovieSearchTMDBSchema>;
-export type TMovieCard = z.infer<typeof MovieCardSchema>;
+export type TMovieTMDB = z.infer<typeof MovieTMDBSchema>; // API
+export type TMovieOMDB = z.infer<typeof MovieOMDBSchema>; // API
+export type TMovieCard = z.infer<typeof SelectMoviesSchema>;
 export type TMovieSearchCard = z.infer<typeof MovieSearchCardSchema>;
-export type TMovieSearchCardTMDB = z.infer<typeof MovieSearchCardTMDBSchema>;
-export type TMovieSearchOMDB = z.infer<typeof MovieSearchOMDBSchema>;
+export type TMovieSearchTMDB = z.infer<typeof MovieSearchTMDBSchema>; // API
 
 // TODO optional or nullable ?

@@ -7,8 +7,6 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
 
 export const mediaEnum = pgEnum("media_type", ["movie", "tv"]);
 
@@ -17,16 +15,16 @@ export const Movies = pgTable(
   "movies",
   {
     _id: uuid("id").primaryKey().defaultRandom(),
-    id: text("tmdb_id").notNull(),
+    tmdb_id: integer("tmdb_id").notNull(),
     title: text("title").notNull(),
     runtime: integer("runtime").notNull(),
     release_date: text("release_date").notNull(),
     genres: text("genres").array().notNull(),
-    poster_path: text("poster_path").notNull(),
-    vote_average: integer("vote_average").notNull(),
-    popularity: integer("popularity").notNull(),
+    poster_path: text("poster_path"),
+    vote_average: text("vote_average").notNull(),
+    popularity: text("popularity").notNull(),
     added_date: timestamp("added_date").notNull().defaultNow(),
-    media_type: mediaEnum("media_type").notNull().default("movie"),
+    media_type: mediaEnum("media_type").notNull(),
     user_id: text("user_id").notNull(),
   },
   (movies) => {
@@ -35,7 +33,3 @@ export const Movies = pgTable(
     };
   }
 );
-
-export const insertMoviesSchema = createInsertSchema(Movies, {
-  genres: z.array(z.string()),
-});
