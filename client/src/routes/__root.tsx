@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
-import CategoryProvider from "@/store/category.context";
+import LibraryProvider from "@/store/library.context";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
@@ -18,10 +18,10 @@ export const Route = createRootRouteWithContext<RootRouteProps>()({
 function Root() {
   return (
     <div className="w-full flex flex-col items-center bg-background">
-      <CategoryProvider>
+      <LibraryProvider>
         <Navbar />
         <Outlet />
-      </CategoryProvider>
+      </LibraryProvider>
       <Toaster />
       {/* <TanStackRouterDevtools /> */}
       <ReactQueryDevtools initialIsOpen={false} />
