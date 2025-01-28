@@ -1,6 +1,6 @@
 {
-  "id": "9d7fd4de-14c5-4f62-88b7-73e8124c07f2",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "ec62aa93-a156-4801-ac12-67b37e1f9c53",
+  "prevId": "9d7fd4de-14c5-4f62-88b7-73e8124c07f2",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -53,13 +53,13 @@
         },
         "vote_average": {
           "name": "vote_average",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "popularity": {
           "name": "popularity",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -154,13 +154,13 @@
         },
         "vote_average": {
           "name": "vote_average",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "popularity": {
           "name": "popularity",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },

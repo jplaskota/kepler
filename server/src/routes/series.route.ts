@@ -2,9 +2,11 @@ import { zValidator } from "@hono/zod-validator";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { db } from "../db";
-import { Series, insertSeriesSchema } from "../db/schema/series.schema";
+import { Series } from "../db/schema/series.schema";
 import { getUser } from "../kinde";
 import type { TSeries, TSeriesSearch } from "../models/series.model";
+import { InsertSeriesSchema } from "../models/series.model";
+import { fetchSeriesDetails } from "../services/tmdb.services";
 
 export const seriesRoute = new Hono()
   // Route to fetch all series for a user
@@ -30,7 +32,7 @@ export const seriesRoute = new Hono()
   })
 
   // Route to fetch a specific series by its ID
-  .get("/:id", getUser, async (c) => {
+  .get("/id/:id", getUser, async (c) => {
     const id = c.req.param("id");
     const userId = c.var.user.id;
 
@@ -39,41 +41,27 @@ export const seriesRoute = new Hono()
       const seriesExist = await db
         .select()
         .from(Series)
-        .where(and(eq(Series.user_id, userId), eq(Series.id, id)));
+        .where(and(eq(Series.user_id, userId), eq(Series._id, id)));
 
       // Return 404 if the series is not found
       if (!seriesExist.length) return c.notFound();
 
-      try {
-        // Fetch additional series details from API
-        const seriesDetails: TSeriesSearch = await fetch(
-          "/search/movie/id/" + id
-        ).then((res) => res.json());
+      const seriesDetails = await fetchSeriesDetails(seriesExist[0].tmdb_id);
 
-        // Prepare the series data to include database information
-        const preparedSeriesData: TSeries = {
-          ...seriesDetails,
-          _id: seriesExist[0]._id,
-          added_date: seriesExist[0].added_date,
-        };
+      return c.json({
+        ...seriesDetails,
+        _id: seriesExist[0]._id,
+        added_date: seriesExist[0].added_date,
+      });
 
-        // Return the series details as JSON
-        return c.json(preparedSeriesData);
-      } catch (err: any) {
-        console.error("Error fetching series details:", err);
-        return c.json(
-          { error: "Failed to fetch series details from external API." },
-          500
-        );
-      }
     } catch (err: any) {
       console.error("Error fetching series by ID:", err);
-      return c.json({ error: "Failed to fetch series by ID." }, 500);
+      return c.json({ error: err.message || "Failed to fetch series" }, 500);
     }
   })
 
   // Route to add a new series for the logged-in user
-  .post("/", getUser, zValidator("json", insertSeriesSchema), async (c) => {
+  .post("/", getUser, zValidator("json", InsertSeriesSchema), async (c) => {
     const series = c.req.valid("json");
     const userId = c.var.user.id;
 
@@ -82,7 +70,7 @@ export const seriesRoute = new Hono()
       const existingContent = await db
         .select()
         .from(Series)
-        .where(and(eq(Series.user_id, userId), eq(Series.id, series.id)));
+        .where(and(eq(Series.user_id, userId), eq(Series.tmdb_id, series.tmdb_id)));
 
       // Return 409 response if the series already exists
       if (existingContent.length) return c.text("Series already exists.", 409);
@@ -118,7 +106,7 @@ export const seriesRoute = new Hono()
       // Delete the series from the database for the user
       const deleteSeries = await db
         .delete(Series)
-        .where(and(eq(Series.user_id, userId), eq(Series.id, id)))
+        .where(and(eq(Series.user_id, userId), eq(Series._id, id)))
         .returning();
 
       // Return 404 if the series was not found
