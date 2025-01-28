@@ -4,12 +4,12 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
-import { CategoryContext } from "@/store/category.context";
+import { LibraryContext } from "@/store/library.context";
 import { cn } from "@/utils/utils";
 import { useContext } from "react";
 
 export default function CategoryBer() {
-  const { category, updateCategory } = useContext(CategoryContext);
+  const { category, updateCategory } = useContext(LibraryContext);
 
   return (
     <Breadcrumb>
@@ -51,3 +51,5 @@ export default function CategoryBer() {
     </Breadcrumb>
   );
 }
+
+// TODO sorted by popularity and recently added

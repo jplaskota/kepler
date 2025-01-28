@@ -1,10 +1,8 @@
 import { userQueryOptions } from "@/services/auth.services";
-import { deleteMovieById, postMovie } from "@/services/movie.services";
 import { deleteSeriesById, postSeries } from "@/services/series.services";
 import { cn } from "@/utils/utils";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import type { Movie } from "@server-models/movie.model";
-import type { Series } from "@server-models/series.model";
+import type { TSeries, TSeriesSearch } from "@server-models/series.model";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
@@ -14,76 +12,46 @@ import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Skeleton } from "./ui/skeleton";
 
-interface ContentPageProps {
-  item: Movie | Series;
+interface SeriesPageProps {
+  series: TSeries | TSeriesSearch;
 }
 
-export default function ContentPage({ item }: ContentPageProps) {
+// Add helper function for type guard
+const isStoredSeries = (series: TSeries | TSeriesSearch): series is TSeries => {
+  return "_id" in series;
+};
+
+export default function SeriesPage({ series }: SeriesPageProps) {
   const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate({ from: "/search/$id" });
+  const navigate = useNavigate({ from: "/library/$type/$id" });
   const { data } = useQuery(userQueryOptions);
 
   // FIXME from context does not work
   const queryClient = useQueryClient();
 
-  const isBookmarked = !!item.tmdb_id;
-
-  // Check if the item is a Series or a Movie
-  const isSeries = item.media_type === "tv";
-
   // Construct poster URL
-  const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
+  const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + series.poster_path;
 
-  // Determine the title and other properties based on the type
-  const title = isSeries ? (item as Series).title : (item as Movie).title,
-    releaseDate = isSeries
-      ? (item as Series).first_air_date
-      : (item as Movie).release_date,
-    additionalInfo = isSeries
-      ? `${(item as Series).number_of_seasons} seasons`
-      : `${(item as Movie).runtime} mins`,
-    voteAverage = isSeries
-      ? (item as Series).vote_average
-      : (item as Movie).vote_average,
-    overview = isSeries ? (item as Series).overview : (item as Movie).overview,
-    genres = item.genres,
-    homepage = isSeries ? (item as Series).homepage : (item as Movie).homepage;
+  // Replace the current check with the type guard
+  const isBookmarked = isStoredSeries(series);
 
   const handleAdd = () => {
     if (data) {
-      if (item.media_type === "movie") {
-        postMovie(item as Movie, data.user.id).then(() => {
-          toast.success("Movie added to your list");
-          queryClient.refetchQueries({
-            queryKey: ["get-content"],
-          });
-          navigate({ to: "/" });
-        });
-      } else {
-        postSeries(item as Series, data.user.id).then(() => {
-          toast.success("Series added to your list");
-          queryClient.refetchQueries({
-            queryKey: ["get-content"],
-          });
-          navigate({ to: "/" });
-        });
-      }
-    } else {
-      toast.error("You must be logged in to add to your list");
-    }
-  };
-
-  const handleDelete = () => {
-    if (item.media_type === "movie") {
-      deleteMovieById(item.id).then(() => {
-        toast.success("Movie deleted");
+      postSeries(series, data.user.id).then(() => {
+        toast.success("Series added to your list");
         queryClient.refetchQueries({
           queryKey: ["get-content"],
         });
         navigate({ to: "/" });
       });
     } else {
-      deleteSeriesById(item.id).then(() => {
+      toast.error("You must be logged in to add to your list");
+    }
+  };
+
+  const handleDelete = () => {
+    if (isStoredSeries(series)) {
+      deleteSeriesById(series._id.toString()).then(() => {
         toast.success("Series deleted");
         queryClient.refetchQueries({
           queryKey: ["get-content"],
@@ -122,20 +90,19 @@ export default function ContentPage({ item }: ContentPageProps) {
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-2">
                 <p className="flex gap-2 font-Anton text-5xl sm:text-6xl lg:text-8xl">
-                  {title.toUpperCase()}
+                  {series.name.toUpperCase()}
                 </p>
                 <div className="flex gap-2 text-md sm:text-xl font-montserrat">
-                  <p>[ {releaseDate.split("-")[0]} ]</p>
-                  <p>[ {additionalInfo} ]</p>
-                  <p>[ {parseFloat(voteAverage).toFixed(1)} ]</p>
+                  <p>[ {series.first_air_date.split("-")[0]} ]</p>
+                  <p>[ {series.number_of_seasons} seasons ]</p>
+                  <p>[ {series.vote_average} ]</p>
                 </div>
               </div>
               <Separator />
-              <p>{overview}</p>
+              <p>{series.overview}</p>
               <Separator />
-              <p>[ {genres.join(" ] [ ")} ]</p>
+              <p>[ {series.genres.join(" ] [ ")} ]</p>
               <Separator />
-              <a href={homepage}>{homepage}</a>
             </div>
           </article>
         </div>

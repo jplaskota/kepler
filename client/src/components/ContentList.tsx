@@ -1,41 +1,26 @@
-import type { Movie } from "@server-models/movie.model";
-import type { Series } from "@server-models/series.model";
-import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
-import { getContent } from "../services/content.services";
-import { CategoryContext } from "../store/category.context";
+import { useLibrary } from "../hooks/useLibrary";
 import ContentCard from "./ContentCard";
 import SkeletonContent from "./SkeletonContent";
 
 export default function ContentList() {
-  const { category } = useContext(CategoryContext);
   const [cols, setCols] = useState<number>(2);
-
-  const {
-    isLoading,
-    isError,
-    data: content,
-  } = useQuery({
-    queryKey: ["get-content", category],
-    queryFn: () => getContent(category),
-    staleTime: 1000 * 60 * 10,
-  });
+  const { library, isLoading, isError } = useLibrary();
 
   useEffect(() => {
     const calculateCols = () => {
       const width = window.innerWidth;
-
+      const length = library.length;
       const maxCols =
         width > 1700 ? 5 : width > 1300 ? 4 : width > 1000 ? 3 : 2;
-
-      return content && content.length < maxCols ? content.length : maxCols;
+      return length < maxCols ? length : maxCols;
     };
 
     const handleResize = debounce(() => {
       setCols(calculateCols());
-    }, 300); // Adjust debounce time as needed
+    }, 300);
 
     setCols(calculateCols());
     window.addEventListener("resize", handleResize);
@@ -43,7 +28,7 @@ export default function ContentList() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [content]);
+  }, [library.length]);
 
   return (
     <>
@@ -53,19 +38,16 @@ export default function ContentList() {
         <div className="text-center text-red-500">
           Error loading content. Please try again later.
         </div>
-      ) : content && content.length > 0 ? (
+      ) : library.length > 0 ? (
         <div className="scroll-smooth overflow-y-auto no-scrollbar">
           <Masonry
             className="flex gap-4 px-4"
             breakpointCols={cols}
             columnClassName="w-full"
           >
-            {content.map((item: Movie | Series) => {
-              if (item.media_type === "movie") {
-                return <ContentCard key={item.id} item={item as Movie} />;
-              }
-              return <ContentCard key={item.id} item={item as Series} />;
-            })}
+            {library.map((item) => (
+              <ContentCard key={item._id} item={item} />
+            ))}
           </Masonry>
         </div>
       ) : (

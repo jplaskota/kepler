@@ -1,16 +1,9 @@
 import { Card, CardDescription } from "@/components/ui/card";
-import { searchByName } from "@/services/search.services";
-import { useQuery } from "@tanstack/react-query";
-import { debounce } from "lodash";
-import { useCallback, useEffect, useState } from "react";
+import { useSearch } from "@/hooks/useSearch";
+import type { SearchModalProps } from "@/types/search.types";
 import { createPortal } from "react-dom";
-import { toast } from "sonner";
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
-
-interface SearchModalProps {
-  onClose: () => void;
-}
 
 const noResults = (
   <Card className="p-6 flex justify-center">
@@ -19,66 +12,23 @@ const noResults = (
 );
 
 export default function SearchModal({ onClose }: SearchModalProps) {
-  const [inputValue, setInputValue] = useState<string>("");
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [content, setContent] = useState<typeof data>();
-  const [searchStatus, setSearchStatus] = useState<boolean>(true);
-
-  // Get the portal root element
-  const portalRoot = document.getElementById("portal")!;
-
-  // Search by name using the debounced input value
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["search", { searchValue }],
-    queryFn: () => searchByName(searchValue),
-    enabled: searchValue.length > 0,
-  });
-
-  // Handle input change with debounce using lodash
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleInputChange = useCallback(
-    debounce((value: string) => {
-      setSearchValue(value.trim());
-    }, 500),
-    []
-  );
-
-  const handleInputValueChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    setInputValue(value);
-    handleInputChange(value);
-  };
-
-  // Handle errors
-  useEffect(() => {
-    if (isError) {
-      toast.warning("Something went wrong");
-    }
-  }, [isError]);
-
-  // Handle data changes and scroll to the top of the search results
-  useEffect(() => {
-    // Set the data status
-    if (data && (data.movies.length > 0 || data.series.length > 0)) {
-      setSearchStatus(true);
-      setContent(data);
-    } else {
-      if (data) {
-        setSearchStatus(false);
-      }
-    }
-  }, [data]);
+  const {
+    inputValue,
+    movies,
+    series,
+    searchStatus,
+    isLoading,
+    handleInputValueChange,
+  } = useSearch();
 
   return createPortal(
     <div
       className="fixed inset-0 py-16 px-4 bg-black/70 backdrop-blur-sm z-10 flex justify-center sm:items-center animate-fade-in-up"
-      onClick={() => onClose()}
+      onClick={onClose}
     >
       <Card
         className="w-full sm:w-fit sm:min-w-[500px] sm:max-w-[1000px] h-fit max-h-[75vh] sm:max-h-[85vh] p-2 sm:p-4 flex flex-col gap-2 sm:gap-4 bg-background"
-        onClick={(e) => e.stopPropagation()} // Prevent event propagation
+        onClick={(e) => e.stopPropagation()}
       >
         <SearchBar
           changeHandler={handleInputValueChange}
@@ -86,14 +36,12 @@ export default function SearchModal({ onClose }: SearchModalProps) {
           onClose={onClose}
           isLoading={isLoading}
         />
-        {content && searchStatus && (
-          <SearchResult results={content} onClose={onClose} />
+        {movies && series && searchStatus && (
+          <SearchResult moviesList={movies} seriesList={series} onClose={onClose} />
         )}
         {!searchStatus && noResults}
       </Card>
     </div>,
-    portalRoot
+    document.getElementById("portal")!
   );
 }
-
-// TODO search input position

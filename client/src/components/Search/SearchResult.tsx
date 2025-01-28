@@ -1,49 +1,54 @@
-import { MovieSearch } from "@server-models/movie.model";
-import { SeriesSearch } from "@server-models/series.model";
+import type { SearchResultProps } from "@/types/search.types";
 import { useEffect, useRef } from "react";
 import { Separator } from "../ui/separator";
 import SearchItemCard from "./SearchItemCard";
 
-interface SearchResultProps {
-  results: {
-    movies: MovieSearch[];
-    series: SeriesSearch[];
-  };
-  onClose: () => void;
-}
-
-export default function SearchResult({ results, onClose }: SearchResultProps) {
+export default function SearchResult({
+  moviesList,
+  seriesList,
+  onClose,
+}: SearchResultProps) {
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to the top of the search results
   useEffect(() => {
-    if (searchContainerRef.current) {
-      searchContainerRef.current.scrollIntoView({
+    const container = searchContainerRef.current;
+    if (container) {
+      container.scrollIntoView({
         behavior: "smooth",
+        block: "start",
       });
     }
-  }, [results]);
+  }, [moviesList, seriesList]);
 
-  // Construct movies
-  const movies = results.movies.map((movie) => (
-    <SearchItemCard key={movie.id} item={movie} onClose={onClose} />
-  ));
-
-  // Construct series
-  const series = results.series.map((series) => (
-    <SearchItemCard key={series.id} item={series} onClose={onClose} />
-  ));
+  const hasMovies = moviesList && moviesList.length > 0;
+  const hasSeries = seriesList && seriesList.length > 0;
 
   return (
     <div className="overflow-y-auto no-scrollbar">
       <div className="w-fit flex flex-col gap-4" ref={searchContainerRef}>
-        <div className="w-fit max-w-[90vw] h-fit grid grid-cols-3 sm:grid-cols-4 gap-2">
-          {movies}
-        </div>
-        <Separator orientation="horizontal" />
-        <div className="w-fit max-w-[90vw] h-fit grid grid-cols-3 sm:grid-cols-4 gap-2">
-          {series}
-        </div>
+        {hasMovies && (
+          <div className="w-fit max-w-[90vw] h-fit grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            {moviesList.map((movie) => (
+              <SearchItemCard
+                key={movie.tmdb_id}
+                item={movie}
+                onClose={onClose}
+              />
+            ))}
+          </div>
+        )}
+        {hasMovies && hasSeries && <Separator orientation="horizontal" />}
+        {hasSeries && (
+          <div className="w-fit max-w-[90vw] h-fit grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            {seriesList.map((series) => (
+              <SearchItemCard
+                key={series.tmdb_id}
+                item={series}
+                onClose={onClose}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

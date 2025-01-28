@@ -5,38 +5,48 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/utils/utils";
-import type { Movie } from "@server-models/movie.model";
-import type { Series } from "@server-models/series.model";
+import type { TMovieCard } from "@server-models/movie.model";
+import type { TSeriesCard } from "@server-models/series.model";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
 interface ContentCardProps {
-  item: Movie | Series;
+  item: TMovieCard | TSeriesCard;
 }
 
 export default function ContentCard({ item }: ContentCardProps) {
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Check if the item is a Series or a Movie
-  const isSeries = item.media_type === "tv";
-
   // Construct poster URL
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
-  // Determine the title and other properties based on the type
-  const title = isSeries ? (item as Series).title : (item as Movie).title;
-  const releaseDate = isSeries
-    ? (item as Series).first_air_date
-    : (item as Movie).release_date;
-  const additionalInfo = isSeries
-    ? `${(item as Series).number_of_seasons} seasons`
-    : `${(item as Movie).runtime} mins`;
-  const genres = item.genres.join(", ");
+  // Get content info based on type
+  const title =
+    item.media_type === "tv"
+      ? (item as TSeriesCard).name
+      : (item as TMovieCard).title;
+  const releaseDate =
+    item.media_type === "tv"
+      ? (item as TSeriesCard).first_air_date
+      : (item as TMovieCard).release_date;
+  const additionalInfo =
+    item.media_type === "tv"
+      ? `${(item as TSeriesCard).number_of_seasons} seasons`
+      : `${(item as TMovieCard).runtime} mins`;
+
+  // Format the added_date
+  const formattedDate = new Date(item.added_date).toLocaleDateString();
 
   return (
-    <Link to="/$id" params={{ id: item.id }}>
-      <Card className="sm:w-[300px] rounded-xl mb-4 select-none animate-fade-in">
+    <Link
+      to="/library/$type/$id"
+      params={{
+        type: item.media_type,
+        id: item._id,
+      }}
+    >
+      <Card>
         <CardHeader className="p-2 sm:p-3">
           {loading && <Skeleton className="aspect-[8/12] w-full" />}
           <img
@@ -47,7 +57,7 @@ export default function ContentCard({ item }: ContentCardProps) {
             onLoad={() => setLoading(false)}
             crossOrigin="anonymous"
           />
-          <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1">
+          <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1 truncate">
             {title.toUpperCase()}
           </CardTitle>
           <div className="flex gap-1 max-sm:text-xs">
@@ -58,7 +68,12 @@ export default function ContentCard({ item }: ContentCardProps) {
               [ {additionalInfo} ]
             </CardDescription>
           </div>
-          <CardDescription className="max-sm:text-xs">{genres}</CardDescription>
+          <CardDescription className="max-sm:text-xs truncate">
+            [ {item.genres.join(" ] [ ")} ]
+          </CardDescription>
+          <CardDescription className="max-sm:text-xs text-right">
+            Added {formattedDate}
+          </CardDescription>
         </CardHeader>
       </Card>
     </Link>
