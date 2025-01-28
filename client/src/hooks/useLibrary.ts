@@ -22,17 +22,20 @@ export function useLibrary() {
         queryKey: ["get-movies"],
         queryFn: getMovies,
         staleTime: 1000 * 60 * 10,
+        retry: 1,
       },
       {
         queryKey: ["get-series"],
         queryFn: getSeries,
         staleTime: 1000 * 60 * 10,
+        retry: 1,
       },
     ],
   });
 
   const isLoading = moviesQuery.isLoading || seriesQuery.isLoading;
-  const isError = moviesQuery.isError || seriesQuery.isError;
+  const isEmpty =
+    !isLoading && !moviesQuery.data?.length && !seriesQuery.data?.length;
 
   const refetchLibrary = async () => {
     await Promise.all([
@@ -78,7 +81,7 @@ export function useLibrary() {
   return {
     library,
     isLoading,
-    isError,
+    isEmpty,
     refetchLibrary,
   };
 }

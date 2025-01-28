@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import Masonry from "react-masonry-css";
 
-export default function SkeletonContent({ cols }: { cols: number }) {
+export default function SkeletonLibrary({ cols }: { cols: number }) {
   return (
     <Masonry
       className="flex justify-center gap-4 w-screen p-4"
@@ -27,4 +27,4 @@ export default function SkeletonContent({ cols }: { cols: number }) {
   );
 }
 
-// TODO: cache the content length and render the amount of content or 8 items
+// TODO: cache the library length and render the amount of library or 8 items

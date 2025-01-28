@@ -11,17 +11,17 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
-interface ContentCardProps {
+interface LibraryCardProps {
   item: TMovieCard | TSeriesCard;
 }
 
-export default function ContentCard({ item }: ContentCardProps) {
+export default function LibraryCard({ item }: LibraryCardProps) {
   const [loading, setLoading] = useState<boolean>(true);
 
   // Construct poster URL
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + item.poster_path;
 
-  // Get content info based on type
+  // Get library info based on type
   const title =
     item.media_type === "tv"
       ? (item as TSeriesCard).name
