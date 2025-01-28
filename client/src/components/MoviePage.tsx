@@ -1,10 +1,9 @@
+import { useMovieActions } from "@/hooks/useMovieActions";
 import { userQueryOptions } from "@/services/auth.services";
-import { deleteMovieById, postMovie } from "@/services/movie.services";
 import { cn } from "@/utils/utils";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { TMovie, TMovieSearch } from "@server-models/movie.model";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -23,43 +22,31 @@ const isStoredMovie = (movie: TMovie | TMovieSearch): movie is TMovie => {
 
 export default function MoviePage({ movie }: MoviePageProps) {
   const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate({ from: "/library/$type/$id" });
   const { data } = useQuery(userQueryOptions);
-
-  const queryClient = useQueryClient();
-
-  // Construct poster URL
-  const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + movie.poster_path;
-
-  // Replace the current check with the type guard
-  const isBookmarked = isStoredMovie(movie);
+  const { addMovie, deleteMovie } = useMovieActions();
 
   const handleAdd = () => {
     if (data) {
-      postMovie(movie, data.user.id).then(() => {
-        toast.success("Movie added to your list");
-        queryClient.refetchQueries({
-          queryKey: ["get-content"],
-        });
-        navigate({ to: "/" });
+      addMovie.mutate({
+        movieData: movie,
+        userId: data.user.id,
       });
     } else {
       toast.error("You must be logged in to add to your list");
     }
   };
 
-  // Now TypeScript knows the correct type in each branch
   const handleDelete = () => {
     if (isStoredMovie(movie)) {
-      deleteMovieById(movie._id.toString()).then(() => {
-        toast.success("Series deleted");
-        queryClient.refetchQueries({
-          queryKey: ["get-content"],
-        });
-        navigate({ to: "/" });
-      });
+      deleteMovie.mutate(movie._id.toString());
     }
   };
+
+  // Construct poster URL
+  const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + movie.poster_path;
+
+  // Replace the current check with the type guard
+  const isBookmarked = isStoredMovie(movie);
 
   return (
     <div className="animate-fade-in">

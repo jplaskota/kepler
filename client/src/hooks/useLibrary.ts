@@ -2,18 +2,19 @@ import { getMovies } from "@/services/movie.services";
 import { getSeries } from "@/services/series.services";
 import type { TMovieCard } from "@server-models/movie.model";
 import type { TSeriesCard } from "@server-models/series.model";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { useContext, useMemo } from "react";
 import { LibraryContext } from "../store/library.context";
 
 type LibraryItem = (TMovieCard | TSeriesCard) & {
   media_type: "movie" | "tv";
   added_date: Date;
-  popularity: number;
+  popularity: string;
 };
 
 export function useLibrary() {
   const { category, sortBy } = useContext(LibraryContext);
+  const queryClient = useQueryClient();
 
   const [moviesQuery, seriesQuery] = useQueries({
     queries: [
@@ -33,6 +34,13 @@ export function useLibrary() {
   const isLoading = moviesQuery.isLoading || seriesQuery.isLoading;
   const isError = moviesQuery.isError || seriesQuery.isError;
 
+  const refetchLibrary = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ["get-movies"] }),
+      queryClient.invalidateQueries({ queryKey: ["get-series"] }),
+    ]);
+  };
+
   const library = useMemo(() => {
     const items: LibraryItem[] = [];
 
@@ -47,7 +55,7 @@ export function useLibrary() {
     if (seriesQuery.data) {
       items.push(
         ...seriesQuery.data.map((series) => ({
-            ...series,
+          ...series,
         }))
       );
     }
@@ -61,7 +69,7 @@ export function useLibrary() {
     // Sort items
     return filteredItems.sort((a, b) => {
       if (sortBy === "popularity") {
-        return b.popularity - a.popularity;
+        return +b.popularity - +a.popularity;
       }
       return b.added_date.getTime() - a.added_date.getTime();
     });
@@ -71,5 +79,6 @@ export function useLibrary() {
     library,
     isLoading,
     isError,
+    refetchLibrary,
   };
 }

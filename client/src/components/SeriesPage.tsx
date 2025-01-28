@@ -1,10 +1,9 @@
+import { useSeriesActions } from "@/hooks/useSeriesActions";
 import { userQueryOptions } from "@/services/auth.services";
-import { deleteSeriesById, postSeries } from "@/services/series.services";
 import { cn } from "@/utils/utils";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { TSeries, TSeriesSearch } from "@server-models/series.model";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -23,26 +22,14 @@ const isStoredSeries = (series: TSeries | TSeriesSearch): series is TSeries => {
 
 export default function SeriesPage({ series }: SeriesPageProps) {
   const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate({ from: "/library/$type/$id" });
   const { data } = useQuery(userQueryOptions);
-
-  // FIXME from context does not work
-  const queryClient = useQueryClient();
-
-  // Construct poster URL
-  const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + series.poster_path;
-
-  // Replace the current check with the type guard
-  const isBookmarked = isStoredSeries(series);
+  const { addSeries, deleteSeries } = useSeriesActions();
 
   const handleAdd = () => {
     if (data) {
-      postSeries(series, data.user.id).then(() => {
-        toast.success("Series added to your list");
-        queryClient.refetchQueries({
-          queryKey: ["get-content"],
-        });
-        navigate({ to: "/" });
+      addSeries.mutate({
+        seriesData: series,
+        userId: data.user.id,
       });
     } else {
       toast.error("You must be logged in to add to your list");
@@ -51,15 +38,15 @@ export default function SeriesPage({ series }: SeriesPageProps) {
 
   const handleDelete = () => {
     if (isStoredSeries(series)) {
-      deleteSeriesById(series._id.toString()).then(() => {
-        toast.success("Series deleted");
-        queryClient.refetchQueries({
-          queryKey: ["get-content"],
-        });
-        navigate({ to: "/" });
-      });
+      deleteSeries.mutate(series._id.toString());
     }
   };
+
+  // Construct poster URL
+  const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + series.poster_path;
+
+  // Replace the current check with the type guard
+  const isBookmarked = isStoredSeries(series);
 
   return (
     <div className="animate-fade-in">
