@@ -1,6 +1,18 @@
-import { type Series } from "@server-models/series.model";
-import { omit } from "lodash";
+// import type { TSeries } from "@server-models/series.model";
+import { TSeriesCard, TSeriesSearch } from "@server-models/series.model";
 import { series } from "./api.services";
+
+export const getSeries = async () => {
+  const results = await series
+    .$get()
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to fetch Series");
+      return res;
+    })
+    .then((res) => res.json());
+
+  return results as TSeriesCard[];
+};
 
 export const getSeriesById = async (id: string) => {
   const results = await series.id[":id"]
@@ -16,22 +28,14 @@ export const getSeriesById = async (id: string) => {
   return results;
 };
 
-export const postSeries = async (data: Series, userId: string) => {
+export const postSeries = async (data: TSeriesSearch, userId: string) => {
   const results = await series
     .$post({
       json: {
-        series: {
-          ...omit(data, ["id"]),
-          tmdb_id: data.id.toString(),
-          vote_average: data.vote_average.toString(),
-          popularity: data.popularity.toString(),
-          user_id: userId,
-        },
-        seasons: data.seasons.map((season) => ({
-          ...season,
-          series_id: data.id.toString(),
-          vote_average: season.vote_average.toString(),
-        })),
+        ...data,
+        poster_path: data.poster_path ?? null,
+        user_id: userId,
+        media_type: "tv",
       },
     })
     .then((res) => {

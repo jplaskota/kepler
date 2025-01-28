@@ -1,6 +1,21 @@
-import { type MovieView } from "@server-models/movie.model";
-import { omit } from "lodash";
+import type {
+  TMovie,
+  TMovieCard,
+  TMovieSearch,
+} from "@server-models/movie.model";
 import { movie } from "./api.services";
+
+export const getMovies = async () => {
+  const results = await movie
+    .$get()
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to fetch Movie");
+      return res;
+    })
+    .then((res) => res.json());
+
+  return results as TMovieCard[];
+};
 
 export const getMovieById = async (id: string) => {
   const results = await movie.id[":id"]
@@ -13,19 +28,16 @@ export const getMovieById = async (id: string) => {
     })
     .then((res) => res.json());
 
-  return results;
+  return results as TMovie;
 };
 
-export const postMovie = async (data: MovieView, userId: string) => {
-  console.log(data.id.toString());
+export const postMovie = async (data: TMovieSearch, userId: string) => {
   const results = await movie
     .$post({
       json: {
-        ...omit(data, ["id"]),
-        tmdb_id: data.id.toString(),
-        vote_average: data.vote_average.toString(),
-        popularity: data.popularity.toString(),
+        ...data,
         user_id: userId,
+        media_type: "movie",
       },
     })
     .then((res) => {
