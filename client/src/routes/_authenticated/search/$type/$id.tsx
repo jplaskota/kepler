@@ -5,7 +5,7 @@ import { TMovieSearch } from "@server-models/movie.model";
 import { TSeriesSearch } from "@server-models/series.model";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/search/$type/$id")({
+export const Route = createFileRoute("/_authenticated/search/$type/$id")({
   component: SearchItem,
   loader: async ({ params }) => {
     const { type, id } = params;

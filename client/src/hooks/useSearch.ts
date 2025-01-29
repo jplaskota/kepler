@@ -38,10 +38,11 @@ export function useSearch() {
   useEffect(() => {
     if (seriesQuery.data) {
       setSeries(seriesQuery.data);
-      setSearchStatus(prev => prev || seriesQuery.data.length > 0);
+      setSearchStatus(seriesQuery.data.length > 0);
     }
   }, [seriesQuery.data]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleInputChange = useCallback(
     debounce((value: string) => {
       setSearchValue(value.trim());
@@ -52,32 +53,14 @@ export function useSearch() {
   const handleInputValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { value } = event.target;
-    setInputValue(value);
-    handleInputChange(value);
+    setInputValue(event.target.value);
+    handleInputChange(event.target.value);
   };
 
   useEffect(() => {
-    if (moviesQuery.isError || seriesQuery.isError) {
-      toast.warning("Something went wrong");
-    }
+    if (moviesQuery.isError) toast.error("Error while fetching movies");
+    if (seriesQuery.isError) toast.error("Error while fetching series");
   }, [moviesQuery.isError, seriesQuery.isError]);
-
-  useEffect(() => {
-    if (moviesQuery.data && moviesQuery.data.length > 0) {
-      setSearchStatus(true);
-      setMovies(moviesQuery.data);
-    } else if (moviesQuery.data) {
-      setSearchStatus(false);
-    }
-
-    if (seriesQuery.data && seriesQuery.data.length > 0) {
-      setSearchStatus(true);
-      setSeries(seriesQuery.data);
-    } else if (seriesQuery.data) {
-      setSearchStatus(false);
-    }
-  }, [moviesQuery.data, seriesQuery.data]);
 
   return {
     inputValue,

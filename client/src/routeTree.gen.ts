@@ -14,7 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
-import { Route as SearchTypeIdImport } from './routes/search/$type/$id'
+import { Route as AuthenticatedSearchTypeIdImport } from './routes/_authenticated/search/$type/$id'
 import { Route as AuthenticatedLibraryTypeIdImport } from './routes/_authenticated/library/$type/$id'
 
 // Create/Update Routes
@@ -36,10 +36,10 @@ const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const SearchTypeIdRoute = SearchTypeIdImport.update({
+const AuthenticatedSearchTypeIdRoute = AuthenticatedSearchTypeIdImport.update({
   id: '/search/$type/$id',
   path: '/search/$type/$id',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedLibraryTypeIdRoute = AuthenticatedLibraryTypeIdImport.update(
@@ -75,18 +75,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/search/$type/$id': {
-      id: '/search/$type/$id'
-      path: '/search/$type/$id'
-      fullPath: '/search/$type/$id'
-      preLoaderRoute: typeof SearchTypeIdImport
-      parentRoute: typeof rootRoute
-    }
     '/_authenticated/library/$type/$id': {
       id: '/_authenticated/library/$type/$id'
       path: '/library/$type/$id'
       fullPath: '/library/$type/$id'
       preLoaderRoute: typeof AuthenticatedLibraryTypeIdImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/search/$type/$id': {
+      id: '/_authenticated/search/$type/$id'
+      path: '/search/$type/$id'
+      fullPath: '/search/$type/$id'
+      preLoaderRoute: typeof AuthenticatedSearchTypeIdImport
       parentRoute: typeof AuthenticatedImport
     }
   }
@@ -97,11 +97,13 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedLibraryTypeIdRoute: typeof AuthenticatedLibraryTypeIdRoute
+  AuthenticatedSearchTypeIdRoute: typeof AuthenticatedSearchTypeIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedLibraryTypeIdRoute: AuthenticatedLibraryTypeIdRoute,
+  AuthenticatedSearchTypeIdRoute: AuthenticatedSearchTypeIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -112,15 +114,15 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
   '/': typeof AuthenticatedIndexRoute
-  '/search/$type/$id': typeof SearchTypeIdRoute
   '/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
+  '/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
 }
 
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/': typeof AuthenticatedIndexRoute
-  '/search/$type/$id': typeof SearchTypeIdRoute
   '/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
+  '/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
 }
 
 export interface FileRoutesById {
@@ -128,35 +130,33 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/search/$type/$id': typeof SearchTypeIdRoute
   '/_authenticated/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
+  '/_authenticated/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/about' | '/' | '/search/$type/$id' | '/library/$type/$id'
+  fullPaths: '' | '/about' | '/' | '/library/$type/$id' | '/search/$type/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/' | '/search/$type/$id' | '/library/$type/$id'
+  to: '/about' | '/' | '/library/$type/$id' | '/search/$type/$id'
   id:
     | '__root__'
     | '/_authenticated'
     | '/about'
     | '/_authenticated/'
-    | '/search/$type/$id'
     | '/_authenticated/library/$type/$id'
+    | '/_authenticated/search/$type/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutRoute: typeof AboutRoute
-  SearchTypeIdRoute: typeof SearchTypeIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutRoute: AboutRoute,
-  SearchTypeIdRoute: SearchTypeIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -170,15 +170,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/_authenticated",
-        "/about",
-        "/search/$type/$id"
+        "/about"
       ]
     },
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/",
-        "/_authenticated/library/$type/$id"
+        "/_authenticated/library/$type/$id",
+        "/_authenticated/search/$type/$id"
       ]
     },
     "/about": {
@@ -188,11 +188,12 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/index.tsx",
       "parent": "/_authenticated"
     },
-    "/search/$type/$id": {
-      "filePath": "search/$type/$id.tsx"
-    },
     "/_authenticated/library/$type/$id": {
       "filePath": "_authenticated/library/$type/$id.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/search/$type/$id": {
+      "filePath": "_authenticated/search/$type/$id.tsx",
       "parent": "/_authenticated"
     }
   }

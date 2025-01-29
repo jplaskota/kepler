@@ -1,3 +1,4 @@
+import { SearchBarProps } from "@/types/search.types";
 import {
   XMarkIcon as CloseIcon,
   ArrowPathIcon as RotateIcon,
@@ -6,13 +7,6 @@ import {
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
-
-interface SearchBarProps {
-  changeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  inputValue: string;
-  onClose: () => void;
-  isLoading: boolean;
-}
 
 export default function SearchBar({
   changeHandler,
