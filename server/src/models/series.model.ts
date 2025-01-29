@@ -6,7 +6,7 @@ export const SeriesActorSchema = z.object({
   id: z.number({ message: "Invalid actor id" }),
   original_name: z.string(),
   character: z.string(),
-  profile_path: z.string(),
+  profile_path: z.string().nullable(),
   order: z.number(),
 });
 
@@ -115,6 +115,8 @@ export const InsertSeriesSchema = createInsertSchema(SeriesTable, {
 });
 
 export type TSeries = z.infer<typeof SeriesSchema>;
+export type TActor = z.infer<typeof SeriesActorSchema>;
+export type TSeason = z.infer<typeof SeriesSeasonSchema>;
 export type TSeriesSearch = z.infer<typeof SeriesSearchSchema>;
 export type TSeriesTMDB = z.infer<typeof SeriesTMDBSchema>; // API
 export type TSeriesOMDB = z.infer<typeof SeriesOMDBSchema>; // API

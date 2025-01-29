@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { useLibrary } from "../hooks/useLibrary";
 import LibraryCard from "./LibraryCard";
-import SkeletonLibrary from "./SkeletonLibrary";
+import SkeletonLibrary from "./ui/skeleton-library";
 
 export default function Library() {
   const [cols, setCols] = useState<number>(2);

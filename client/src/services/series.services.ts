@@ -1,5 +1,8 @@
-// import type { TSeries } from "@server-models/series.model";
-import { TSeriesCard, TSeriesSearch } from "@server-models/series.model";
+import {
+  TSeries,
+  TSeriesCard,
+  TSeriesSearch,
+} from "@server-models/series.model";
 import { series } from "./api.services";
 
 export const getSeries = async () => {
@@ -25,7 +28,7 @@ export const getSeriesById = async (id: string) => {
     })
     .then((res) => res.json());
 
-  return results;
+  return results as TSeries;
 };
 
 export const postSeries = async (data: TSeriesSearch, userId: string) => {

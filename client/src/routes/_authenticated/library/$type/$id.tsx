@@ -1,28 +1,16 @@
 import MoviePage from "@/components/MoviePage";
 import SeriesPage from "@/components/SeriesPage";
-import { getMovieById } from "@/services/movie.services";
-import { getSeriesById } from "@/services/series.services";
-import { TMovie } from "@server-models/movie.model";
-import { TSeries } from "@server-models/series.model";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/library/$type/$id")({
-  component: LibraryItem,
-  loader: async ({ params }) => {
-    const { type, id } = params;
-    if (type === "movie") {
-      return await getMovieById(id);
-    }
-    return await getSeriesById(id);
-  },
+  component: RouteComponent,
 });
 
-function LibraryItem() {
-  const { type } = Route.useParams();
-  const data = Route.useLoaderData();
+function RouteComponent() {
+  const { type, id } = Route.useParams();
 
-  if (type === "movie") {
-    return <MoviePage movie={data as TMovie} />;
-  }
-  return <SeriesPage series={data as TSeries} />;
+  if (type === "movie") return <MoviePage id={id} saved={true} />;
+  if (type === "tv") return <SeriesPage id={id} saved={true} />;
+
+  return <p>404 Not Found</p>;
 }
