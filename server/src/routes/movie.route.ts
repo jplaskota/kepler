@@ -20,8 +20,8 @@ export const movieRoute = new Hono()
         .from(Movies)
         .where(eq(Movies.user_id, userId));
 
-      // Return 404 if no movies are found
-      if (!movies.length) return c.notFound();
+      // Return empty array if no movies are found
+      if (!movies.length) return c.json([]);
 
       // Return the list of movies as JSON
       return c.json(movies);

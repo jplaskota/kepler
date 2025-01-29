@@ -20,8 +20,8 @@ export const seriesRoute = new Hono()
         .from(Series)
         .where(eq(Series.user_id, userId));
 
-      // Return 404 if no series are found
-      if (!series.length) return c.notFound();
+      // Return empty array if no series are found
+      if (!series.length) return c.json([]);
 
       // Return the list of series as JSON
       return c.json(series);
@@ -53,7 +53,6 @@ export const seriesRoute = new Hono()
         _id: seriesExist[0]._id,
         added_date: seriesExist[0].added_date,
       });
-
     } catch (err: any) {
       console.error("Error fetching series by ID:", err);
       return c.json({ error: err.message || "Failed to fetch series" }, 500);
@@ -70,7 +69,9 @@ export const seriesRoute = new Hono()
       const existingContent = await db
         .select()
         .from(Series)
-        .where(and(eq(Series.user_id, userId), eq(Series.tmdb_id, series.tmdb_id)));
+        .where(
+          and(eq(Series.user_id, userId), eq(Series.tmdb_id, series.tmdb_id))
+        );
 
       // Return 409 response if the series already exists
       if (existingContent.length) return c.text("Series already exists.", 409);

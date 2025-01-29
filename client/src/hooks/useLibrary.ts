@@ -33,15 +33,20 @@ export function useLibrary() {
     ],
   });
 
-  const isLoading = moviesQuery.isLoading || seriesQuery.isLoading;
+  const isLoading = moviesQuery.isLoading && seriesQuery.isLoading;
   const isEmpty =
     !isLoading && !moviesQuery.data?.length && !seriesQuery.data?.length;
 
+  const refetchMovies = async () => {
+    await queryClient.invalidateQueries({ queryKey: ["get-movies"] });
+  };
+
+  const refetchSeries = async () => {
+    await queryClient.invalidateQueries({ queryKey: ["get-series"] });
+  };
+
   const refetchLibrary = async () => {
-    await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["get-movies"] }),
-      queryClient.invalidateQueries({ queryKey: ["get-series"] }),
-    ]);
+    await Promise.all([refetchMovies(), refetchSeries()]);
   };
 
   const library = useMemo(() => {
@@ -82,6 +87,8 @@ export function useLibrary() {
     library,
     isLoading,
     isEmpty,
+    refetchMovies,
+    refetchSeries,
     refetchLibrary,
   };
 }

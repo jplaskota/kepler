@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useLibrary } from "./useLibrary";
 
 export function useSeriesActions() {
-  const { refetchLibrary } = useLibrary();
+  const { refetchSeries } = useLibrary();
   const navigate = useNavigate();
 
   const addSeries = useMutation({
@@ -18,18 +18,18 @@ export function useSeriesActions() {
       userId: string;
     }) => postSeries(seriesData, userId),
     onSuccess: () => {
-      toast.success("Series added to your list");
-      refetchLibrary();
       navigate({ to: "/" });
+      refetchSeries();
+      toast.success("Series added to your list");
     },
   });
 
   const deleteSeries = useMutation({
     mutationFn: (id: string) => deleteSeriesById(id),
     onSuccess: () => {
-      toast.success("Series deleted");
-      refetchLibrary();
       navigate({ to: "/" });
+      refetchSeries();
+      toast.success("Series deleted");
     },
   });
 

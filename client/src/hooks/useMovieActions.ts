@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useLibrary } from "./useLibrary";
 
 export function useMovieActions() {
-  const { refetchLibrary } = useLibrary();
+  const { refetchMovies } = useLibrary();
   const navigate = useNavigate();
 
   const addMovie = useMutation({
@@ -18,18 +18,18 @@ export function useMovieActions() {
       userId: string;
     }) => postMovie(movieData, userId),
     onSuccess: () => {
-      toast.success("Movie added to your list");
-      refetchLibrary();
       navigate({ to: "/" });
+      refetchMovies();
+      toast.success("Movie added to your list");
     },
   });
 
   const deleteMovie = useMutation({
     mutationFn: (id: string) => deleteMovieById(id),
     onSuccess: () => {
-      toast.success("Movie deleted");
-      refetchLibrary();
       navigate({ to: "/" });
+      refetchMovies();
+      toast.success("Movie deleted");
     },
   });
 

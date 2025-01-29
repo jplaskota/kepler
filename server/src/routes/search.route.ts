@@ -60,7 +60,8 @@ export const searchRoute = new Hono()
             .map((id) => MovieGenresMap.get(id))
             .filter((g) => g !== undefined),
         }))
-        .sort((a, b) => parseFloat(b.popularity) - parseFloat(a.popularity));
+        .sort((a, b) => parseFloat(b.popularity) - parseFloat(a.popularity))
+        .slice(0, 8);
 
       return c.json(moviesPrepared);
     } catch (err: any) {
@@ -109,7 +110,8 @@ export const searchRoute = new Hono()
             .map((id) => SeriesGenresMap.get(id))
             .filter((g) => g !== undefined),
         }))
-        .sort((a, b) => parseFloat(b.popularity) - parseFloat(a.popularity));
+        .sort((a, b) => parseFloat(b.popularity) - parseFloat(a.popularity))
+        .slice(0, 8);
 
       return c.json(seriesPrepared);
     } catch (err: any) {
