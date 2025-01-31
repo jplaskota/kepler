@@ -58,7 +58,7 @@ export default function DetailedContent({
               </p>
               <div className="flex gap-2 text-md sm:text-xl font-montserrat">
                 <p>[ {media.year.split("-")[0]} ]</p>
-                <p>[ {media.details} mins ]</p>
+                <p>[ {media.details} ]</p>
                 <p>[ {media.vote_average} ]</p>
               </div>
             </div>

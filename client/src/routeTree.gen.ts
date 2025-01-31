@@ -10,158 +10,158 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
-import { Route as AuthenticatedImport } from './routes/_authenticated'
-import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedSearchTypeIdImport } from './routes/_authenticated/search/$type/$id'
-import { Route as AuthenticatedLibraryTypeIdImport } from './routes/_authenticated/library/$type/$id'
+import { Route as rootRoute } from "./routes/__root";
+import { Route as AuthenticatedImport } from "./routes/_authenticated";
+import { Route as AuthenticatedIndexImport } from "./routes/_authenticated/index";
+import { Route as AuthenticatedLibraryTypeIdImport } from "./routes/_authenticated/library/$type/$id";
+import { Route as AuthenticatedSearchTypeIdImport } from "./routes/_authenticated/search/$type/$id";
+import { Route as AboutImport } from "./routes/about";
 
 // Create/Update Routes
 
 const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
+  id: "/about",
+  path: "/about",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AuthenticatedRoute = AuthenticatedImport.update({
-  id: '/_authenticated',
+  id: "/_authenticated",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => AuthenticatedRoute,
-} as any)
+} as any);
 
 const AuthenticatedSearchTypeIdRoute = AuthenticatedSearchTypeIdImport.update({
-  id: '/search/$type/$id',
-  path: '/search/$type/$id',
+  id: "/search/$type/$id",
+  path: "/search/$type/$id",
   getParentRoute: () => AuthenticatedRoute,
-} as any)
+} as any);
 
 const AuthenticatedLibraryTypeIdRoute = AuthenticatedLibraryTypeIdImport.update(
   {
-    id: '/library/$type/$id',
-    path: '/library/$type/$id',
+    id: "/library/$type/$id",
+    path: "/library/$type/$id",
     getParentRoute: () => AuthenticatedRoute,
-  } as any,
-)
+  } as any
+);
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthenticatedImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authenticated/': {
-      id: '/_authenticated/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/library/$type/$id': {
-      id: '/_authenticated/library/$type/$id'
-      path: '/library/$type/$id'
-      fullPath: '/library/$type/$id'
-      preLoaderRoute: typeof AuthenticatedLibraryTypeIdImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/search/$type/$id': {
-      id: '/_authenticated/search/$type/$id'
-      path: '/search/$type/$id'
-      fullPath: '/search/$type/$id'
-      preLoaderRoute: typeof AuthenticatedSearchTypeIdImport
-      parentRoute: typeof AuthenticatedImport
-    }
+    "/_authenticated": {
+      id: "/_authenticated";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof AuthenticatedImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/about": {
+      id: "/about";
+      path: "/about";
+      fullPath: "/about";
+      preLoaderRoute: typeof AboutImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/_authenticated/": {
+      id: "/_authenticated/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof AuthenticatedIndexImport;
+      parentRoute: typeof AuthenticatedImport;
+    };
+    "/_authenticated/library/$type/$id": {
+      id: "/_authenticated/library/$type/$id";
+      path: "/library/$type/$id";
+      fullPath: "/library/$type/$id";
+      preLoaderRoute: typeof AuthenticatedLibraryTypeIdImport;
+      parentRoute: typeof AuthenticatedImport;
+    };
+    "/_authenticated/search/$type/$id": {
+      id: "/_authenticated/search/$type/$id";
+      path: "/search/$type/$id";
+      fullPath: "/search/$type/$id";
+      preLoaderRoute: typeof AuthenticatedSearchTypeIdImport;
+      parentRoute: typeof AuthenticatedImport;
+    };
   }
 }
 
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedLibraryTypeIdRoute: typeof AuthenticatedLibraryTypeIdRoute
-  AuthenticatedSearchTypeIdRoute: typeof AuthenticatedSearchTypeIdRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute;
+  AuthenticatedLibraryTypeIdRoute: typeof AuthenticatedLibraryTypeIdRoute;
+  AuthenticatedSearchTypeIdRoute: typeof AuthenticatedSearchTypeIdRoute;
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedLibraryTypeIdRoute: AuthenticatedLibraryTypeIdRoute,
   AuthenticatedSearchTypeIdRoute: AuthenticatedSearchTypeIdRoute,
-}
+};
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
+  AuthenticatedRouteChildren
+);
 
 export interface FileRoutesByFullPath {
-  '': typeof AuthenticatedRouteWithChildren
-  '/about': typeof AboutRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
-  '/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
+  "": typeof AuthenticatedRouteWithChildren;
+  "/about": typeof AboutRoute;
+  "/": typeof AuthenticatedIndexRoute;
+  "/library/$type/$id": typeof AuthenticatedLibraryTypeIdRoute;
+  "/search/$type/$id": typeof AuthenticatedSearchTypeIdRoute;
 }
 
 export interface FileRoutesByTo {
-  '/about': typeof AboutRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
-  '/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
+  "/about": typeof AboutRoute;
+  "/": typeof AuthenticatedIndexRoute;
+  "/library/$type/$id": typeof AuthenticatedLibraryTypeIdRoute;
+  "/search/$type/$id": typeof AuthenticatedSearchTypeIdRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/about': typeof AboutRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/_authenticated/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
-  '/_authenticated/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
+  __root__: typeof rootRoute;
+  "/_authenticated": typeof AuthenticatedRouteWithChildren;
+  "/about": typeof AboutRoute;
+  "/_authenticated/": typeof AuthenticatedIndexRoute;
+  "/_authenticated/library/$type/$id": typeof AuthenticatedLibraryTypeIdRoute;
+  "/_authenticated/search/$type/$id": typeof AuthenticatedSearchTypeIdRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/about' | '/' | '/library/$type/$id' | '/search/$type/$id'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/' | '/library/$type/$id' | '/search/$type/$id'
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: "" | "/about" | "/" | "/library/$type/$id" | "/search/$type/$id";
+  fileRoutesByTo: FileRoutesByTo;
+  to: "/about" | "/" | "/library/$type/$id" | "/search/$type/$id";
   id:
-    | '__root__'
-    | '/_authenticated'
-    | '/about'
-    | '/_authenticated/'
-    | '/_authenticated/library/$type/$id'
-    | '/_authenticated/search/$type/$id'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/_authenticated"
+    | "/about"
+    | "/_authenticated/"
+    | "/_authenticated/library/$type/$id"
+    | "/_authenticated/search/$type/$id";
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  AboutRoute: typeof AboutRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren;
+  AboutRoute: typeof AboutRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutRoute: AboutRoute,
-}
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
