@@ -85,6 +85,10 @@ module.exports = {
         Anton: ['"Anton"', "sans-serif"],
         Montserrat: ['"Montserrat", "sans-serif"'],
       },
+      backgroundImage: {
+        gradient:
+          "linear-gradient(45deg, #3d6ee5, #3452a6, #28376c, #1a1f37, #000000)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

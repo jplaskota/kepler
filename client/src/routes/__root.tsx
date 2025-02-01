@@ -2,8 +2,8 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import LibraryProvider from "@/store/library.context";
 import type { QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 // need to be type to avoid error
@@ -17,14 +17,14 @@ export const Route = createRootRouteWithContext<RootRouteProps>()({
 
 function Root() {
   return (
-    <div className="w-full flex flex-col items-center bg-background">
+    <div className="w-full flex flex-col items-center bg-gradient">
       <LibraryProvider>
         <Navbar />
         <Outlet />
       </LibraryProvider>
       <Toaster />
       {/* <TanStackRouterDevtools /> */}
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </div>
   );
 }
