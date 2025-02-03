@@ -37,9 +37,7 @@ export default function Library() {
   if (isEmpty) {
     return (
       <div className="text-center p-4">
-        <p>
-          No media saved yet. Start adding your favorite movies and series!
-        </p>
+        <p>No media saved yet. Start adding your favorite movies and series!</p>
       </div>
     );
   }
@@ -49,7 +47,7 @@ export default function Library() {
       <Masonry
         className="flex gap-4 px-4"
         breakpointCols={cols}
-        columnClassName="w-full"
+        columnClassName=""
       >
         {library.map((item) => (
           <LibraryCard key={item._id} item={item} />

@@ -35,9 +35,6 @@ export default function LibraryCard({ item }: LibraryCardProps) {
       ? `${(item as TSeriesCard).number_of_seasons} seasons`
       : `${(item as TMovieCard).runtime} mins`;
 
-  // Format the added_date
-  const formattedDate = new Date(item.added_date).toLocaleDateString();
-
   return (
     <Link
       to="/library/$type/$id"
@@ -46,7 +43,7 @@ export default function LibraryCard({ item }: LibraryCardProps) {
         id: item._id,
       }}
     >
-      <Card>
+      <Card className="mb-4">
         <CardHeader className="p-2 sm:p-3">
           {loading && <Skeleton className="aspect-[8/12] w-full" />}
           <img
@@ -67,12 +64,12 @@ export default function LibraryCard({ item }: LibraryCardProps) {
             <CardDescription className="max-sm:text-xs">
               [ {additionalInfo} ]
             </CardDescription>
+            <CardDescription className="max-sm:text-xs">
+              [ {item.vote_average} ]
+            </CardDescription>
           </div>
           <CardDescription className="max-sm:text-xs truncate">
             [ {item.genres.join(" ] [ ")} ]
-          </CardDescription>
-          <CardDescription className="max-sm:text-xs text-right">
-            Added {formattedDate}
           </CardDescription>
         </CardHeader>
       </Card>
