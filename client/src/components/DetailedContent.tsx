@@ -56,9 +56,11 @@ export default function DetailedContent({
                 {media.title.toUpperCase()}
               </p>
               <div className="flex gap-2 text-md sm:text-xl font-montserrat">
-                <p>[ {media.year.split("-")[0]} ]</p>
-                <p>[ {media.details} ]</p>
-                <p>[ {media.vote_average} ]</p>
+                <p>{media.year.split("-")[0]}</p>
+                <p>|</p>
+                <p>{media.details}</p>
+                <p>|</p>
+                <p>{media.vote_average}</p>
               </div>
             </div>
             <Separator />

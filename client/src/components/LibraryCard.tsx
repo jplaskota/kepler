@@ -42,6 +42,7 @@ export default function LibraryCard({ item }: LibraryCardProps) {
         type: item.media_type,
         id: item._id,
       }}
+      className="w-full sm:w-[300px]"
     >
       <Card>
         <CardHeader className="p-2 sm:p-3">
@@ -57,15 +58,17 @@ export default function LibraryCard({ item }: LibraryCardProps) {
           <CardTitle className="font-Anton text-2xl sm:text-4xl sm:pt-1 truncate">
             {title.toUpperCase()}
           </CardTitle>
-          <div className="flex gap-1 max-sm:text-xs">
+          <div className="flex gap-1.5">
             <CardDescription className="max-sm:text-xs">
-              [ {releaseDate.split("-")[0]} ]
+              {releaseDate.split("-")[0]}
             </CardDescription>
+            <CardDescription className="max-sm:text-xs">|</CardDescription>
             <CardDescription className="max-sm:text-xs">
-              [ {additionalInfo} ]
+              {additionalInfo}
             </CardDescription>
+            <CardDescription className="max-sm:text-xs">|</CardDescription>
             <CardDescription className="max-sm:text-xs">
-              [ {item.vote_average} ]
+              {item.vote_average}
             </CardDescription>
           </div>
           <CardDescription className="max-sm:text-xs truncate">
