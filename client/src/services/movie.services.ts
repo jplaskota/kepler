@@ -14,7 +14,10 @@ export const getMovies = async () => {
     })
     .then((res) => res.json());
 
-  return results as TMovieCard[];
+  return results.map((movie) => ({
+    ...movie,
+    added_date: new Date(movie.added_date),
+  })) as TMovieCard[];
 };
 
 export const getMovieById = async (id: string) => {

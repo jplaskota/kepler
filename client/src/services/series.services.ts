@@ -14,7 +14,10 @@ export const getSeries = async () => {
     })
     .then((res) => res.json());
 
-  return results as TSeriesCard[];
+  return results.map((series) => ({
+    ...series,
+    added_date: new Date(series.added_date),
+  })) as TSeriesCard[];
 };
 
 export const getSeriesById = async (id: string) => {
