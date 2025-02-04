@@ -17,17 +17,17 @@ export default function Navbar() {
   const { navbarVisible, navbarTop } = useScroll();
 
   return (
-    <div className="w-full h-[60px]">
+    <div className="w-full h-[70px] flex justify-center">
       <nav
         className={cn(
           !navbarTop &&
             (navbarVisible
               ? "fixed top-0 transition-all duration-300"
               : "fixed -top-[60px] transition-all duration-300"),
-          "z-50 w-full bg-gradient-to-t from-background/80 to-background backdrop-blur-md"
+          "w-full bg-gradient-to-t from-background/80 to-background backdrop-blur-md"
         )}
       >
-        <div className="flex justify-between w-full sm:max-w-[1600px] px-3 py-3 items-center mx-auto">
+        <div className="flex justify-between w-full sm:max-w-[1600px] h-[70px] px-4 items-center mx-auto">
           <div className="flex h-5 items-center gap-2.5 sm:gap-3">
             <Link
               to="/"

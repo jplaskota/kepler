@@ -16,7 +16,7 @@ export function useScroll() {
 
       const speedThreshold = 0.5;
 
-      if (currentScroll > 60) {
+      if (currentScroll > 70) {
         setNavbarTop(false);
         if (scrollSpeed > speedThreshold) {
           if (prevScroll > currentScroll) {
