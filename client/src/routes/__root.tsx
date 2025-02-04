@@ -17,7 +17,7 @@ export const Route = createRootRouteWithContext<RootRouteProps>()({
 
 function Root() {
   return (
-    <div className="w-full min-h-svh flex flex-col items-center  pt-[60px]">
+    <div className="w-full min-h-svh flex flex-col items-center">
       <LibraryProvider>
         <Navbar />
         <Outlet />

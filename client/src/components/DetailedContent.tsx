@@ -36,7 +36,6 @@ export default function DetailedContent({
       <div className="flex flex-col-reverse md:flex-col justify-between items-end gap-8 font-Montserrat">
         {saved ? (
           <nav className="flex gap-2 items-center sm:gap-4">
-            <Button>Archive</Button>
             <Button
               variant="destructive"
               size="icon"
