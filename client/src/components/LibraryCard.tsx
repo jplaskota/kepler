@@ -43,7 +43,7 @@ export default function LibraryCard({ item }: LibraryCardProps) {
         id: item._id,
       }}
     >
-      <Card className="mb-4">
+      <Card>
         <CardHeader className="p-2 sm:p-3">
           {loading && <Skeleton className="aspect-[8/12] w-full" />}
           <img
@@ -77,6 +77,5 @@ export default function LibraryCard({ item }: LibraryCardProps) {
   );
 }
 
-// TODO series page with more info
-// TODO one line category
-// TODO text truncation
+// TODO slider with actors
+// TODO [series] slider with seasons
