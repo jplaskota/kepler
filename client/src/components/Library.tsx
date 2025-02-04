@@ -15,18 +15,18 @@ export default function Library() {
 
   return (
     <div className="scroll-smooth overflow-y-auto no-scrollbar">
-      <div className="flex flex-wrap justify-center gap-4 max-w-[1600px]">
+      <div className="grid grid-cols-2 sm:flex flex-wrap justify-center px-2 sm:px-4 pb-2 sm:pb-4 gap-2 sm:gap-4 max-w-[1600px]">
         {isLoading ? (
           <>
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
-            <Skeleton className="w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
+            <Skeleton className="w-full sm:w-[300px] h-[500px]" />
           </>
         ) : (
           library.map((item) => <LibraryCard key={item._id} item={item} />)
