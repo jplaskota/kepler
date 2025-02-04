@@ -12,7 +12,7 @@ export const SeriesActorSchema = z.object({
 
 export const SeriesSeasonSchema = z.object({
   id: z.number(),
-  air_date: z.string(),
+  air_date: z.string().nullable(), // in specials season can be null
   episode_count: z.number(),
   poster_path: z.string(),
   season_number: z.number(),
@@ -37,7 +37,7 @@ export const SeriesSchema = z.object({
   seasons: z.array(SeriesSeasonSchema),
   vote_average: z.string(),
   popularity: z.string(),
-  added_date: z.date().optional(),
+  added_date: z.date(),
   media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
 });
 

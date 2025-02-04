@@ -29,7 +29,7 @@ export const MovieSchema = z.object({
   rotten_tomatoes: z.string().optional(), // * OMDB | sometimes is null
   vote_average: z.string(),
   popularity: z.string(),
-  added_date: z.date().nullable(), // when added to db
+  added_date: z.date(),
   media_type: z.enum(["movie", "series"], { message: "Invalid media type" }),
 });
 

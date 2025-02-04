@@ -4,8 +4,7 @@ import { Hono } from "hono";
 import { db } from "../db";
 import { Series } from "../db/schema/series.schema";
 import { getUser } from "../kinde";
-import type { TSeries, TSeriesSearch } from "../models/series.model";
-import { InsertSeriesSchema } from "../models/series.model";
+import { InsertSeriesSchema, type TSeries } from "../models/series.model";
 import { fetchSeriesDetails } from "../services/tmdb.services";
 
 export const seriesRoute = new Hono()
@@ -48,11 +47,13 @@ export const seriesRoute = new Hono()
 
       const seriesDetails = await fetchSeriesDetails(seriesExist[0].tmdb_id);
 
-      return c.json({
+      const preparedSeries: TSeries = {
         ...seriesDetails,
         _id: seriesExist[0]._id,
         added_date: seriesExist[0].added_date,
-      });
+      };
+
+      return c.json(preparedSeries);
     } catch (err: any) {
       console.error("Error fetching series by ID:", err);
       return c.json({ error: err.message || "Failed to fetch series" }, 500);

@@ -4,8 +4,7 @@ import { Hono } from "hono";
 import { db } from "../db";
 import { Movies } from "../db/schema/movies.schema";
 import { getUser } from "../kinde";
-import type { TMovie } from "../models/movie.model";
-import { InsertMoviesSchema } from "../models/movie.model";
+import { InsertMoviesSchema, type TMovie } from "../models/movie.model";
 import { fetchMovieDetails } from "../services/tmdb.services";
 
 export const movieRoute = new Hono()
@@ -46,11 +45,13 @@ export const movieRoute = new Hono()
 
       const movieDetails = await fetchMovieDetails(movieExist[0].tmdb_id);
 
-      return c.json({
+      const preparedMovie: TMovie = {
         ...movieDetails,
         _id: movieExist[0]._id,
         added_date: movieExist[0].added_date,
-      });
+      };
+
+      return c.json(preparedMovie);
     } catch (err: any) {
       console.error("Error fetching movie by ID:", err);
       return c.json({ error: err.message || "Failed to fetch movie" }, 500);
