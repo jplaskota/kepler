@@ -35,7 +35,7 @@ export default function Menu() {
           <AvatarFallback>{fallback}</AvatarFallback>
         </Avatar>
         <div>
-          <SheetDescription className="text-lg">Hi</SheetDescription>
+          <SheetDescription className="flex text-lg">Hi</SheetDescription>
           <SheetTitle className="text-2xl font-Montserrat">
             {data?.user.given_name}
           </SheetTitle>
@@ -46,7 +46,7 @@ export default function Menu() {
   );
 
   const LogoutBtn = (
-    <a href="/api/logout">
+    <a href="/api/logout" className="flex justify-end">
       <Button variant="secondary" className="flex gap-2">
         <Logout className="w-4 h-4" />
         <p>Sign out</p>

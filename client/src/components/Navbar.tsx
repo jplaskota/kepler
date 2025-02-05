@@ -44,7 +44,14 @@ export default function Navbar() {
                 alt="logo"
                 className="h-6 block dark:hidden"
               />
-              <p className="hidden sm:block text-xl select-none">Kepler</p>
+              <p
+                className={cn(
+                  "hidden sm:block text-xl select-none",
+                  location.pathname !== "/" && "block"
+                )}
+              >
+                Kepler
+              </p>
             </Link>
             {location.pathname === "/" && data && (
               <>
