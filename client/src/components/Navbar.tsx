@@ -27,7 +27,7 @@ export default function Navbar() {
           "w-full bg-gradient-to-t from-background/80 to-background backdrop-blur-md"
         )}
       >
-        <div className="flex justify-between w-full sm:max-w-[1600px] p-2 sm:p-4 items-center">
+        <div className="flex justify-between w-full sm:max-w-[1600px] p-2 sm:p-4 items-center mx-auto">
           <div className="flex h-5 items-center gap-2.5 sm:gap-3">
             <Link
               to="/"
