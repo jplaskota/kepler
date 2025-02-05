@@ -3,24 +3,22 @@ import { Skeleton } from "./skeleton";
 
 export function DetailedPageSkeleton() {
   return (
-    <div className="animate-fade-in">
-      <Card className="flex md:max-w-[1200px] max-md:flex-col gap-4 p-3 mx-4 mb-4">
-        <Skeleton className="md:max-h-[600px] aspect-[8/12] w-full rounded-md" />
-        <div className="flex flex-col gap-8 w-full">
-          <div className="flex flex-col gap-2">
-            <Skeleton className="h-16 w-full" />
-            <div className="flex gap-2">
-              <Skeleton className="h-6 w-24" />
-              <Skeleton className="h-6 w-24" />
-              <Skeleton className="h-6 w-24" />
-            </div>
-          </div>
-          <div className="space-y-4">
-            <Skeleton className="h-32 w-full" />
-            <Skeleton className="h-6 w-full" />
-          </div>
-        </div>
-      </Card>
-    </div>
+    <Card className="flex md:max-w-[1200px] max-md:flex-col gap-4 p-3">
+      <Skeleton className="h-[600px] aspect-[8/12]" />
+      <div className="flex flex-col-reverse md:flex-col justify-between items-end gap-8">
+        <Skeleton className="h-10 w-10" />
+        <article className="flex flex-col gap-3">
+          <Skeleton className="h-28 w-full sm:w-2/3" />
+          <Skeleton className="h-8 w-full sm:w-1/3" />
+          <Skeleton className="flex flex-wrap gap-1 max-w-fit">
+            <p className="h-8 w-52" />
+            <p className="h-8 w-52" />
+            <p className="h-8 w-52" />
+            <p className="h-8 w-52" />
+          </Skeleton>
+          <Skeleton className="h-8 w-full sm:w-1/3" />
+        </article>
+      </div>
+    </Card>
   );
 }
