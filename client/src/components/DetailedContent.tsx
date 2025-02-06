@@ -73,7 +73,7 @@ export default function DetailedContent({
           </article>
         </div>
       </Card>
-      <Slider />
+      <Slider actors={media.actors} />
     </div>
   );
 }
