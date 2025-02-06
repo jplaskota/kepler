@@ -3,8 +3,8 @@ import { Skeleton } from "./skeleton";
 
 export function DetailedPageSkeleton() {
   return (
-    <Card className="flex md:max-w-[1200px] max-md:flex-col gap-4 p-3">
-      <Skeleton className="h-[600px] aspect-[8/12]" />
+    <Card className="flex md:max-w-[1200px] max-md:flex-col gap-4 p-3 mx-2 sm:mx-4 mb-2 sm:mb-4">
+      <Skeleton className="sm:h-[600px] aspect-[8/12]" />
       <div className="flex flex-col-reverse md:flex-col justify-between items-end gap-8">
         <Skeleton className="h-10 w-10" />
         <article className="flex flex-col gap-3">
