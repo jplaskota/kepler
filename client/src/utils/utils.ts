@@ -1,6 +1,11 @@
 import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
 import { TMovie, TMovieSearch } from "@server-models/movie.model";
-import { TSeries, TSeriesSearch } from "@server-models/series.model";
+import {
+  TActor,
+  TSeason,
+  TSeries,
+  TSeriesSearch,
+} from "@server-models/series.model";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -39,4 +44,22 @@ export function formatSeries(series: TSeries | TSeriesSearch) {
   };
 
   return newSeries;
+}
+
+export function actorsToSliderItems(actors: TActor[]) {
+  return actors.map((actor) => ({
+    id: actor.id,
+    title: actor.character,
+    subtitle: actor.original_name,
+    image_path: actor.profile_path,
+  }));
+}
+
+export function seasonsToSliderItems(seasons: TSeason[]) {
+  return seasons.map((season) => ({
+    id: season.id,
+    title: "Season - " + season.season_number,
+    subtitle: "Episodes - " + season.episode_count.toString(),
+    image_path: season.poster_path,
+  }));
 }

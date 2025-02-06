@@ -1,5 +1,5 @@
 import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
-import { cn } from "@/utils/utils";
+import { actorsToSliderItems, cn, seasonsToSliderItems } from "@/utils/utils";
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Separator } from "@radix-ui/react-separator";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export default function DetailedContent({
   const [imageLoading, setImageLoading] = useState(true);
 
   return (
-    <div className="flex flex-col gap-4 p-4 w-full max-w-[1200px]">
+    <div className="flex flex-col gap-2 sm:gap-4 px-2 sm:px-4 w-full max-w-[1200px]">
       <Card className="flex max-md:flex-col gap-4 p-3 font-Montserrat">
         {imageLoading && <Skeleton className="aspect-[8/12] w-full" />}
         <img
@@ -73,7 +73,12 @@ export default function DetailedContent({
           </article>
         </div>
       </Card>
-      <Slider actors={media.actors} />
+      {"seasons" in media && media.seasons && media.seasons.length > 0 && (
+        <Slider items={seasonsToSliderItems(media.seasons)} />
+      )}
+      {media.actors && media.actors.length > 0 && (
+        <Slider items={actorsToSliderItems(media.actors)} />
+      )}
     </div>
   );
 }
