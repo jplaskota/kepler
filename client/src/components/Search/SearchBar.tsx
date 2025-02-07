@@ -26,6 +26,7 @@ export default function SearchBar({
           <Input
             name="title"
             type="text"
+            placeholder="Search . . ."
             value={inputValue}
             onChange={changeHandler}
             className="bg-background text-xl border-0 font-Montserrat focus-visible:ring-0"

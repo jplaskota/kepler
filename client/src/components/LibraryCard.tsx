@@ -134,7 +134,7 @@ export default function LibraryCard({ item }: LibraryCardProps) {
                 <Badge
                   key={genre}
                   variant="secondary"
-                  className="max-sm:text-xs shrink-0 snap-start"
+                  className="max-sm:text-xs shrink-0 snap-start select-none cursor-default"
                 >
                   {genre}
                 </Badge>

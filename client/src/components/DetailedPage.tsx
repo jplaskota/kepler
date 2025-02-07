@@ -1,5 +1,6 @@
-import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
+import { Badge } from "@/components/ui/badge";
 import { actorsToSliderItems, cn, seasonsToSliderItems } from "@/lib/utils";
+import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Separator } from "@radix-ui/react-separator";
 import { useState } from "react";
@@ -70,8 +71,17 @@ export default function DetailedPage({
             <Separator />
             <p>{media.overview}</p>
             <Separator />
-            <p>[ {media.genres.join(" ] [ ")} ]</p>
-            <Separator />
+            <div className="flex flex-wrap gap-2">
+              {media.genres.map((genre) => (
+                <Badge
+                  key={genre}
+                  variant="secondary"
+                  className="text-sm sm:text-base select-none cursor-default"
+                >
+                  {genre}
+                </Badge>
+              ))}
+            </div>
           </article>
         </div>
       </Card>
