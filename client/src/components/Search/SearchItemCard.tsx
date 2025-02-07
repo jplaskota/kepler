@@ -7,7 +7,7 @@ import {
 import type { SearchItemCardProps } from "@/types/search.types";
 import type { TMovieSearchCard } from "@server-models/movie.model";
 import type { TSeriesSearchCard } from "@server-models/series.model";
-import { cn } from "@/utils/utils";
+import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Skeleton } from "../ui/skeleton";

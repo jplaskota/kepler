@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/utils/utils";
+import { cn } from "@/lib/utils";
 import type { TMovieCard } from "@server-models/movie.model";
 import type { TSeriesCard } from "@server-models/series.model";
 import { Link } from "@tanstack/react-router";

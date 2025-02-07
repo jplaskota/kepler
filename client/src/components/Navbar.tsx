@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { useScroll } from "@/hooks/useScroll";
 import { userQueryOptions } from "@/services/auth.services";
-import { cn } from "@/utils/utils";
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "@tanstack/react-router";
 import logo_dark from "../assets/logo_dark.png";

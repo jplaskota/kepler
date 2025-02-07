@@ -5,7 +5,7 @@ import {
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
 import { LibraryContext } from "@/store/library.context";
-import { cn } from "@/utils/utils";
+import { cn } from "@/lib/utils";
 import { useContext } from "react";
 
 export default function CategoryBer() {

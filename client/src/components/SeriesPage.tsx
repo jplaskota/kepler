@@ -2,7 +2,7 @@ import { useSeriesActions } from "@/hooks/useSeriesActions";
 import { userQueryOptions } from "@/services/auth.services";
 import { searchSeriesById } from "@/services/search.services";
 import { getSeriesById } from "@/services/series.services";
-import { formatSeries } from "@/utils/utils";
+import { formatSeries } from "@/lib/utils";
 import type { TSeries, TSeriesSearch } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";

@@ -1,5 +1,5 @@
 import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
-import { actorsToSliderItems, cn, seasonsToSliderItems } from "@/utils/utils";
+import { actorsToSliderItems, cn, seasonsToSliderItems } from "@/lib/utils";
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Separator } from "@radix-ui/react-separator";
 import { useState } from "react";

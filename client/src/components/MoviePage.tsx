@@ -2,7 +2,7 @@ import { useMovieActions } from "@/hooks/useMovieActions";
 import { userQueryOptions } from "@/services/auth.services";
 import { getMovieById } from "@/services/movie.services";
 import { searchMovieById } from "@/services/search.services";
-import { formatMovie } from "@/utils/utils";
+import { formatMovie } from "@/lib/utils";
 import type { TMovie, TMovieSearch } from "@server-models/movie.model";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
