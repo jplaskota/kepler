@@ -8,19 +8,19 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
-interface DetailedContentProps {
+interface DetailedPageProps {
   media: TFormattedMovie | TFormattedSeries;
   saved: boolean;
   onDelete: () => void;
   onAdd: () => void;
 }
 
-export default function DetailedContent({
+export default function DetailedPage({
   media,
   saved,
   onDelete,
   onAdd,
-}: DetailedContentProps) {
+}: DetailedPageProps) {
   const [imageLoading, setImageLoading] = useState(true);
 
   return (

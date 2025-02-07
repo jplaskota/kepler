@@ -6,8 +6,8 @@ import { formatSeries } from "@/utils/utils";
 import type { TSeries, TSeriesSearch } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import DetailedContent from "./DetailedContent";
-import { DetailedPageSkeleton } from "./ui/skeleton-detailed";
+import DetailedPage from "./DetailedPage";
+import DetailedPageSkeleton from "./DetailedPageSkeleton";
 
 interface SeriesPageProps {
   id: string;
@@ -53,7 +53,7 @@ export default function SeriesPage({ id, saved }: SeriesPageProps) {
   };
 
   return (
-    <DetailedContent
+    <DetailedPage
       media={formatSeries(series!)}
       saved={saved}
       onDelete={handleDelete}

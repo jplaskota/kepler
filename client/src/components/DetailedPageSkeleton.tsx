@@ -1,7 +1,7 @@
-import { Card } from "./card";
-import { Skeleton } from "./skeleton";
+import { Card } from "./ui/card";
+import { Skeleton } from "./ui/skeleton";
 
-export function DetailedPageSkeleton() {
+export default function DetailedPageSkeleton() {
   return (
     <Card className="flex md:max-w-[1200px] max-md:flex-col gap-4 p-3 mx-2 sm:mx-4 mb-2 sm:mb-4">
       <Skeleton className="sm:h-[600px] aspect-[8/12]" />

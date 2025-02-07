@@ -6,8 +6,8 @@ import { formatMovie } from "@/utils/utils";
 import type { TMovie, TMovieSearch } from "@server-models/movie.model";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import DetailedContent from "./DetailedContent";
-import { DetailedPageSkeleton } from "./ui/skeleton-detailed";
+import DetailedPage from "./DetailedPage";
+import DetailedPageSkeleton from "./DetailedPageSkeleton";
 
 interface MoviePageProps {
   id: string;
@@ -53,7 +53,7 @@ export default function MoviePage({ id, saved }: MoviePageProps) {
   };
 
   return (
-    <DetailedContent
+    <DetailedPage
       media={formatMovie(movie!)}
       saved={saved}
       onDelete={handleDelete}
