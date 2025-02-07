@@ -17,7 +17,14 @@ import { MovieGenresMap, SeriesGenresMap } from "../utils/genres";
 const TMDB_API_BASE_URL = "https://api.themoviedb.org/3",
   TMDB_API_KEY = Bun.env.TMDB_API_KEY,
   OMDB_API_BASE_URL = "http://www.omdbapi.com/",
-  OMDB_API_KEY = Bun.env.OMDB_API_KEY;
+  OMDB_API_KEY = Bun.env.OMDB_API_KEY,
+  TMDB_OPTIONS = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: TMDB_API_KEY!,
+    },
+  };
 
 export const searchRoute = new Hono()
   .get("/movie/id/:id", async (c) => {
@@ -38,7 +45,8 @@ export const searchRoute = new Hono()
     try {
       // Fetch movies matching the search query from TMDB
       const moviesRes = await fetch(
-        `${TMDB_API_BASE_URL}/search/movie?query=${searchName}&api_key=${TMDB_API_KEY}`
+        `${TMDB_API_BASE_URL}/search/movie?query=${searchName}`,
+        TMDB_OPTIONS
       ).then((res) => {
         if (!res.ok)
           throw new Error("Failed to fetch movies by title from TMDB.");
@@ -88,7 +96,8 @@ export const searchRoute = new Hono()
     try {
       // Fetch series matching the search query from TMDB
       const seriesRes = await fetch(
-        `${TMDB_API_BASE_URL}/search/tv?query=${searchName}&api_key=${TMDB_API_KEY}`
+        `${TMDB_API_BASE_URL}/search/tv?query=${searchName}`,
+        TMDB_OPTIONS
       ).then((res) => {
         if (!res.ok)
           throw new Error("Failed to fetch series by title from TMDB.");

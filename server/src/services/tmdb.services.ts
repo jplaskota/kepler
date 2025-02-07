@@ -11,25 +11,30 @@ import {
   type TSeriesSearch,
 } from "../models/series.model";
 
-const TMDB_API_BASE_URL = "https://api.themoviedb.org/3";
-const TMDB_API_KEY = Bun.env.TMDB_API_KEY;
-const OMDB_API_BASE_URL = "http://www.omdbapi.com";
-const OMDB_API_KEY = Bun.env.OMDB_API_KEY;
+const TMDB_API_BASE_URL = "https://api.themoviedb.org/3",
+  TMDB_API_KEY = Bun.env.TMDB_API_KEY,
+  OMDB_API_BASE_URL = "http://www.omdbapi.com",
+  OMDB_API_KEY = Bun.env.OMDB_API_KEY,
+  TMDB_OPTIONS = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: TMDB_API_KEY!,
+    },
+  };
 
 export async function fetchMovieDetails(tmdbId: number) {
   const [tmdbMovieData, tmdbActorsData] = await Promise.all([
-    fetch(`${TMDB_API_BASE_URL}/movie/${tmdbId}?api_key=${TMDB_API_KEY}`).then(
+    fetch(`${TMDB_API_BASE_URL}/movie/${tmdbId}`, TMDB_OPTIONS).then((res) => {
+      if (!res.ok) throw new Error("Failed to fetch movie details from TMDB");
+      return res.json();
+    }),
+    fetch(`${TMDB_API_BASE_URL}/movie/${tmdbId}/credits`, TMDB_OPTIONS).then(
       (res) => {
-        if (!res.ok) throw new Error("Failed to fetch movie details from TMDB");
+        if (!res.ok) throw new Error("Failed to fetch movie actors from TMDB");
         return res.json();
       }
     ),
-    fetch(
-      `${TMDB_API_BASE_URL}/movie/${tmdbId}/credits?api_key=${TMDB_API_KEY}`
-    ).then((res) => {
-      if (!res.ok) throw new Error("Failed to fetch movie actors from TMDB");
-      return res.json();
-    }),
   ]);
 
   const parsedTMDBMovieData = MovieTMDBSchema.parse(tmdbMovieData);
@@ -70,17 +75,18 @@ export async function fetchMovieDetails(tmdbId: number) {
 export async function fetchSeriesDetails(tmdbId: number) {
   const [tmdbSeriesData, tmdbActorsData] = await Promise.all([
     fetch(
-      `${TMDB_API_BASE_URL}/tv/${tmdbId}?api_key=${TMDB_API_KEY}&append_to_response=external_ids`
+      `${TMDB_API_BASE_URL}/tv/${tmdbId}?append_to_response=external_ids`,
+      TMDB_OPTIONS
     ).then((res) => {
       if (!res.ok) throw new Error("Failed to fetch series details from TMDB");
       return res.json();
     }),
-    fetch(
-      `${TMDB_API_BASE_URL}/tv/${tmdbId}/credits?api_key=${TMDB_API_KEY}`
-    ).then((res) => {
-      if (!res.ok) throw new Error("Failed to fetch series actors from TMDB");
-      return res.json();
-    }),
+    fetch(`${TMDB_API_BASE_URL}/tv/${tmdbId}/credits`, TMDB_OPTIONS).then(
+      (res) => {
+        if (!res.ok) throw new Error("Failed to fetch series actors from TMDB");
+        return res.json();
+      }
+    ),
   ]);
 
   const parsedTMDBSeriesData = SeriesTMDBSchema.parse(tmdbSeriesData);
