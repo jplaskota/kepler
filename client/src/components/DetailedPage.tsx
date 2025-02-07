@@ -24,7 +24,7 @@ export default function DetailedPage({
   const [imageLoading, setImageLoading] = useState(true);
 
   return (
-    <div className="flex flex-col gap-2 sm:gap-4 px-2 sm:px-4 w-full max-w-[1200px]">
+    <div className="flex flex-col gap-2 sm:gap-4 px-2 sm:px-4 pb-2 sm:pb-4 w-full max-w-[1200px]">
       <Card className="flex max-md:flex-col gap-4 p-3 font-Montserrat">
         {imageLoading && <Skeleton className="aspect-[8/12] w-full" />}
         <img
@@ -39,19 +39,21 @@ export default function DetailedPage({
           crossOrigin="anonymous"
         />
         <div className="flex flex-col-reverse md:flex-col justify-between items-end gap-8 font-Montserrat">
-          {saved ? (
-            <Button
-              variant="destructive"
-              size="icon"
-              onClick={() => onDelete()}
-            >
-              <TrashIcon className="w-4 h-4" />
-            </Button>
-          ) : (
-            <Button size="icon" onClick={() => onAdd()}>
-              <PlusIcon className="w-4 h-4" />
-            </Button>
-          )}
+          <div className="hidden sm:block">
+            {saved ? (
+              <Button
+                variant="destructive"
+                size="icon"
+                onClick={() => onDelete()}
+              >
+                <TrashIcon className="w-4 h-4" />
+              </Button>
+            ) : (
+              <Button size="icon" onClick={() => onAdd()}>
+                <PlusIcon className="w-4 h-4" />
+              </Button>
+            )}
+          </div>
           <article className="flex flex-col gap-3">
             <div className="flex flex-col gap-2">
               <p className="flex gap-2 font-Anton text-5xl sm:text-6xl lg:text-8xl">
@@ -79,6 +81,22 @@ export default function DetailedPage({
       {media.actors && media.actors.length > 0 && (
         <Slider items={actorsToSliderItems(media.actors)} />
       )}
+      <div className="sm:hidden">
+        {saved ? (
+          <Button
+            variant="destructive"
+            size="default"
+            className="w-full"
+            onClick={() => onDelete()}
+          >
+            <p>Delete</p>
+          </Button>
+        ) : (
+          <Button size="default" className="w-full" onClick={() => onAdd()}>
+            <p>Add to Library</p>
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
