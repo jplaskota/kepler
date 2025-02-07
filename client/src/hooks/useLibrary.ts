@@ -3,7 +3,7 @@ import { getSeries } from "@/services/series.services";
 import type { TMovieCard } from "@server-models/movie.model";
 import type { TSeriesCard } from "@server-models/series.model";
 import { useQueries, useQueryClient } from "@tanstack/react-query";
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { LibraryContext } from "../store/library.context";
 
 type LibraryItem = (TMovieCard | TSeriesCard) & {
@@ -68,20 +68,33 @@ export function useLibrary() {
       );
     }
 
+    // Update cached size before filtering
+    if (!isLoading && items.length > 0) {
+      localStorage.setItem("librarySize", items.length.toString());
+    }
+
     // Filter by category
     const filteredItems =
       category === "all"
         ? items
         : items.filter((item) => item.media_type === category);
 
-    // Sort items
     return filteredItems.sort((a, b) => {
       if (sortBy === "popularity") {
         return +b.popularity - +a.popularity;
       }
       return b.added_date.getTime() - a.added_date.getTime();
     });
-  }, [moviesQuery.data, seriesQuery.data, category, sortBy]);
+  }, [moviesQuery.data, seriesQuery.data, category, sortBy, isLoading]);
+
+  // Clear cache if library becomes empty
+  useEffect(() => {
+    if (isEmpty) {
+      localStorage.removeItem("librarySize");
+    }
+  }, [isEmpty]);
+
+  const cachedSize = parseInt(localStorage.getItem("librarySize") || "9");
 
   return {
     library,
@@ -90,5 +103,6 @@ export function useLibrary() {
     refetchMovies,
     refetchSeries,
     refetchLibrary,
+    cachedSize,
   };
 }
