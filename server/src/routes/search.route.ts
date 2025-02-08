@@ -11,7 +11,7 @@ import {
   fetchMovieDetails,
   fetchSeriesDetails,
 } from "../services/tmdb.services";
-import { MovieGenresMap, SeriesGenresMap } from "../utils/genres";
+import { MovieGenresMap, SeriesGenresMap } from "../lib/genres";
 
 // API base URLs and keys for TMDB and OMDB services
 const TMDB_API_BASE_URL = "https://api.themoviedb.org/3",
