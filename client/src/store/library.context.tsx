@@ -2,9 +2,9 @@ import { createContext, ReactElement, useState } from "react";
 
 interface LibraryContextType {
   category: "all" | "movie" | "tv";
-  sortBy: "popularity" | "added_date";
+  sortBy: "popularity" | "added_date" | "rating";
   updateCategory: (category: "all" | "movie" | "tv") => void;
-  updateSortBy: (sort: "popularity" | "added_date") => void;
+  updateSortBy: (sort: "popularity" | "added_date" | "rating") => void;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -22,22 +22,26 @@ interface LibraryProviderProps {
 export default function LibraryProvider({ children }: LibraryProviderProps) {
   const [category, setCategory] =
     useState<LibraryContextType["category"]>("all");
-  const [sortBy, setSortBy] =
-    useState<LibraryContextType["sortBy"]>("popularity");
+
+  const [sortBy, setSortBy] = useState<LibraryContextType["sortBy"]>(() => {
+    const savedSort = localStorage.getItem("kepler-sort-by");
+    return (savedSort as LibraryContextType["sortBy"]) || "popularity";
+  });
 
   const updateCategory = (newCategory: "all" | "movie" | "tv") => {
     setCategory(newCategory);
   };
 
-  const updateSortBy = (sort: "popularity" | "added_date") => {
+  const updateSortBy = (sort: "popularity" | "added_date" | "rating") => {
     setSortBy(sort);
+    localStorage.setItem("kepler-sort-by", sort);
   };
 
   return (
     <LibraryContext.Provider
       value={{ category, sortBy, updateCategory, updateSortBy }}
     >
-      {...children}
+      {children}
     </LibraryContext.Provider>
   );
 }

@@ -79,12 +79,23 @@ export function useLibrary() {
         ? items
         : items.filter((item) => item.media_type === category);
 
-    return filteredItems.sort((a, b) => {
-      if (sortBy === "popularity") {
-        return +b.popularity - +a.popularity;
-      }
-      return b.added_date.getTime() - a.added_date.getTime();
-    });
+    switch (sortBy) {
+      case "popularity":
+        return [...filteredItems].sort(
+          (a, b) => Number(b.popularity) - Number(a.popularity)
+        );
+      case "rating":
+        return [...filteredItems].sort(
+          (a, b) => Number(b.vote_average) - Number(a.vote_average)
+        );
+      case "added_date":
+        return [...filteredItems].sort(
+          (a, b) =>
+            new Date(b.added_date).getTime() - new Date(a.added_date).getTime()
+        );
+      default:
+        return filteredItems;
+    }
   }, [moviesQuery.data, seriesQuery.data, category, sortBy, isLoading]);
 
   // Clear cache if library becomes empty
