@@ -1,9 +1,9 @@
 import { SearchBarProps } from "@/types/search.types";
 import {
-  XMarkIcon as CloseIcon,
-  ArrowPathIcon as RotateIcon,
-  MagnifyingGlassIcon as SearchIcon,
-} from "@heroicons/react/24/outline";
+  X as CloseIcon,
+  RotateCw as RotateIcon,
+  Search as SearchIcon,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
@@ -46,5 +46,3 @@ export default function SearchBar({
     </div>
   );
 }
-
-// TODO after clear focus on input ?

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useSearchShortcuts } from "@/hooks/useSearchShortcuts";
-import { MagnifyingGlassIcon as SearchIcon } from "@heroicons/react/24/outline";
+import { Search as SearchIcon } from "lucide-react";
 import { useState } from "react";
 import SearchModal from "./SearchModal";
 
