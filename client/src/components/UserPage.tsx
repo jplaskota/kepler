@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import { useLibrary } from "@/hooks/useLibrary";
 import { userQueryOptions } from "@/services/auth.services";
 import { useQuery } from "@tanstack/react-query";
 import { Command, Laptop, Moon, Sun } from "lucide-react";
@@ -35,6 +36,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 export default function UserPage() {
   const { data } = useQuery(userQueryOptions);
   const { theme, setTheme } = useTheme();
+  const { cachedSize } = useLibrary();
 
   const handleClearLibrary = () => {
     console.log("clearing library data");
@@ -96,7 +98,9 @@ export default function UserPage() {
               </div>
               <div>
                 <p className="text-sm font-medium">Library Items</p>
-                <p className="text-sm text-muted-foreground">42 items</p>
+                <p className="text-sm text-muted-foreground">
+                  {cachedSize} items
+                </p>
               </div>
             </div>
           </CardContent>

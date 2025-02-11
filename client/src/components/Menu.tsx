@@ -48,11 +48,11 @@ export default function Menu() {
             <DropdownMenuLabel className="font-normal">
               <Link to="/user" disabled={location.pathname === "/user"}>
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-10 w-10 my-1">
+                  <Avatar className="h-10 w-10 my-1 select-none">
                     <AvatarImage src={data.user.picture!} />
                     <AvatarFallback>{fallback}</AvatarFallback>
                   </Avatar>
-                  <p className="text-xl">{data.user.given_name}</p>
+                  <p className="text-xl select-none">{data.user.given_name}</p>
                 </div>
               </Link>
             </DropdownMenuLabel>
