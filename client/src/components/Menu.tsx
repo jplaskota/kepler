@@ -51,13 +51,15 @@ export default function Menu() {
         {data && (
           <>
             <DropdownMenuLabel className="font-normal">
-              <div className="flex items-center gap-3">
-                <Avatar className="h-10 w-10 my-1">
-                  <AvatarImage src={data.user.picture!} />
-                  <AvatarFallback>{fallback}</AvatarFallback>
-                </Avatar>
-                <p className="text-xl">{data.user.given_name}</p>
-              </div>
+              <Link to="/user" disabled={location.pathname === "/user"}>
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-10 w-10 my-1">
+                    <AvatarImage src={data.user.picture!} />
+                    <AvatarFallback>{fallback}</AvatarFallback>
+                  </Avatar>
+                  <p className="text-xl">{data.user.given_name}</p>
+                </div>
+              </Link>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
           </>

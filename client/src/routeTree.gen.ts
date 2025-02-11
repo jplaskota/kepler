@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedUserImport } from './routes/_authenticated/user'
 import { Route as AuthenticatedSearchTypeIdImport } from './routes/_authenticated/search/$type/$id'
 import { Route as AuthenticatedLibraryTypeIdImport } from './routes/_authenticated/library/$type/$id'
 
@@ -33,6 +34,12 @@ const AuthenticatedRoute = AuthenticatedImport.update({
 const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedUserRoute = AuthenticatedUserImport.update({
+  id: '/user',
+  path: '/user',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
@@ -68,6 +75,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/user': {
+      id: '/_authenticated/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof AuthenticatedUserImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
@@ -95,12 +109,14 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedUserRoute: typeof AuthenticatedUserRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedLibraryTypeIdRoute: typeof AuthenticatedLibraryTypeIdRoute
   AuthenticatedSearchTypeIdRoute: typeof AuthenticatedSearchTypeIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedUserRoute: AuthenticatedUserRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedLibraryTypeIdRoute: AuthenticatedLibraryTypeIdRoute,
   AuthenticatedSearchTypeIdRoute: AuthenticatedSearchTypeIdRoute,
@@ -113,6 +129,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
+  '/user': typeof AuthenticatedUserRoute
   '/': typeof AuthenticatedIndexRoute
   '/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
   '/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
@@ -120,6 +137,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
+  '/user': typeof AuthenticatedUserRoute
   '/': typeof AuthenticatedIndexRoute
   '/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
   '/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
@@ -129,6 +147,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
+  '/_authenticated/user': typeof AuthenticatedUserRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/library/$type/$id': typeof AuthenticatedLibraryTypeIdRoute
   '/_authenticated/search/$type/$id': typeof AuthenticatedSearchTypeIdRoute
@@ -136,13 +155,20 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/about' | '/' | '/library/$type/$id' | '/search/$type/$id'
+  fullPaths:
+    | ''
+    | '/about'
+    | '/user'
+    | '/'
+    | '/library/$type/$id'
+    | '/search/$type/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/' | '/library/$type/$id' | '/search/$type/$id'
+  to: '/about' | '/user' | '/' | '/library/$type/$id' | '/search/$type/$id'
   id:
     | '__root__'
     | '/_authenticated'
     | '/about'
+    | '/_authenticated/user'
     | '/_authenticated/'
     | '/_authenticated/library/$type/$id'
     | '/_authenticated/search/$type/$id'
@@ -176,6 +202,7 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/user",
         "/_authenticated/",
         "/_authenticated/library/$type/$id",
         "/_authenticated/search/$type/$id"
@@ -183,6 +210,10 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/_authenticated/user": {
+      "filePath": "_authenticated/user.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/": {
       "filePath": "_authenticated/index.tsx",
