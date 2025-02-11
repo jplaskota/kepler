@@ -28,11 +28,13 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { userQueryOptions } from "@/services/auth.services";
 import { useQuery } from "@tanstack/react-query";
-import { Command } from "lucide-react";
+import { Command, Laptop, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export default function UserPage() {
   const { data } = useQuery(userQueryOptions);
+  const { theme, setTheme } = useTheme();
 
   const handleClearLibrary = () => {
     console.log("clearing library data");
@@ -59,8 +61,8 @@ export default function UserPage() {
   };
 
   return (
-    <div className="container flex gap-4 px-2 sm:px-4">
-      <div className="w-64 space-y-4">
+    <div className="container flex max-sm:flex-col gap-4 px-2 sm:px-4 pb-2 sm:pb-4">
+      <div className="sm:w-64 w-full space-y-4">
         <Card>
           <CardHeader>
             <CardTitle>Account</CardTitle>
@@ -149,6 +151,36 @@ export default function UserPage() {
                     <SelectItem value="pl">Polish</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Theme</label>
+                <div className="flex items-center justify-between rounded-md border p-1">
+                  <Button
+                    variant={theme === "system" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setTheme("system")}
+                    className="w-full"
+                  >
+                    <Laptop className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant={theme === "light" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setTheme("light")}
+                    className="w-full"
+                  >
+                    <Sun className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant={theme === "dark" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setTheme("dark")}
+                    className="w-full"
+                  >
+                    <Moon className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>

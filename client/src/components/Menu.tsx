@@ -23,13 +23,9 @@ import { Link, useLocation } from "@tanstack/react-router";
 import {
   HelpCircle as HelpIcon,
   Home as HomeIcon,
-  Laptop,
   LogOut as Logout,
   Menu as MenuIcon,
-  Moon,
-  Sun,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import { useContext } from "react";
 
 export default function Menu() {
@@ -37,7 +33,6 @@ export default function Menu() {
   const { data } = useQuery(userQueryOptions);
   const { sortBy, updateSortBy } = useContext(LibraryContext);
   const fallback = data?.user?.given_name?.[0]?.toUpperCase();
-  const { theme, setTheme } = useTheme();
 
   return (
     <DropdownMenu modal>
@@ -104,39 +99,6 @@ export default function Menu() {
                   </SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel className="font-normal text-sm text-muted-foreground select-none cursor-default">
-              Theme
-            </DropdownMenuLabel>
-            <div className="px-2 pb-1.5">
-              <div className="flex items-center justify-between rounded-md border p-1">
-                <Button
-                  variant={theme === "system" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setTheme("system")}
-                  className="w-full"
-                >
-                  <Laptop className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={theme === "light" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setTheme("light")}
-                  className="w-full"
-                >
-                  <Sun className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={theme === "dark" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setTheme("dark")}
-                  className="w-full"
-                >
-                  <Moon className="h-4 w-4" />
-                </Button>
-              </div>
             </div>
 
             <DropdownMenuSeparator />
