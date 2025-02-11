@@ -61,7 +61,7 @@ export default function UserPage() {
   };
 
   return (
-    <div className="container flex max-sm:flex-col gap-4 px-2 sm:px-4 pb-2 sm:pb-4">
+    <div className="container flex max-sm:flex-col gap-4 px-2 sm:px-4 pb-2 sm:pb-4 mx-auto max-w-[1200px]">
       <div className="sm:w-64 w-full space-y-4">
         <Card>
           <CardHeader>
@@ -103,7 +103,7 @@ export default function UserPage() {
         </Card>
       </div>
 
-      <div className="flex-1 space-y-4">
+      <div className="flex-1 space-y-4 max-w-3xl">
         <Card>
           <CardHeader>
             <CardTitle>Customization</CardTitle>
