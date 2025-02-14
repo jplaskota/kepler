@@ -80,6 +80,11 @@ export function useLibrary() {
         : items.filter((item) => item.media_type === category);
 
     switch (sortBy) {
+      case "added_date":
+        return [...filteredItems].sort(
+          (a, b) =>
+            new Date(b.added_date).getTime() - new Date(a.added_date).getTime()
+        );
       case "popularity":
         return [...filteredItems].sort(
           (a, b) => Number(b.popularity) - Number(a.popularity)
@@ -87,11 +92,6 @@ export function useLibrary() {
       case "rating":
         return [...filteredItems].sort(
           (a, b) => Number(b.vote_average) - Number(a.vote_average)
-        );
-      case "added_date":
-        return [...filteredItems].sort(
-          (a, b) =>
-            new Date(b.added_date).getTime() - new Date(a.added_date).getTime()
         );
       default:
         return filteredItems;

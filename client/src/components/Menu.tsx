@@ -88,14 +88,14 @@ export default function Menu() {
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="added_date" className="cursor-pointer">
+                    Added Date
+                  </SelectItem>
                   <SelectItem value="popularity" className="cursor-pointer">
                     Popularity
                   </SelectItem>
                   <SelectItem value="rating" className="cursor-pointer">
                     Highest Rating
-                  </SelectItem>
-                  <SelectItem value="added_date" className="cursor-pointer">
-                    Added Date
                   </SelectItem>
                 </SelectContent>
               </Select>

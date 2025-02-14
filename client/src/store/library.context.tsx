@@ -10,7 +10,7 @@ interface LibraryContextType {
 // eslint-disable-next-line react-refresh/only-export-components
 export const LibraryContext = createContext<LibraryContextType>({
   category: "all",
-  sortBy: "popularity",
+  sortBy: "added_date",
   updateCategory: () => {},
   updateSortBy: () => {},
 });
