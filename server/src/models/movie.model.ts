@@ -21,7 +21,6 @@ export const MovieSchema = z.object({
   rated: z.string(), // * OMDB
   origin_country: z.array(z.string()),
   genres: z.array(z.string()),
-  actors: z.array(MovieActorSchema),
   overview: z.string(),
   poster_path: z.string().nullable(), // sometimes is null
   backdrop_path: z.string().nullable(), // sometimes is null
@@ -41,7 +40,6 @@ export const MovieSearchSchema = MovieSchema.omit({
 export const MovieTMDBSchema = MovieSearchSchema.omit({
   director: true,
   rated: true,
-  actors: true,
   imdb_rating: true,
   rotten_tomatoes: true,
   media_type: true,

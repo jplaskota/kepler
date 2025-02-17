@@ -1,22 +1,7 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { Series as SeriesTable } from "../db/schema/series.schema";
-
-export const SeriesActorSchema = z.object({
-  id: z.number({ message: "Invalid actor id" }),
-  original_name: z.string(),
-  character: z.string(),
-  profile_path: z.string().nullable(),
-  order: z.number(),
-});
-
-export const SeriesSeasonSchema = z.object({
-  id: z.number(),
-  air_date: z.string().nullable(), // in specials season can be null
-  episode_count: z.number(),
-  poster_path: z.string(),
-  season_number: z.number(),
-});
+import { SeasonSchema } from "./additional.model";
 
 export const SeriesSchema = z.object({
   _id: z.string().uuid({ message: "Invalid id" }),
@@ -28,13 +13,12 @@ export const SeriesSchema = z.object({
   rated: z.string(), // * OMDB
   origin_country: z.array(z.string()),
   genres: z.array(z.string()),
-  actors: z.array(SeriesActorSchema),
   overview: z.string(),
   poster_path: z.string().nullable(), // sometimes is null
   backdrop_path: z.string().nullable(), // sometimes is null
   imdb_rating: z.string().optional(), // * OMDB | sometimes is null
   rotten_tomatoes: z.string().optional(), // * OMDB | sometimes is null
-  seasons: z.array(SeriesSeasonSchema),
+  seasons: z.array(SeasonSchema),
   vote_average: z.string(),
   popularity: z.string(),
   added_date: z.date(),
@@ -48,7 +32,6 @@ export const SeriesSearchSchema = SeriesSchema.omit({
 
 export const SeriesTMDBSchema = SeriesSearchSchema.omit({
   rated: true, // * OMDB
-  actors: true, // * TMDB Credits
   imdb_rating: true, // * OMDB
   rotten_tomatoes: true, // * OMDB
   media_type: true, // * added manually
@@ -115,8 +98,6 @@ export const InsertSeriesSchema = createInsertSchema(SeriesTable, {
 });
 
 export type TSeries = z.infer<typeof SeriesSchema>;
-export type TActor = z.infer<typeof SeriesActorSchema>;
-export type TSeason = z.infer<typeof SeriesSeasonSchema>;
 export type TSeriesSearch = z.infer<typeof SeriesSearchSchema>;
 export type TSeriesTMDB = z.infer<typeof SeriesTMDBSchema>; // API
 export type TSeriesOMDB = z.infer<typeof SeriesOMDBSchema>; // API
