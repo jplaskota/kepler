@@ -1,11 +1,8 @@
 import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
+import type { TActors } from "@server-models/additional.model";
 import { TMovie, TMovieSearch } from "@server-models/movie.model";
-import {
-  TActor,
-  TSeason,
-  TSeries,
-  TSeriesSearch,
-} from "@server-models/series.model";
+import type { TSeason } from "@server-models/series.model";
+import { TSeries, TSeriesSearch } from "@server-models/series.model";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -23,7 +20,6 @@ export function formatMovie(movie: TMovie | TMovieSearch) {
     poster_path: movie.poster_path,
     overview: movie.overview,
     genres: movie.genres,
-    actors: movie.actors,
   };
 
   return newMovie;
@@ -39,14 +35,13 @@ export function formatSeries(series: TSeries | TSeriesSearch) {
     poster_path: series.poster_path,
     overview: series.overview,
     genres: series.genres,
-    actors: series.actors,
     seasons: series.seasons,
   };
 
   return newSeries;
 }
 
-export function actorsToSliderItems(actors: TActor[]) {
+export function actorsToSliderItems(actors: TActors) {
   return actors.map((actor) => ({
     id: actor.id,
     title: actor.character,
@@ -55,7 +50,7 @@ export function actorsToSliderItems(actors: TActor[]) {
   }));
 }
 
-export function seasonsToSliderItems(seasons: TSeason[]) {
+export function seasonsToSliderItems(seasons: TSeason) {
   return seasons.map((season) => ({
     id: season.id,
     title: "Season - " + season.season_number,

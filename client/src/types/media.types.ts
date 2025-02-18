@@ -1,4 +1,4 @@
-import { TActor, TSeason } from "@server-models/series.model";
+import type { TSeason } from "@server-models/series.model";
 
 export interface TFormattedMovie {
   title: string;
@@ -9,9 +9,8 @@ export interface TFormattedMovie {
   poster_path: string | null;
   overview: string;
   genres: string[];
-  actors: TActor[];
 }
 
 export interface TFormattedSeries extends TFormattedMovie {
-  seasons: TSeason[];
+  seasons: TSeason;
 }

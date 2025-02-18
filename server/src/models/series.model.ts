@@ -1,7 +1,16 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { Series as SeriesTable } from "../db/schema/series.schema";
-import { SeasonSchema } from "./additional.model";
+
+export const SeasonSchema = z.array(
+  z.object({
+    id: z.number({ message: "Invalid season id" }),
+    air_date: z.string(), // in specials season can be null
+    episode_count: z.number(),
+    poster_path: z.string(),
+    season_number: z.number(),
+  })
+);
 
 export const SeriesSchema = z.object({
   _id: z.string().uuid({ message: "Invalid id" }),
@@ -18,7 +27,7 @@ export const SeriesSchema = z.object({
   backdrop_path: z.string().nullable(), // sometimes is null
   imdb_rating: z.string().optional(), // * OMDB | sometimes is null
   rotten_tomatoes: z.string().optional(), // * OMDB | sometimes is null
-  seasons: z.array(SeasonSchema),
+  seasons: SeasonSchema,
   vote_average: z.string(),
   popularity: z.string(),
   added_date: z.date(),
@@ -98,6 +107,7 @@ export const InsertSeriesSchema = createInsertSchema(SeriesTable, {
 });
 
 export type TSeries = z.infer<typeof SeriesSchema>;
+export type TSeason = z.infer<typeof SeasonSchema>;
 export type TSeriesSearch = z.infer<typeof SeriesSearchSchema>;
 export type TSeriesTMDB = z.infer<typeof SeriesTMDBSchema>; // API
 export type TSeriesOMDB = z.infer<typeof SeriesOMDBSchema>; // API
