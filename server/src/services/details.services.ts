@@ -1,11 +1,9 @@
 import {
-  MovieActorSchema,
   MovieOMDBSchema,
   MovieTMDBSchema,
   type TMovieSearch,
 } from "../models/movie.model";
 import {
-  SeriesActorSchema,
   SeriesOMDBSchema,
   SeriesTMDBSchema,
   type TSeriesSearch,
@@ -24,21 +22,15 @@ const TMDB_API_BASE_URL = "https://api.themoviedb.org/3",
   };
 
 export async function fetchMovieDetails(tmdbId: number) {
-  const [tmdbMovieData, tmdbActorsData] = await Promise.all([
-    fetch(`${TMDB_API_BASE_URL}/movie/${tmdbId}`, TMDB_OPTIONS).then((res) => {
-      if (!res.ok) throw new Error("Failed to fetch movie details from TMDB");
-      return res.json();
-    }),
-    fetch(`${TMDB_API_BASE_URL}/movie/${tmdbId}/credits`, TMDB_OPTIONS).then(
-      (res) => {
-        if (!res.ok) throw new Error("Failed to fetch movie actors from TMDB");
-        return res.json();
-      }
-    ),
-  ]);
+  const tmdbMovieData = await fetch(
+    `${TMDB_API_BASE_URL}/movie/${tmdbId}`,
+    TMDB_OPTIONS
+  ).then((res) => {
+    if (!res.ok) throw new Error("Failed to fetch movie details from TMDB");
+    return res.json();
+  });
 
   const parsedTMDBMovieData = MovieTMDBSchema.parse(tmdbMovieData);
-  const parsedActorsData = MovieActorSchema.array().parse(tmdbActorsData.cast);
 
   const omdbMovieData = await fetch(
     `${OMDB_API_BASE_URL}?apikey=${OMDB_API_KEY}&i=${parsedTMDBMovieData.imdb_id}`
@@ -68,29 +60,19 @@ export async function fetchMovieDetails(tmdbId: number) {
     imdb_rating: imdbRating,
     rotten_tomatoes: rottenTomatoes,
     media_type: "movie",
-    actors: parsedActorsData.slice(0, 10),
   } as TMovieSearch;
 }
 
 export async function fetchSeriesDetails(tmdbId: number) {
-  const [tmdbSeriesData, tmdbActorsData] = await Promise.all([
-    fetch(
-      `${TMDB_API_BASE_URL}/tv/${tmdbId}?append_to_response=external_ids`,
-      TMDB_OPTIONS
-    ).then((res) => {
-      if (!res.ok) throw new Error("Failed to fetch series details from TMDB");
-      return res.json();
-    }),
-    fetch(`${TMDB_API_BASE_URL}/tv/${tmdbId}/credits`, TMDB_OPTIONS).then(
-      (res) => {
-        if (!res.ok) throw new Error("Failed to fetch series actors from TMDB");
-        return res.json();
-      }
-    ),
-  ]);
+  const tmdbSeriesData = await fetch(
+    `${TMDB_API_BASE_URL}/tv/${tmdbId}?append_to_response=external_ids`,
+    TMDB_OPTIONS
+  ).then((res) => {
+    if (!res.ok) throw new Error("Failed to fetch series details from TMDB");
+    return res.json();
+  });
 
   const parsedTMDBSeriesData = SeriesTMDBSchema.parse(tmdbSeriesData);
-  const parsedActorsData = SeriesActorSchema.array().parse(tmdbActorsData.cast);
 
   const omdbSeriesData = await fetch(
     `${OMDB_API_BASE_URL}?apikey=${OMDB_API_KEY}&i=${parsedTMDBSeriesData.external_ids.imdb_id}`
@@ -117,10 +99,11 @@ export async function fetchSeriesDetails(tmdbId: number) {
     genres: parsedTMDBSeriesData.genres.map((g) => g.name),
     created_by: parsedTMDBSeriesData.created_by.map((c) => c.name),
     rated: parsedOMDBSeriesData.Rated,
-    seasons: parsedTMDBSeriesData.seasons.filter((s) => s.season_number !== 0),
+    number_of_seasons: parsedTMDBSeriesData.seasons.filter(
+      (s) => s.season_number !== 0
+    ).length,
     imdb_rating: imdbRating,
     rotten_tomatoes: rottenTomatoes,
     media_type: "tv",
-    actors: parsedActorsData.slice(0, 10),
   } as TSeriesSearch;
 }

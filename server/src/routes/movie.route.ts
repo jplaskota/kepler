@@ -5,7 +5,7 @@ import { db } from "../db";
 import { Movies } from "../db/schema/movies.schema";
 import { getUser } from "../kinde";
 import { InsertMoviesSchema, type TMovie } from "../models/movie.model";
-import { fetchMovieDetails } from "../services/tmdb.services";
+import { fetchMovieDetails } from "../services/details.services";
 
 export const movieRoute = new Hono()
   // Route to fetch all movies for a user

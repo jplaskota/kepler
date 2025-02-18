@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { MovieGenresMap, SeriesGenresMap } from "../lib/genres";
 import {
   MovieSearchTMDBSchema,
   type TMovieSearchCard,
@@ -10,14 +11,11 @@ import {
 import {
   fetchMovieDetails,
   fetchSeriesDetails,
-} from "../services/tmdb.services";
-import { MovieGenresMap, SeriesGenresMap } from "../lib/genres";
+} from "../services/details.services";
 
 // API base URLs and keys for TMDB and OMDB services
 const TMDB_API_BASE_URL = "https://api.themoviedb.org/3",
   TMDB_API_KEY = Bun.env.TMDB_API_KEY,
-  OMDB_API_BASE_URL = "http://www.omdbapi.com/",
-  OMDB_API_KEY = Bun.env.OMDB_API_KEY,
   TMDB_OPTIONS = {
     method: "GET",
     headers: {

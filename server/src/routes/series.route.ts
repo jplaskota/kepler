@@ -5,7 +5,7 @@ import { db } from "../db";
 import { Series } from "../db/schema/series.schema";
 import { getUser } from "../kinde";
 import { InsertSeriesSchema, type TSeries } from "../models/series.model";
-import { fetchSeriesDetails } from "../services/tmdb.services";
+import { fetchSeriesDetails } from "../services/details.services";
 
 export const seriesRoute = new Hono()
   // Route to fetch all series for a user
