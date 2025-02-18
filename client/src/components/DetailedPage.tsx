@@ -3,6 +3,7 @@ import { actorsToSliderItems, cn, seasonsToSliderItems } from "@/lib/utils";
 import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Separator } from "@radix-ui/react-separator";
+import { TActors } from "@server-models/additional.model";
 import { useState } from "react";
 import Slider from "./Slider";
 import { Button } from "./ui/button";
@@ -12,6 +13,7 @@ import { Skeleton } from "./ui/skeleton";
 interface DetailedPageProps {
   media: TFormattedMovie | TFormattedSeries;
   saved: boolean;
+  actors: TActors | undefined;
   onDelete: () => void;
   onAdd: () => void;
 }
@@ -19,6 +21,7 @@ interface DetailedPageProps {
 export default function DetailedPage({
   media,
   saved,
+  actors,
   onDelete,
   onAdd,
 }: DetailedPageProps) {
@@ -88,8 +91,8 @@ export default function DetailedPage({
       {"seasons" in media && media.seasons && media.seasons.length > 0 && (
         <Slider items={seasonsToSliderItems(media.seasons)} />
       )}
-      {media.actors && media.actors.length > 0 && (
-        <Slider items={actorsToSliderItems(media.actors)} />
+      {actors && actors.length > 0 && (
+        <Slider items={actorsToSliderItems(actors)} />
       )}
       <div className="sm:hidden">
         {saved ? (

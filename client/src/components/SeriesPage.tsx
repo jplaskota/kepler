@@ -1,8 +1,9 @@
 import { useSeriesActions } from "@/hooks/useSeriesActions";
+import { formatSeries } from "@/lib/utils";
+import { getActors } from "@/services/additional.services";
 import { userQueryOptions } from "@/services/auth.services";
 import { searchSeriesById } from "@/services/search.services";
 import { getSeriesById } from "@/services/series.services";
-import { formatSeries } from "@/lib/utils";
 import type { TSeries, TSeriesSearch } from "@server-models/series.model";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -26,6 +27,12 @@ export default function SeriesPage({ id, saved }: SeriesPageProps) {
   } = useQuery({
     queryKey: [saved ? "library-series" : "search-series", id],
     queryFn: () => (saved ? getSeriesById(id) : searchSeriesById(id)),
+  });
+
+  const { data: actors } = useQuery({
+    queryKey: ["actors", id],
+    queryFn: () =>
+      saved ? getActors(series!.tmdb_id.toString(), "tv") : getActors(id, "tv"),
   });
 
   if (isLoading) {
@@ -56,6 +63,7 @@ export default function SeriesPage({ id, saved }: SeriesPageProps) {
     <DetailedPage
       media={formatSeries(series!)}
       saved={saved}
+      actors={actors}
       onDelete={handleDelete}
       onAdd={handleAdd}
     />
