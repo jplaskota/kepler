@@ -91,7 +91,17 @@ export default function DetailedPage({
       {"seasons" in media && media.seasons && media.seasons.length > 0 && (
         <Slider items={seasonsToSliderItems(media.seasons)} />
       )}
-      {actors && actors.length > 0 && (
+      {actors === undefined ? (
+        <div className="flex gap-2 sm:gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory">
+          {[...Array(6)].map((_, i) => (
+            <Card key={i} className="w-64 shrink-0 snap-start first:ml-0 p-3 flex flex-col gap-3 font-Montserrat">
+              <Skeleton className="w-full aspect-[2/3]" />
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </Card>
+          ))}
+        </div>
+      ) : actors.length > 0 && (
         <Slider items={actorsToSliderItems(actors)} />
       )}
       <div className="sm:hidden">
