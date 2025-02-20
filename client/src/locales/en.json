@@ -1,0 +1,41 @@
+{
+  "account": {
+    "title": "Account",
+    "created": "Account Created",
+    "libraryItems": "Library Items",
+    "items": "items"
+  },
+  "customization": {
+    "title": "Customization",
+    "actorsSlider": {
+      "title": "Actors Slider",
+      "description": "Show actors slider in content details"
+    },
+    "recommendations": {
+      "title": "Recommendations",
+      "description": "Show recommendations slider"
+    },
+    "similarContent": {
+      "title": "Similar Content",
+      "description": "Show similar content slider"
+    },
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "search": "Search",
+    "closeModal": "Close Modal"
+  },
+  "dangerZone": {
+    "title": "Danger Zone",
+    "description": "Destructive actions for your account",
+    "clearLibrary": {
+      "button": "Clear Library",
+      "title": "Clear Library",
+      "description": "Are you sure you want to clear your library? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Clear Library"
+    }
+  }
+}
