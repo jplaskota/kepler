@@ -52,12 +52,8 @@ export const searchRoute = new Hono()
       });
 
       // Validate and parse the response data using the defined schema
-      const parsedMovies = MovieSearchTMDBSchema.array().parse(
-        moviesRes.results
-      );
-
-      // Map genre IDs to names and prepare the final list of movies
-      const moviesPrepared: TMovieSearchCard[] = parsedMovies
+      const parsedMovies = MovieSearchTMDBSchema.array()
+        .parse(moviesRes.results)
         .map(({ genre_ids, id, ...movie }) => ({
           ...movie,
           tmdb_id: id,
@@ -69,7 +65,7 @@ export const searchRoute = new Hono()
         .sort((a, b) => parseFloat(b.popularity) - parseFloat(a.popularity))
         .slice(0, 8);
 
-      return c.json(moviesPrepared);
+      return c.json(parsedMovies);
     } catch (err: any) {
       console.error("Error fetching movies by title:", err);
       return c.json({ error: err.message || "Internal Server Error" }, 500);
@@ -105,10 +101,7 @@ export const searchRoute = new Hono()
       // Validate and parse the response data using the defined schema
       const parsedSeries = SeriesSearchTMDBSchema.array().parse(
         seriesRes.results
-      );
-
-      // Map genre IDs to names and prepare the final list of series
-      const seriesPrepared: TSeriesSearchCard[] = parsedSeries
+      )
         .map(({ genre_ids, id, ...series }) => ({
           ...series,
           tmdb_id: id,
@@ -120,7 +113,7 @@ export const searchRoute = new Hono()
         .sort((a, b) => parseFloat(b.popularity) - parseFloat(a.popularity))
         .slice(0, 8);
 
-      return c.json(seriesPrepared);
+      return c.json(parsedSeries);
     } catch (err: any) {
       console.error("Error fetching series by title:", err);
       return c.json({ error: err.message || "Internal Server Error" }, 500);
