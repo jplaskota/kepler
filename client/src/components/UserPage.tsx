@@ -39,7 +39,7 @@ export default function UserPage() {
   const { data } = useQuery(userQueryOptions);
   const { theme, setTheme } = useTheme();
   const { cachedSize } = useLibrary();
-  const { t, setLanguage } = useLanguage();
+  const { t, setLanguage, language } = useLanguage();
   const {
     clearUserLibrary,
     toggleActors,
@@ -173,7 +173,7 @@ export default function UserPage() {
                 <label className="text-sm font-medium">
                   {t("userPage.customization.language")}
                 </label>
-                <Select onValueChange={handleLanguageChange} defaultValue="en">
+                <Select onValueChange={handleLanguageChange} value={language}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select language" />
                   </SelectTrigger>
