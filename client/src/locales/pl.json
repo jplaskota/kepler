@@ -93,5 +93,17 @@
     "title": "Kepler",
     "signIn": "Zaloguj się",
     "signUp": "Zarejestruj się"
+  },
+  "menu": {
+    "account": "Konto",
+    "sorting": "Sortowanie",
+    "home": "Strona główna",
+    "about": "O projekcie",
+    "sortedBy": {
+      "addedDate": "Data dodania",
+      "popularity": "Popularności",
+      "rating": "Oceny"
+    },
+    "signOut": "Wyloguj się"
   }
 }

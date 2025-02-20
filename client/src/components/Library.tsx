@@ -17,7 +17,7 @@ export default function Library() {
   if (isEmpty) {
     return (
       <div className="text-center p-4">
-        <p>No media saved yet. Start adding your favorite movies and series!</p>
+        <p>{t("library.empty")}</p>
       </div>
     );
   }

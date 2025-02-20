@@ -20,6 +20,7 @@ import { userQueryOptions } from "@/services/auth.services";
 import { useLibraryContext } from "@/store/library.context";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "@tanstack/react-router";
+import { t } from "i18next";
 import {
   HelpCircle as HelpIcon,
   Home as HomeIcon,
@@ -63,14 +64,14 @@ export default function Menu() {
           <Link to="/" disabled={location.pathname === "/"}>
             <DropdownMenuItem className="cursor-pointer h-10">
               <HomeIcon className="w-4 h-4 mr-2" />
-              <span>Home</span>
+              <span>{t("menu.home")}</span>
             </DropdownMenuItem>
           </Link>
 
           <Link to="/about" disabled={location.pathname === "/about"}>
             <DropdownMenuItem className="cursor-pointer h-10">
               <HelpIcon className="w-4 h-4 mr-2" />
-              <span>About</span>
+              <span>{t("menu.about")}</span>
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
@@ -79,7 +80,7 @@ export default function Menu() {
           <>
             <DropdownMenuSeparator />
             <DropdownMenuLabel className="font-normal text-sm text-muted-foreground select-none cursor-default">
-              Sorted by
+              {t("menu.sorting")}
             </DropdownMenuLabel>
             <div className="px-2 pb-1.5">
               <Select value={sortBy} onValueChange={updateSortBy}>
@@ -88,13 +89,13 @@ export default function Menu() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="added_date" className="cursor-pointer">
-                    Added Date
+                    {t("menu.sortedBy.addedDate")}
                   </SelectItem>
                   <SelectItem value="popularity" className="cursor-pointer">
-                    Popularity
+                    {t("menu.sortedBy.popularity")}
                   </SelectItem>
                   <SelectItem value="rating" className="cursor-pointer">
-                    Highest Rating
+                    {t("menu.sortedBy.rating")}
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -104,7 +105,7 @@ export default function Menu() {
             <a href="/api/logout">
               <DropdownMenuItem className="cursor-pointer text-red-600 dark:text-red-400">
                 <Logout className="w-4 h-4 mr-2" />
-                <span>Sign out</span>
+                <span>{t("menu.signOut")}</span>
               </DropdownMenuItem>
             </a>
           </>
