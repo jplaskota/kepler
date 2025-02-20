@@ -1,10 +1,13 @@
-import { createContext, ReactElement, useState } from "react";
+import { createContext, ReactElement, useContext, useState } from "react";
+
+type Category = "all" | "movie" | "tv";
+type SortBy = "popularity" | "added_date" | "rating";
 
 interface LibraryContextType {
-  category: "all" | "movie" | "tv";
-  sortBy: "popularity" | "added_date" | "rating";
-  updateCategory: (category: "all" | "movie" | "tv") => void;
-  updateSortBy: (sort: "popularity" | "added_date" | "rating") => void;
+  category: Category;
+  sortBy: SortBy;
+  updateCategory: (category: Category) => void;
+  updateSortBy: (sort: SortBy) => void;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -16,7 +19,12 @@ export const LibraryContext = createContext<LibraryContextType>({
 });
 
 interface LibraryProviderProps {
-  children: ReactElement[];
+  children: ReactElement[] | ReactElement;
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function useLibrary() {
+  return useContext(LibraryContext);
 }
 
 export default function LibraryProvider({ children }: LibraryProviderProps) {
