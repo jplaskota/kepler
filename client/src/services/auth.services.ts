@@ -9,6 +9,12 @@ const getCurrentUser = async () => {
   return data;
 };
 
+export const clearLibrary = async () => {
+  const res = await auth.clearLibrary.$delete();
+  if (!res.ok) throw new Error("Failed to clear library");
+  return res.json();
+};
+
 export const userQueryOptions = queryOptions({
   queryKey: ["get-current-user"],
   queryFn: getCurrentUser,

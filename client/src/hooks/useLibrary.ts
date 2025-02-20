@@ -105,7 +105,7 @@ export function useLibrary() {
     }
   }, [isEmpty]);
 
-  const cachedSize = parseInt(localStorage.getItem("librarySize") || "9");
+  const cachedSize = parseInt(localStorage.getItem("librarySize") || "0");
 
   return {
     library,

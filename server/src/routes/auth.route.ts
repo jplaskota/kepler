@@ -1,4 +1,8 @@
+import { eq } from "drizzle-orm";
 import { Hono } from "hono";
+import { db } from "../db";
+import { Movies } from "../db/schema/movies.schema";
+import { Series } from "../db/schema/series.schema";
 import { getUser, kindeClient, sessionManager } from "../kinde";
 
 export const authRoute = new Hono()
@@ -23,4 +27,19 @@ export const authRoute = new Hono()
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
     return c.json({ user });
+  })
+  .delete("/clearLibrary", getUser, async (c) => {
+    const userId = c.var.user.id;
+
+    try {
+      // Delete all movies for the user
+      await db.delete(Movies).where(eq(Movies.user_id, userId));
+      // Delete all series for the user
+      await db.delete(Series).where(eq(Series.user_id, userId));
+
+      return c.json({ message: "Library cleared successfully" });
+    } catch (err: any) {
+      console.error("Error clearing library:", err);
+      return c.json({ error: "Failed to clear library" }, 500);
+    }
   });
