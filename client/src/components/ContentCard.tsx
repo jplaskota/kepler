@@ -60,12 +60,11 @@ export default function ContentCard({
         {additionalInfo && additionalInfo.length > 0 && (
           <div className="flex gap-1.5 text-sm text-muted-foreground">
             {additionalInfo.map((info, index) => (
-              <>
-                {index > 0 && <span>|</span>}
+              <div key={index}>
                 <span key={index} className="max-sm:text-xs">
                   {info}
                 </span>
-              </>
+              </div>
             ))}
           </div>
         )}

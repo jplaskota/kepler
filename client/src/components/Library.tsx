@@ -31,7 +31,7 @@ export default function Library() {
             ))}
           </>
         ) : (
-          library.map((item) => {
+          library.map((item, index) => {
             const title =
               item.media_type === "tv"
                 ? (item as TSeriesCard).name
@@ -47,7 +47,7 @@ export default function Library() {
 
             return (
               <Link
-                key={item._id}
+                key={index}
                 to="/library/$type/$id"
                 params={{
                   type: item.media_type,
@@ -60,7 +60,9 @@ export default function Library() {
                   image_path={item.poster_path}
                   additionalInfo={[
                     releaseDate.split("-")[0],
+                    " | ",
                     additionalInfo,
+                    " | ",
                     item.vote_average.toString(),
                   ]}
                   tags={item.genres}
