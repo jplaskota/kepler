@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { userQueryOptions } from "@/services/auth.services";
-import { useLibrary } from "@/store/library.context";
+import { useLibraryContext } from "@/store/library.context";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "@tanstack/react-router";
 import {
@@ -30,7 +30,7 @@ import {
 export default function Menu() {
   const location = useLocation();
   const { data } = useQuery(userQueryOptions);
-  const { sortBy, updateSortBy } = useLibrary();
+  const { sortBy, updateSortBy } = useLibraryContext();
   const fallback = data?.user?.given_name?.[0]?.toUpperCase();
 
   return (

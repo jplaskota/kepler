@@ -1,5 +1,5 @@
 import { useMovieActions } from "@/hooks/useMovieActions";
-import { usePreferences } from "@/store/preferences.context";
+import { usePreferencesContext } from "@/store/preferences.context";
 import { formatMovie } from "@/lib/utils";
 import {
   getActors,
@@ -23,7 +23,8 @@ interface MoviePageProps {
 export default function MoviePage({ id, saved }: MoviePageProps) {
   const { data: userData } = useQuery(userQueryOptions);
   const { addMovie, deleteMovie } = useMovieActions();
-  const { showActors, showRecommendations, showSimilar } = usePreferences();
+  const { showActors, showRecommendations, showSimilar } =
+    usePreferencesContext();
 
   const {
     data: movie,

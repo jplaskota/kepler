@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import TagsSlider from "./TagsSlider";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
+import { useLanguage } from "@/store/language.context";
 
 interface ContentCardProps {
   title: string;
@@ -25,6 +26,7 @@ export default function ContentCard({
   onClick,
 }: ContentCardProps) {
   const posterUrl = import.meta.env.VITE_IMAGE_BASE_URL + image_path;
+  const { t } = useLanguage();
 
   return (
     <Card
@@ -42,7 +44,7 @@ export default function ContentCard({
           <div className="relative w-full aspect-[2/3] overflow-hidden rounded-md">
             <img
               src={posterUrl}
-              alt={title}
+              alt={t("content.poster")}
               loading="lazy"
               className={cn("w-full h-full object-cover", imageClassName)}
               crossOrigin="anonymous"

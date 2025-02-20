@@ -1,14 +1,15 @@
 import { Card, CardDescription } from "@/components/ui/card";
 import { useSearch } from "@/hooks/useSearch";
 import type { SearchModalProps } from "@/types/search.types";
-import { createPortal } from "react-dom";
+import { t } from "i18next";
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
 
 const noResults = (
   <Card className="p-6 flex justify-center">
-    <CardDescription>Nothing found</CardDescription>
+    <CardDescription>{t("search.noResults")}</CardDescription>
   </Card>
 );
 
@@ -29,8 +30,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
       document.body.style.overflow = "auto";
     };
   }, []);
-
-  console.log(movies.length > 0 && series.length > 0 && searchStatus);
 
   return createPortal(
     <div

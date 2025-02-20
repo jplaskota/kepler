@@ -1,11 +1,12 @@
 import { Badge } from "@/components/ui/badge";
-import { usePreferences } from "@/store/preferences.context";
 import {
   actorsToSliderItems,
   cn,
   contentToSliderItems,
   seasonsToSliderItems,
 } from "@/lib/utils";
+import { useLanguage } from "@/store/language.context";
+import { usePreferencesContext } from "@/store/preferences.context";
 import type { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Separator } from "@radix-ui/react-separator";
@@ -38,7 +39,9 @@ export default function DetailedPage({
   onAdd,
 }: DetailedPageProps) {
   const [imageLoading, setImageLoading] = useState(true);
-  const { showActors, showRecommendations, showSimilar } = usePreferences();
+  const { showActors, showRecommendations, showSimilar } =
+    usePreferencesContext();
+  const { t } = useLanguage();
 
   return (
     <div className="flex flex-col gap-4 sm:gap-8 px-2 sm:px-4 pb-2 sm:pb-4 w-full max-w-[1200px]">
@@ -102,7 +105,10 @@ export default function DetailedPage({
         </div>
       </Card>
       {"seasons" in media && media.seasons && media.seasons.length > 0 && (
-        <Slider items={seasonsToSliderItems(media.seasons)} title="Seasons" />
+        <Slider
+          items={seasonsToSliderItems(media.seasons)}
+          title={t("detailed.seasonsSlider.title")}
+        />
       )}
       {showActors &&
         (actors === undefined ? (
@@ -120,7 +126,10 @@ export default function DetailedPage({
           </div>
         ) : (
           actors.length > 0 && (
-            <Slider items={actorsToSliderItems(actors)} title="Actors" />
+            <Slider
+              items={actorsToSliderItems(actors)}
+              title={t("detailed.actorsSlider.title")}
+            />
           )
         ))}
       {showRecommendations &&
@@ -141,7 +150,7 @@ export default function DetailedPage({
           recommendations.length > 0 && (
             <Slider
               items={contentToSliderItems(recommendations)}
-              title="Recommendations"
+              title={t("detailed.recommendationsSlider.title")}
             />
           )
         ))}
@@ -161,7 +170,10 @@ export default function DetailedPage({
           </div>
         ) : (
           similar.length > 0 && (
-            <Slider items={contentToSliderItems(similar)} title="Similar" />
+            <Slider
+              items={contentToSliderItems(similar)}
+              title={t("detailed.similarSlider.title")}
+            />
           )
         ))}
       <div className="sm:hidden">

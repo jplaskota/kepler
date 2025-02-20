@@ -1,7 +1,8 @@
 import type { SearchResultProps } from "@/types/search.types";
+import { Link } from "@tanstack/react-router";
+import { t } from "i18next";
 import { useEffect, useRef } from "react";
-import { Separator } from "../ui/separator";
-import SearchItemCard from "./SearchItemCard";
+import ContentCard from "../ContentCard";
 
 export default function SearchResult({
   moviesList,
@@ -25,28 +26,65 @@ export default function SearchResult({
 
   return (
     <div className="overflow-y-auto no-scrollbar">
-      <div className="w-fit flex flex-col gap-4" ref={searchContainerRef}>
+      <div className="w-fit flex flex-col gap-6" ref={searchContainerRef}>
         {hasMovies && (
-          <div className="w-fit max-w-[90vw] h-fit grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {moviesList.map((movie) => (
-              <SearchItemCard
-                key={movie.tmdb_id}
-                item={movie}
-                onClose={onClose}
-              />
-            ))}
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {t("search.movies")}
+            </h2>
+            <div className="w-fit max-w-[90vw] h-fit grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              {moviesList.map((movie, index) => (
+                <Link
+                  key={index}
+                  to="/search/$type/$id"
+                  params={{
+                    type: movie.media_type,
+                    id: movie.tmdb_id.toString(),
+                  }}
+                >
+                  <div onClick={onClose}>
+                    <ContentCard
+                      title={movie.title}
+                      image_path={movie.poster_path}
+                      additionalInfo={[
+                        movie.release_date?.split("-")[0] || "N/A",
+                      ]}
+                      className="select-none hover:scale-[1.02] transition-transform"
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
-        {hasMovies && hasSeries && <Separator orientation="horizontal" />}
         {hasSeries && (
-          <div className="w-fit max-w-[90vw] h-fit grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {seriesList.map((series) => (
-              <SearchItemCard
-                key={series.tmdb_id}
-                item={series}
-                onClose={onClose}
-              />
-            ))}
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {t("search.series")}
+            </h2>
+            <div className="w-fit max-w-[90vw] h-fit grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              {seriesList.map((series, index) => (
+                <Link
+                  key={index}
+                  to="/search/$type/$id"
+                  params={{
+                    type: series.media_type,
+                    id: series.tmdb_id.toString(),
+                  }}
+                >
+                  <div onClick={onClose}>
+                    <ContentCard
+                      title={series.name}
+                      image_path={series.poster_path}
+                      additionalInfo={[
+                        series.first_air_date?.split("-")[0] || "N/A",
+                      ]}
+                      className="select-none hover:scale-[1.02] transition-transform"
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>

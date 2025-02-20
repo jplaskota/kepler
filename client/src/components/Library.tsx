@@ -1,6 +1,7 @@
 import type { TMovieCard } from "@server-models/movie.model";
 import type { TSeriesCard } from "@server-models/series.model";
 import { Link } from "@tanstack/react-router";
+import { t } from "i18next";
 import { useEffect } from "react";
 import { useLibrary } from "../hooks/useLibrary";
 import ContentCard from "./ContentCard";
@@ -42,8 +43,8 @@ export default function Library() {
                 : (item as TMovieCard).release_date;
             const additionalInfo =
               item.media_type === "tv"
-                ? `${(item as TSeriesCard).number_of_seasons} seasons`
-                : `${(item as TMovieCard).runtime} mins`;
+                ? `${(item as TSeriesCard).number_of_seasons} ${t("library.seasons")}`
+                : `${(item as TMovieCard).runtime} ${t("library.mins")}`;
 
             return (
               <Link

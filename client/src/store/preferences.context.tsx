@@ -32,7 +32,7 @@ interface PreferencesProviderProps {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function usePreferences() {
+export function usePreferencesContext() {
   return useContext(PreferencesContext);
 }
 

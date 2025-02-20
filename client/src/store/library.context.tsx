@@ -23,7 +23,7 @@ interface LibraryProviderProps {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function useLibrary() {
+export function useLibraryContext() {
   return useContext(LibraryContext);
 }
 

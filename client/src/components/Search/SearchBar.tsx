@@ -1,4 +1,5 @@
 import { SearchBarProps } from "@/types/search.types";
+import { t } from "i18next";
 import {
   X as CloseIcon,
   RotateCw as RotateIcon,
@@ -26,7 +27,7 @@ export default function SearchBar({
           <Input
             name="title"
             type="text"
-            placeholder="Search . . ."
+            placeholder={t("search.placeholder")}
             value={inputValue}
             onChange={changeHandler}
             className="bg-background text-xl border-0 font-Montserrat focus-visible:ring-0"

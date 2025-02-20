@@ -10,11 +10,13 @@ import CategoryBar from "./CategoryBar";
 import Menu from "./Menu";
 import { Search } from "./Search/Search";
 import { Button } from "./ui/button";
+import { useLanguage } from "@/store/language.context";
 
 export default function Navbar() {
   const location = useLocation();
   const { data } = useQuery(userQueryOptions);
   const { navbarVisible, navbarTop } = useScroll();
+  const { t } = useLanguage();
 
   return (
     <div className="w-full h-[52px] sm:h-[70px] flex justify-center">
@@ -36,12 +38,12 @@ export default function Navbar() {
             >
               <img
                 src={logo_dark}
-                alt="logo"
+                alt={t("navbar.logo")}
                 className="h-6 hidden dark:block"
               />
               <img
                 src={logo_light}
-                alt="logo"
+                alt={t("navbar.logo")}
                 className="h-6 block dark:hidden"
               />
               <p
@@ -50,7 +52,7 @@ export default function Navbar() {
                   location.pathname !== "/" && "block"
                 )}
               >
-                Kepler
+                {t("navbar.title")}
               </p>
             </Link>
             {location.pathname === "/" && data && (
@@ -69,10 +71,10 @@ export default function Navbar() {
             ) : (
               <div className="flex gap-2">
                 <a href="/api/login">
-                  <Button variant="ghost">Sign in</Button>
+                  <Button variant="ghost">{t("navbar.signIn")}</Button>
                 </a>
                 <a href="/api/register">
-                  <Button variant="secondary">Sign up</Button>
+                  <Button variant="secondary">{t("navbar.signUp")}</Button>
                 </a>
               </div>
             )}

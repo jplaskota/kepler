@@ -4,6 +4,7 @@ import { TMovie, TMovieSearch } from "@server-models/movie.model";
 import type { TSeason } from "@server-models/series.model";
 import { TSeries, TSeriesSearch } from "@server-models/series.model";
 import { clsx, type ClassValue } from "clsx";
+import { t } from "i18next";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -53,8 +54,11 @@ export function actorsToSliderItems(actors: TActors) {
 export function seasonsToSliderItems(seasons: TSeason) {
   return seasons.map((season) => ({
     id: season.id,
-    title: "Season - " + season.season_number,
-    subtitle: "Episodes - " + season.episode_count.toString(),
+    title:
+      `${t("detailed.seasonsSlider.seasonNumber")} - ` + season.season_number,
+    subtitle:
+      `${t("detailed.seasonsSlider.episodes")} - ` +
+      season.episode_count.toString(),
     image_path: season.poster_path,
   }));
 }

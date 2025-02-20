@@ -29,7 +29,7 @@ import { Switch } from "@/components/ui/switch";
 import { useLibrary } from "@/hooks/useLibrary";
 import { userQueryOptions } from "@/services/auth.services";
 import { useLanguage } from "@/store/language.context";
-import { usePreferences } from "@/store/preferences.context";
+import { usePreferencesContext } from "@/store/preferences.context";
 import { useQuery } from "@tanstack/react-query";
 import { Command, Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -48,7 +48,7 @@ export default function UserPage() {
     showRecommendations,
     toggleSimilar,
     showSimilar,
-  } = usePreferences();
+  } = usePreferencesContext();
 
   const handleClearLibrary = () => {
     clearUserLibrary.mutate();
@@ -75,7 +75,7 @@ export default function UserPage() {
       <div className="sm:w-64 w-full space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("account.title")}</CardTitle>
+            <CardTitle>{t("userPage.account.title")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-col items-center gap-4 pb-4">
@@ -101,16 +101,16 @@ export default function UserPage() {
 
             <div className="space-y-4">
               <div>
-                <p className="text-sm font-medium">{t("account.created")}</p>
+                <p className="text-sm font-medium">
+                  {t("userPage.account.created")}
+                </p>
                 <p className="text-sm text-muted-foreground">January 1, 2024</p>
               </div>
               <div>
                 <p className="text-sm font-medium">
-                  {t("account.libraryItems")}
+                  {t("userPage.account.libraryItems")}
                 </p>
-                <p className="text-sm text-muted-foreground">
-                  {cachedSize} {t("account.items")}
-                </p>
+                <p className="text-sm text-muted-foreground">{cachedSize}</p>
               </div>
             </div>
           </CardContent>
@@ -120,17 +120,17 @@ export default function UserPage() {
       <div className="flex-1 space-y-4 max-w-3xl">
         <Card>
           <CardHeader>
-            <CardTitle>{t("customization.title")}</CardTitle>
+            <CardTitle>{t("userPage.customization.title")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <label className="text-sm font-medium">
-                    {t("customization.actorsSlider.title")}
+                    {t("userPage.customization.actorsSlider.title")}
                   </label>
                   <p className="text-sm text-muted-foreground">
-                    {t("customization.actorsSlider.description")}
+                    {t("userPage.customization.actorsSlider.description")}
                   </p>
                 </div>
                 <Switch
@@ -142,10 +142,10 @@ export default function UserPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <label className="text-sm font-medium">
-                    {t("customization.recommendations.title")}
+                    {t("userPage.customization.recommendations.title")}
                   </label>
                   <p className="text-sm text-muted-foreground">
-                    {t("customization.recommendations.description")}
+                    {t("userPage.customization.recommendations.description")}
                   </p>
                 </div>
                 <Switch
@@ -157,10 +157,10 @@ export default function UserPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <label className="text-sm font-medium">
-                    {t("customization.similarContent.title")}
+                    {t("userPage.customization.similarContent.title")}
                   </label>
                   <p className="text-sm text-muted-foreground">
-                    {t("customization.similarContent.description")}
+                    {t("userPage.customization.similarContent.description")}
                   </p>
                 </div>
                 <Switch
@@ -171,7 +171,7 @@ export default function UserPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  {t("customization.language")}
+                  {t("userPage.customization.language")}
                 </label>
                 <Select onValueChange={handleLanguageChange} defaultValue="en">
                   <SelectTrigger>
@@ -179,14 +179,14 @@ export default function UserPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="pl">Polish</SelectItem>
+                    <SelectItem value="pl">Polski</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">
-                  {t("customization.theme")}
+                  {t("userPage.customization.theme")}
                 </label>
                 <div className="flex items-center justify-between rounded-md border p-1">
                   <Button
@@ -221,11 +221,11 @@ export default function UserPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("shortcuts.title")}</CardTitle>
+            <CardTitle>{t("userPage.shortcuts.title")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
-              <span className="text-sm">{t("shortcuts.search")}</span>
+              <span className="text-sm">{t("userPage.shortcuts.search")}</span>
               <div className="flex items-center gap-1">
                 <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
                   <span className="text-xs">
@@ -236,7 +236,9 @@ export default function UserPage() {
               </div>
             </div>
             <div className="mt-2 flex items-center justify-between">
-              <span className="text-sm">{t("shortcuts.closeModal")}</span>
+              <span className="text-sm">
+                {t("userPage.shortcuts.closeModal")}
+              </span>
               <div className="flex items-center gap-1">
                 <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
                   Esc
@@ -249,9 +251,11 @@ export default function UserPage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-destructive">
-              {t("dangerZone.title")}
+              {t("userPage.dangerZone.title")}
             </CardTitle>
-            <CardDescription>{t("dangerZone.description")}</CardDescription>
+            <CardDescription>
+              {t("userPage.dangerZone.description")}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <AlertDialog>
@@ -261,24 +265,24 @@ export default function UserPage() {
                   className="w-full"
                   disabled={cachedSize === 0}
                 >
-                  {t("dangerZone.clearLibrary.button")}
+                  {t("userPage.dangerZone.clearLibrary.button")}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    {t("dangerZone.clearLibrary.title")}
+                    {t("userPage.dangerZone.clearLibrary.title")}
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    {t("dangerZone.clearLibrary.description")}
+                    {t("userPage.dangerZone.clearLibrary.description")}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>
-                    {t("dangerZone.clearLibrary.cancel")}
+                    {t("userPage.dangerZone.clearLibrary.cancel")}
                   </AlertDialogCancel>
                   <AlertDialogAction onClick={handleClearLibrary}>
-                    {t("dangerZone.clearLibrary.confirm")}
+                    {t("userPage.dangerZone.clearLibrary.confirm")}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

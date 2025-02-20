@@ -4,12 +4,13 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
-import { LibraryContext } from "@/store/library.context";
 import { cn } from "@/lib/utils";
-import { useContext } from "react";
+import { useLanguage } from "@/store/language.context";
+import { useLibraryContext } from "@/store/library.context";
 
 export default function CategoryBer() {
-  const { category, updateCategory } = useContext(LibraryContext);
+  const { category, updateCategory } = useLibraryContext();
+  const { t } = useLanguage();
 
   return (
     <Breadcrumb>
@@ -22,7 +23,7 @@ export default function CategoryBer() {
               "cursor-pointer select-none"
             )}
           >
-            All
+            {t("categories.all")}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
@@ -33,7 +34,7 @@ export default function CategoryBer() {
               "cursor-pointer select-none"
             )}
           >
-            Movies
+            {t("categories.movies")}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
@@ -44,7 +45,7 @@ export default function CategoryBer() {
               "cursor-pointer select-none"
             )}
           >
-            Series
+            {t("categories.series")}
           </BreadcrumbLink>
         </BreadcrumbItem>
       </BreadcrumbList>

@@ -1,10 +1,10 @@
 import { getMovies } from "@/services/movie.services";
 import { getSeries } from "@/services/series.services";
+import { useLibraryContext } from "@/store/library.context";
 import type { TMovieCard } from "@server-models/movie.model";
 import type { TSeriesCard } from "@server-models/series.model";
 import { useQueries, useQueryClient } from "@tanstack/react-query";
-import { useContext, useEffect, useMemo } from "react";
-import { LibraryContext } from "../store/library.context";
+import { useEffect, useMemo } from "react";
 
 type LibraryItem = (TMovieCard | TSeriesCard) & {
   media_type: "movie" | "tv";
@@ -13,7 +13,7 @@ type LibraryItem = (TMovieCard | TSeriesCard) & {
 };
 
 export function useLibrary() {
-  const { category, sortBy } = useContext(LibraryContext);
+  const { category, sortBy } = useLibraryContext();
   const queryClient = useQueryClient();
 
   const [moviesQuery, seriesQuery] = useQueries({
