@@ -38,15 +38,14 @@ export default function UserPage() {
   const { data } = useQuery(userQueryOptions);
   const { theme, setTheme } = useTheme();
   const { cachedSize } = useLibrary();
-
-  const { clearUserLibrary } = useUserPreferences();
+  const { clearUserLibrary, toggleActors, showActors } = useUserPreferences();
 
   const handleClearLibrary = () => {
     clearUserLibrary.mutate();
   };
 
   const handleToggleActors = () => {
-    console.log("toggling actors slider");
+    toggleActors();
   };
 
   const handleToggleRecommendations = () => {
@@ -120,7 +119,10 @@ export default function UserPage() {
                     Show actors slider in content details
                   </p>
                 </div>
-                <Switch onCheckedChange={handleToggleActors} />
+                <Switch
+                  onCheckedChange={handleToggleActors}
+                  checked={showActors}
+                />
               </div>
 
               <div className="flex items-center justify-between">

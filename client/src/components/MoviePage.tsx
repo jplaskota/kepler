@@ -1,4 +1,5 @@
 import { useMovieActions } from "@/hooks/useMovieActions";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { formatMovie } from "@/lib/utils";
 import { getActors } from "@/services/additional.services";
 import { userQueryOptions } from "@/services/auth.services";
@@ -18,6 +19,7 @@ interface MoviePageProps {
 export default function MoviePage({ id, saved }: MoviePageProps) {
   const { data: userData } = useQuery(userQueryOptions);
   const { addMovie, deleteMovie } = useMovieActions();
+  const { showActors } = useUserPreferences();
 
   const {
     data: movie,
@@ -35,6 +37,7 @@ export default function MoviePage({ id, saved }: MoviePageProps) {
       saved
         ? getActors(movie!.tmdb_id.toString(), "movie")
         : getActors(id, "movie"),
+    enabled: showActors,
   });
 
   if (isLoading) {

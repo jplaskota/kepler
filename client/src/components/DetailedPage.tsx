@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { actorsToSliderItems, cn, seasonsToSliderItems } from "@/lib/utils";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { TFormattedMovie, TFormattedSeries } from "@/types/media.types";
 import { PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Separator } from "@radix-ui/react-separator";
@@ -26,6 +27,7 @@ export default function DetailedPage({
   onAdd,
 }: DetailedPageProps) {
   const [imageLoading, setImageLoading] = useState(true);
+  const { showActors } = useUserPreferences();
 
   return (
     <div className="flex flex-col gap-2 sm:gap-4 px-2 sm:px-4 pb-2 sm:pb-4 w-full max-w-[1200px]">
@@ -91,18 +93,20 @@ export default function DetailedPage({
       {"seasons" in media && media.seasons && media.seasons.length > 0 && (
         <Slider items={seasonsToSliderItems(media.seasons)} />
       )}
-      {actors === undefined ? (
-        <div className="flex gap-2 sm:gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory">
-          {[...Array(6)].map((_, i) => (
-            <Card key={i} className="w-64 shrink-0 snap-start first:ml-0 p-3 flex flex-col gap-3 font-Montserrat">
-              <Skeleton className="w-full aspect-[2/3]" />
-              <Skeleton className="h-6 w-3/4" />
-              <Skeleton className="h-4 w-1/2" />
-            </Card>
-          ))}
-        </div>
-      ) : actors.length > 0 && (
-        <Slider items={actorsToSliderItems(actors)} />
+      {showActors && (
+        actors === undefined ? (
+          <div className="flex gap-2 sm:gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory">
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="w-64 shrink-0 snap-start first:ml-0 p-3 flex flex-col gap-3 font-Montserrat">
+                <Skeleton className="w-full aspect-[2/3]" />
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </Card>
+            ))}
+          </div>
+        ) : actors.length > 0 && (
+          <Slider items={actorsToSliderItems(actors)} />
+        )
       )}
       <div className="sm:hidden">
         {saved ? (

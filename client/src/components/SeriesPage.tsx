@@ -1,4 +1,5 @@
 import { useSeriesActions } from "@/hooks/useSeriesActions";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { formatSeries } from "@/lib/utils";
 import { getActors } from "@/services/additional.services";
 import { userQueryOptions } from "@/services/auth.services";
@@ -18,6 +19,7 @@ interface SeriesPageProps {
 export default function SeriesPage({ id, saved }: SeriesPageProps) {
   const { data: userData } = useQuery(userQueryOptions);
   const { addSeries, deleteSeries } = useSeriesActions();
+  const { showActors } = useUserPreferences();
 
   const {
     data: series,
@@ -33,6 +35,7 @@ export default function SeriesPage({ id, saved }: SeriesPageProps) {
     queryKey: ["actors", id],
     queryFn: () =>
       saved ? getActors(series!.tmdb_id.toString(), "tv") : getActors(id, "tv"),
+    enabled: showActors,
   });
 
   if (isLoading) {
