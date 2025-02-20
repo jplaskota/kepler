@@ -38,7 +38,15 @@ export default function UserPage() {
   const { data } = useQuery(userQueryOptions);
   const { theme, setTheme } = useTheme();
   const { cachedSize } = useLibrary();
-  const { clearUserLibrary, toggleActors, showActors } = useUserPreferences();
+  const {
+    clearUserLibrary,
+    toggleActors,
+    showActors,
+    toggleRecommendations,
+    showRecommendations,
+    toggleSimilar,
+    showSimilar,
+  } = useUserPreferences();
 
   const handleClearLibrary = () => {
     clearUserLibrary.mutate();
@@ -49,11 +57,11 @@ export default function UserPage() {
   };
 
   const handleToggleRecommendations = () => {
-    console.log("toggling recommendations slider");
+    toggleRecommendations();
   };
 
   const handleToggleSimilar = () => {
-    console.log("toggling similar slider");
+    toggleSimilar();
   };
 
   const handleLanguageChange = (value: string) => {
@@ -132,7 +140,10 @@ export default function UserPage() {
                     Show recommendations slider
                   </p>
                 </div>
-                <Switch onCheckedChange={handleToggleRecommendations} />
+                <Switch
+                  onCheckedChange={handleToggleRecommendations}
+                  checked={showRecommendations}
+                />
               </div>
 
               <div className="flex items-center justify-between">
@@ -142,7 +153,10 @@ export default function UserPage() {
                     Show similar content slider
                   </p>
                 </div>
-                <Switch onCheckedChange={handleToggleSimilar} />
+                <Switch
+                  onCheckedChange={handleToggleSimilar}
+                  checked={showSimilar}
+                />
               </div>
 
               <div className="space-y-2">
