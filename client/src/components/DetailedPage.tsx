@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
+import { usePreferences } from "@/store/preferences.context";
 import {
   actorsToSliderItems,
   cn,
@@ -38,7 +38,7 @@ export default function DetailedPage({
   onAdd,
 }: DetailedPageProps) {
   const [imageLoading, setImageLoading] = useState(true);
-  const { showActors, showRecommendations, showSimilar } = useUserPreferences();
+  const { showActors, showRecommendations, showSimilar } = usePreferences();
 
   return (
     <div className="flex flex-col gap-4 sm:gap-8 px-2 sm:px-4 pb-2 sm:pb-4 w-full max-w-[1200px]">

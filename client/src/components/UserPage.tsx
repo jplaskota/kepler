@@ -27,8 +27,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useLibrary } from "@/hooks/useLibrary";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { userQueryOptions } from "@/services/auth.services";
+import { useLanguage } from "@/store/language.context";
+import { usePreferences } from "@/store/preferences.context";
 import { useQuery } from "@tanstack/react-query";
 import { Command, Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -38,6 +39,7 @@ export default function UserPage() {
   const { data } = useQuery(userQueryOptions);
   const { theme, setTheme } = useTheme();
   const { cachedSize } = useLibrary();
+  const { t, setLanguage } = useLanguage();
   const {
     clearUserLibrary,
     toggleActors,
@@ -46,7 +48,7 @@ export default function UserPage() {
     showRecommendations,
     toggleSimilar,
     showSimilar,
-  } = useUserPreferences();
+  } = usePreferences();
 
   const handleClearLibrary = () => {
     clearUserLibrary.mutate();
@@ -65,7 +67,7 @@ export default function UserPage() {
   };
 
   const handleLanguageChange = (value: string) => {
-    console.log("changing language to:", value);
+    setLanguage(value);
   };
 
   return (
@@ -73,7 +75,7 @@ export default function UserPage() {
       <div className="sm:w-64 w-full space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>Account</CardTitle>
+            <CardTitle>{t("account.title")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-col items-center gap-4 pb-4">
@@ -99,13 +101,15 @@ export default function UserPage() {
 
             <div className="space-y-4">
               <div>
-                <p className="text-sm font-medium">Account Created</p>
+                <p className="text-sm font-medium">{t("account.created")}</p>
                 <p className="text-sm text-muted-foreground">January 1, 2024</p>
               </div>
               <div>
-                <p className="text-sm font-medium">Library Items</p>
+                <p className="text-sm font-medium">
+                  {t("account.libraryItems")}
+                </p>
                 <p className="text-sm text-muted-foreground">
-                  {cachedSize} items
+                  {cachedSize} {t("account.items")}
                 </p>
               </div>
             </div>
@@ -116,15 +120,17 @@ export default function UserPage() {
       <div className="flex-1 space-y-4 max-w-3xl">
         <Card>
           <CardHeader>
-            <CardTitle>Customization</CardTitle>
+            <CardTitle>{t("customization.title")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <label className="text-sm font-medium">Actors Slider</label>
+                  <label className="text-sm font-medium">
+                    {t("customization.actorsSlider.title")}
+                  </label>
                   <p className="text-sm text-muted-foreground">
-                    Show actors slider in content details
+                    {t("customization.actorsSlider.description")}
                   </p>
                 </div>
                 <Switch
@@ -135,9 +141,11 @@ export default function UserPage() {
 
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <label className="text-sm font-medium">Recommendations</label>
+                  <label className="text-sm font-medium">
+                    {t("customization.recommendations.title")}
+                  </label>
                   <p className="text-sm text-muted-foreground">
-                    Show recommendations slider
+                    {t("customization.recommendations.description")}
                   </p>
                 </div>
                 <Switch
@@ -148,9 +156,11 @@ export default function UserPage() {
 
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <label className="text-sm font-medium">Similar Content</label>
+                  <label className="text-sm font-medium">
+                    {t("customization.similarContent.title")}
+                  </label>
                   <p className="text-sm text-muted-foreground">
-                    Show similar content slider
+                    {t("customization.similarContent.description")}
                   </p>
                 </div>
                 <Switch
@@ -160,7 +170,9 @@ export default function UserPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Language</label>
+                <label className="text-sm font-medium">
+                  {t("customization.language")}
+                </label>
                 <Select onValueChange={handleLanguageChange} defaultValue="en">
                   <SelectTrigger>
                     <SelectValue placeholder="Select language" />
@@ -173,7 +185,9 @@ export default function UserPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Theme</label>
+                <label className="text-sm font-medium">
+                  {t("customization.theme")}
+                </label>
                 <div className="flex items-center justify-between rounded-md border p-1">
                   <Button
                     variant={theme === "system" ? "default" : "ghost"}
@@ -207,11 +221,11 @@ export default function UserPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Keyboard Shortcuts</CardTitle>
+            <CardTitle>{t("shortcuts.title")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
-              <span className="text-sm">Search</span>
+              <span className="text-sm">{t("shortcuts.search")}</span>
               <div className="flex items-center gap-1">
                 <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
                   <span className="text-xs">
@@ -222,7 +236,7 @@ export default function UserPage() {
               </div>
             </div>
             <div className="mt-2 flex items-center justify-between">
-              <span className="text-sm">Close Modal</span>
+              <span className="text-sm">{t("shortcuts.closeModal")}</span>
               <div className="flex items-center gap-1">
                 <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
                   Esc
@@ -234,10 +248,10 @@ export default function UserPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-destructive">Danger Zone</CardTitle>
-            <CardDescription>
-              Destructive actions for your account
-            </CardDescription>
+            <CardTitle className="text-destructive">
+              {t("dangerZone.title")}
+            </CardTitle>
+            <CardDescription>{t("dangerZone.description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <AlertDialog>
@@ -247,21 +261,24 @@ export default function UserPage() {
                   className="w-full"
                   disabled={cachedSize === 0}
                 >
-                  Clear Library
+                  {t("dangerZone.clearLibrary.button")}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Clear Library</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    {t("dangerZone.clearLibrary.title")}
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    Are you sure you want to clear your library? This action
-                    cannot be undone.
+                    {t("dangerZone.clearLibrary.description")}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>
+                    {t("dangerZone.clearLibrary.cancel")}
+                  </AlertDialogCancel>
                   <AlertDialogAction onClick={handleClearLibrary}>
-                    Clear Library
+                    {t("dangerZone.clearLibrary.confirm")}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

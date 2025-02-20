@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { userQueryOptions } from "@/services/auth.services";
-import { LibraryContext } from "@/store/library.context";
+import { useLibrary } from "@/store/library.context";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "@tanstack/react-router";
 import {
@@ -26,12 +26,11 @@ import {
   LogOut as Logout,
   Menu as MenuIcon,
 } from "lucide-react";
-import { useContext } from "react";
 
 export default function Menu() {
   const location = useLocation();
   const { data } = useQuery(userQueryOptions);
-  const { sortBy, updateSortBy } = useContext(LibraryContext);
+  const { sortBy, updateSortBy } = useLibrary();
   const fallback = data?.user?.given_name?.[0]?.toUpperCase();
 
   return (

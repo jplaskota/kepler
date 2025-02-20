@@ -1,5 +1,5 @@
 import { useSeriesActions } from "@/hooks/useSeriesActions";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
+import { usePreferences } from "@/store/preferences.context";
 import { formatSeries } from "@/lib/utils";
 import {
   getActors,
@@ -23,7 +23,7 @@ interface SeriesPageProps {
 export default function SeriesPage({ id, saved }: SeriesPageProps) {
   const { data: userData } = useQuery(userQueryOptions);
   const { addSeries, deleteSeries } = useSeriesActions();
-  const { showActors, showRecommendations, showSimilar } = useUserPreferences();
+  const { showActors, showRecommendations, showSimilar } = usePreferences();
 
   const {
     data: series,
