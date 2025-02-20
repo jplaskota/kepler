@@ -7,8 +7,8 @@
   },
   "customization": {
     "title": "Customization",
-    "actorsSlider": {
-      "title": "Actors Slider",
+    "actors": {
+      "title": "Actors",
       "description": "Show actors slider in content details"
     },
     "recommendations": {
@@ -37,5 +37,17 @@
       "cancel": "Cancel",
       "confirm": "Clear Library"
     }
+  },
+  "library": {
+    "empty": "No media saved yet. Start adding your favorite movies and series!",
+    "seasons": "seasons",
+    "mins": "mins"
+  },
+  "search": {
+    "placeholder": "Search . . .",
+    "notAvailable": "N/A"
+  },
+  "content": {
+    "poster": "poster"
   }
 }

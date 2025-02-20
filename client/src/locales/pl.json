@@ -1,41 +1,97 @@
 {
-  "account": {
-    "title": "Konto",
-    "created": "Konto utworzone",
-    "libraryItems": "Elementy biblioteki",
-    "items": "elementów"
-  },
-  "customization": {
-    "title": "Personalizacja",
-    "actorsSlider": {
-      "title": "Suwak aktorów",
-      "description": "Pokaż suwak aktorów w szczegółach zawartości"
+  "userPage": {
+    "account": {
+      "title": "Konto",
+      "created": "Konto utworzone",
+      "libraryItems": "Elementy biblioteki"
     },
-    "recommendations": {
-      "title": "Rekomendacje",
-      "description": "Pokaż suwak rekomendacji"
+    "shortcuts": {
+      "title": "Skróty klawiszowe",
+      "search": "Szukaj",
+      "closeModal": "Zamknij okno"
     },
-    "similarContent": {
-      "title": "Podobna zawartość",
-      "description": "Pokaż suwak podobnej zawartości"
+    "customization": {
+      "title": "Personalizacja",
+      "actorsSlider": {
+        "title": "Aktorzy",
+        "description": "Pokaż pasek aktorów"
+      },
+      "recommendations": {
+        "title": "Rekomendacje",
+        "description": "Pokaż pasek z rekomendacjami"
+      },
+      "similarContent": {
+        "title": "Podobna zawartość",
+        "description": "Pokaż pasek podobnej zawartości"
+      },
+      "language": "Język",
+      "theme": "Motyw"
     },
-    "language": "Język",
-    "theme": "Motyw"
-  },
-  "shortcuts": {
-    "title": "Skróty klawiszowe",
-    "search": "Szukaj",
-    "closeModal": "Zamknij okno"
-  },
-  "dangerZone": {
-    "title": "Strefa zagrożenia",
-    "description": "Destrukcyjne działania dla twojego konta",
-    "clearLibrary": {
-      "button": "Wyczyść bibliotekę",
-      "title": "Wyczyść bibliotekę",
-      "description": "Czy na pewno chcesz wyczyścić swoją bibliotekę? Tej akcji nie można cofnąć.",
-      "cancel": "Anuluj",
-      "confirm": "Wyczyść bibliotekę"
+    "dangerZone": {
+      "title": "Strefa zagrożenia",
+      "description": "Destrukcyjne działania dla twojego konta",
+      "clearLibrary": {
+        "button": "Wyczyść bibliotekę",
+        "title": "Wyczyść bibliotekę",
+        "description": "Czy na pewno chcesz wyczyścić swoją bibliotekę? Tej akcji nie można cofnąć.",
+        "cancel": "Anuluj",
+        "confirm": "Wyczyść bibliotekę"
+      }
     }
+  },
+  "library": {
+    "empty": "Brak zapisanych mediów. Zacznij dodawać swoje ulubione filmy i seriale!",
+    "seasons": "sezony",
+    "mins": "min"
+  },
+  "detailed": {
+    "title": "Szczegóły",
+    "overview": "Opis",
+    "genres": "Gatunki",
+    "releaseDate": "Data premiery",
+    "runtime": "Czas trwania",
+    "seasons": "sezony",
+    "add": "Dodaj do biblioteki",
+    "delete": "Usuń z biblioteki",
+    "seasonsSlider": {
+      "title": "Sezony",
+      "seasonNumber": "Sezon",
+      "episodes": "Odcinki",
+      "description": "Pokaż pasek sezonów"
+    },
+    "actorsSlider": {
+      "title": "Aktorzy",
+      "description": "Pokaż pasek aktorów"
+    },
+    "recommendationsSlider": {
+      "title": "Rekomendacje",
+      "description": "Pokaż pasek z rekomendacjami"
+    },
+    "similarSlider": {
+      "title": "Podobna zawartość",
+      "description": "Pokaż pasek podobnej zawartości"
+    }
+  },
+  "search": {
+    "placeholder": "Wpisz nazwę filmu lub serialu ...",
+    "noResults": "Nic nie znaleziono. Spróbuj ponownie.",
+    "poster": "plakat",
+    "movies": "Filmy",
+    "series": "Seriale",
+    "more": "Więcej"
+  },
+  "content": {
+    "poster": "plakat"
+  },
+  "categories": {
+    "all": "Wszystko",
+    "movies": "Filmy",
+    "series": "Seriale"
+  },
+  "navbar": {
+    "logo": "logo",
+    "title": "Kepler",
+    "signIn": "Zaloguj się",
+    "signUp": "Zarejestruj się"
   }
 }
