@@ -5,9 +5,9 @@ import { Series as SeriesTable } from "../db/schema/series.schema";
 export const SeasonSchema = z.array(
   z.object({
     id: z.number({ message: "Invalid season id" }),
-    air_date: z.string(), // in specials season can be null
+    air_date: z.string().nullable(), // in specials season can be null
     episode_count: z.number(),
-    poster_path: z.string(),
+    poster_path: z.string().nullable(),
     season_number: z.number(),
   })
 );

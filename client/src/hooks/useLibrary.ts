@@ -68,16 +68,20 @@ export function useLibrary() {
       );
     }
 
-    // Update cached size before filtering
-    if (!isLoading && items.length > 0) {
-      localStorage.setItem("librarySize", items.length.toString());
-    }
-
     // Filter by category
     const filteredItems =
       category === "all"
         ? items
         : items.filter((item) => item.media_type === category);
+
+    // Update cached size after confirming the actual library state
+    if (!isLoading) {
+      if (items.length > 0) {
+        localStorage.setItem("librarySize", items.length.toString());
+      } else {
+        localStorage.removeItem("librarySize");
+      }
+    }
 
     switch (sortBy) {
       case "added_date":

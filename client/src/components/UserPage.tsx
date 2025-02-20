@@ -27,6 +27,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useLibrary } from "@/hooks/useLibrary";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { userQueryOptions } from "@/services/auth.services";
 import { useQuery } from "@tanstack/react-query";
 import { Command, Laptop, Moon, Sun } from "lucide-react";
@@ -38,12 +39,10 @@ export default function UserPage() {
   const { theme, setTheme } = useTheme();
   const { cachedSize } = useLibrary();
 
-  const handleClearLibrary = () => {
-    console.log("clearing library data");
-  };
+  const { clearUserLibrary } = useUserPreferences();
 
-  const handleDeleteAccount = () => {
-    console.log("deleting account");
+  const handleClearLibrary = () => {
+    clearUserLibrary.mutate();
   };
 
   const handleToggleActors = () => {
@@ -206,6 +205,14 @@ export default function UserPage() {
                 </kbd>
               </div>
             </div>
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-sm">Close Modal</span>
+              <div className="flex items-center gap-1">
+                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                  Esc
+                </kbd>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -219,7 +226,11 @@ export default function UserPage() {
           <CardContent className="space-y-4">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" className="w-full">
+                <Button
+                  variant="destructive"
+                  className="w-full"
+                  disabled={cachedSize === 0}
+                >
                   Clear Library
                 </Button>
               </AlertDialogTrigger>
@@ -235,29 +246,6 @@ export default function UserPage() {
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction onClick={handleClearLibrary}>
                     Clear Library
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive" className="w-full">
-                  Delete Account
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Delete Account</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Are you sure you want to delete your account? This will
-                    remove all your data and cannot be undone.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeleteAccount}>
-                    Delete Account
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
