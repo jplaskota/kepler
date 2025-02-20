@@ -1,6 +1,9 @@
+import type { TMovieCard } from "@server-models/movie.model";
+import type { TSeriesCard } from "@server-models/series.model";
+import { Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useLibrary } from "../hooks/useLibrary";
-import LibraryCard from "./LibraryCard";
+import ContentCard from "./ContentCard";
 import { Skeleton } from "./ui/skeleton";
 
 export default function Library() {
@@ -28,7 +31,43 @@ export default function Library() {
             ))}
           </>
         ) : (
-          library.map((item) => <LibraryCard key={item._id} item={item} />)
+          library.map((item) => {
+            const title =
+              item.media_type === "tv"
+                ? (item as TSeriesCard).name
+                : (item as TMovieCard).title;
+            const releaseDate =
+              item.media_type === "tv"
+                ? (item as TSeriesCard).first_air_date
+                : (item as TMovieCard).release_date;
+            const additionalInfo =
+              item.media_type === "tv"
+                ? `${(item as TSeriesCard).number_of_seasons} seasons`
+                : `${(item as TMovieCard).runtime} mins`;
+
+            return (
+              <Link
+                key={item._id}
+                to="/library/$type/$id"
+                params={{
+                  type: item.media_type,
+                  id: item._id,
+                }}
+                className="w-full sm:w-[300px]"
+              >
+                <ContentCard
+                  title={title}
+                  image_path={item.poster_path}
+                  additionalInfo={[
+                    releaseDate.split("-")[0],
+                    additionalInfo,
+                    item.vote_average.toString(),
+                  ]}
+                  tags={item.genres}
+                />
+              </Link>
+            );
+          })
         )}
       </div>
     </div>

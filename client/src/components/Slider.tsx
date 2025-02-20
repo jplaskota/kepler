@@ -77,6 +77,7 @@ export default function Slider({ items }: SliderProps) {
             title={item.title}
             subtitle={item.subtitle}
             image_path={item.image_path}
+            className="w-64"
           />
         ))}
       </div>
