@@ -1,7 +1,11 @@
 import { useSeriesActions } from "@/hooks/useSeriesActions";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { formatSeries } from "@/lib/utils";
-import { getActors } from "@/services/additional.services";
+import {
+  getActors,
+  getRecommendations,
+  getSimilar,
+} from "@/services/additional.services";
 import { userQueryOptions } from "@/services/auth.services";
 import { searchSeriesById } from "@/services/search.services";
 import { getSeriesById } from "@/services/series.services";
@@ -19,7 +23,7 @@ interface SeriesPageProps {
 export default function SeriesPage({ id, saved }: SeriesPageProps) {
   const { data: userData } = useQuery(userQueryOptions);
   const { addSeries, deleteSeries } = useSeriesActions();
-  const { showActors } = useUserPreferences();
+  const { showActors, showRecommendations, showSimilar } = useUserPreferences();
 
   const {
     data: series,
@@ -36,6 +40,24 @@ export default function SeriesPage({ id, saved }: SeriesPageProps) {
     queryFn: () =>
       saved ? getActors(series!.tmdb_id.toString(), "tv") : getActors(id, "tv"),
     enabled: showActors,
+  });
+
+  const { data: recommendations } = useQuery({
+    queryKey: ["recommendations", id],
+    queryFn: () =>
+      saved
+        ? getRecommendations(series!.tmdb_id.toString(), "tv")
+        : getRecommendations(id, "tv"),
+    enabled: showRecommendations,
+  });
+
+  const { data: similar } = useQuery({
+    queryKey: ["similar", id],
+    queryFn: () =>
+      saved
+        ? getSimilar(series!.tmdb_id.toString(), "tv")
+        : getSimilar(id, "tv"),
+    enabled: showSimilar,
   });
 
   if (isLoading) {
@@ -67,6 +89,14 @@ export default function SeriesPage({ id, saved }: SeriesPageProps) {
       media={formatSeries(series!)}
       saved={saved}
       actors={actors}
+      recommendations={recommendations?.map((item) => ({
+        ...item,
+        media_type: "tv" as const,
+      }))}
+      similar={similar?.map((item) => ({
+        ...item,
+        media_type: "tv" as const,
+      }))}
       onDelete={handleDelete}
       onAdd={handleAdd}
     />

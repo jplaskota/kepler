@@ -1,7 +1,11 @@
 import { useMovieActions } from "@/hooks/useMovieActions";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { formatMovie } from "@/lib/utils";
-import { getActors } from "@/services/additional.services";
+import {
+  getActors,
+  getRecommendations,
+  getSimilar,
+} from "@/services/additional.services";
 import { userQueryOptions } from "@/services/auth.services";
 import { getMovieById } from "@/services/movie.services";
 import { searchMovieById } from "@/services/search.services";
@@ -19,7 +23,7 @@ interface MoviePageProps {
 export default function MoviePage({ id, saved }: MoviePageProps) {
   const { data: userData } = useQuery(userQueryOptions);
   const { addMovie, deleteMovie } = useMovieActions();
-  const { showActors } = useUserPreferences();
+  const { showActors, showRecommendations, showSimilar } = useUserPreferences();
 
   const {
     data: movie,
@@ -38,6 +42,24 @@ export default function MoviePage({ id, saved }: MoviePageProps) {
         ? getActors(movie!.tmdb_id.toString(), "movie")
         : getActors(id, "movie"),
     enabled: showActors,
+  });
+
+  const { data: recommendations } = useQuery({
+    queryKey: ["recommendations", id],
+    queryFn: () =>
+      saved
+        ? getRecommendations(movie!.tmdb_id.toString(), "movie")
+        : getRecommendations(id, "movie"),
+    enabled: showRecommendations,
+  });
+
+  const { data: similar } = useQuery({
+    queryKey: ["similar", id],
+    queryFn: () =>
+      saved
+        ? getSimilar(movie!.tmdb_id.toString(), "movie")
+        : getSimilar(id, "movie"),
+    enabled: showSimilar,
   });
 
   if (isLoading) {
@@ -69,6 +91,14 @@ export default function MoviePage({ id, saved }: MoviePageProps) {
       media={formatMovie(movie!)}
       saved={saved}
       actors={actors}
+      recommendations={recommendations?.map((item) => ({
+        ...item,
+        media_type: "movie" as const,
+      }))}
+      similar={similar?.map((item) => ({
+        ...item,
+        media_type: "movie" as const,
+      }))}
       onDelete={handleDelete}
       onAdd={handleAdd}
     />

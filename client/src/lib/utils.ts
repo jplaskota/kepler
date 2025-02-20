@@ -58,3 +58,25 @@ export function seasonsToSliderItems(seasons: TSeason) {
     image_path: season.poster_path,
   }));
 }
+
+export function contentToSliderItems(
+  content: Array<{
+    name?: string;
+    title?: string;
+    popularity: string;
+    poster_path?: string | null;
+    first_air_date?: string;
+    release_date?: string;
+    vote_average: string;
+    tmdb_id: number;
+    media_type: "tv" | "movie";
+    genres: string[];
+  }>
+) {
+  return content.map((item) => ({
+    id: item.tmdb_id,
+    title: item.media_type === "tv" ? item.name! : item.title!,
+    subtitle: `[ ${item.media_type === "tv" ? item.first_air_date?.split("-")[0] : item.release_date?.split("-")[0]} ]`,
+    image_path: item.poster_path || null,
+  }));
+}

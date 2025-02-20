@@ -29,7 +29,7 @@ export const MovieSchema = z.object({
   vote_average: z.string(),
   popularity: z.string(),
   added_date: z.date(),
-  media_type: z.enum(["movie", "series"], { message: "Invalid media type" }),
+  media_type: z.enum(["movie", "tv"], { message: "Invalid media type" }),
 });
 
 export const MovieSearchSchema = MovieSchema.omit({
@@ -87,7 +87,7 @@ export const MovieSearchCardSchema = z.object({
   release_date: z.string(),
   vote_average: z.string(),
   genres: z.array(z.string()),
-  media_type: z.enum(["movie", "series"]),
+  media_type: z.enum(["movie", "tv"]),
 });
 
 export const SelectMoviesSchema = createSelectSchema(MoviesTable, {
