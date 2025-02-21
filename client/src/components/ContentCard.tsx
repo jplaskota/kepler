@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/store/language.context";
 import TagsSlider from "./TagsSlider";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
-import { useLanguage } from "@/store/language.context";
 
 interface ContentCardProps {
   title: string;
@@ -41,7 +41,7 @@ export default function ContentCard({
         {!image_path ? (
           <Skeleton className="w-full aspect-[2/3]" />
         ) : (
-          <div className="relative w-full aspect-[2/3] overflow-hidden rounded-md">
+          <div className="w-full aspect-[2/3] overflow-hidden rounded-md">
             <img
               src={posterUrl}
               alt={t("content.poster")}

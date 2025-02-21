@@ -1,41 +1,42 @@
 {
-  "account": {
-    "title": "Account",
-    "created": "Account Created",
-    "libraryItems": "Library Items",
-    "items": "items"
-  },
-  "customization": {
-    "title": "Customization",
-    "actors": {
-      "title": "Actors",
-      "description": "Show actors slider in content details"
+  "userPage": {
+    "account": {
+      "title": "Account",
+      "created": "Account Created",
+      "libraryItems": "Library Items"
     },
-    "recommendations": {
-      "title": "Recommendations",
-      "description": "Show recommendations slider"
+    "shortcuts": {
+      "title": "Keyboard Shortcuts",
+      "search": "Search",
+      "closeModal": "Close Modal"
     },
-    "similarContent": {
-      "title": "Similar Content",
-      "description": "Show similar content slider"
+    "customization": {
+      "title": "Customization",
+      "actorsSlider": {
+        "title": "Actors",
+        "description": "Show actors slider"
+      },
+      "recommendations": {
+        "title": "Recommendations",
+        "description": "Show recommendations slider"
+      },
+      "similarContent": {
+        "title": "Similar Content",
+        "description": "Show similar content slider"
+      },
+      "language": "Language",
+      "theme": "Theme"
     },
-    "language": "Language",
-    "theme": "Theme"
-  },
-  "shortcuts": {
-    "title": "Keyboard Shortcuts",
-    "search": "Search",
-    "closeModal": "Close Modal"
-  },
-  "dangerZone": {
-    "title": "Danger Zone",
-    "description": "Destructive actions for your account",
-    "clearLibrary": {
-      "button": "Clear Library",
-      "title": "Clear Library",
-      "description": "Are you sure you want to clear your library? This action cannot be undone.",
-      "cancel": "Cancel",
-      "confirm": "Clear Library"
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "Destructive actions for your account",
+      "clearLibrary": {
+        "button": "Clear Library",
+        "title": "Clear Library",
+        "description": "Are you sure you want to clear your library? This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Clear Library"
+      }
     }
   },
   "library": {
@@ -43,11 +44,66 @@
     "seasons": "seasons",
     "mins": "mins"
   },
+  "detailed": {
+    "title": "Details",
+    "overview": "Overview",
+    "genres": "Genres",
+    "releaseDate": "Release Date",
+    "runtime": "Runtime",
+    "seasons": "seasons",
+    "add": "Add to Library",
+    "delete": "Remove from Library",
+    "seasonsSlider": {
+      "title": "Seasons",
+      "seasonNumber": "Season",
+      "episodes": "Episodes",
+      "description": "Show seasons slider"
+    },
+    "actorsSlider": {
+      "title": "Actors",
+      "description": "Show actors slider"
+    },
+    "recommendationsSlider": {
+      "title": "Recommendations",
+      "description": "Show recommendations slider"
+    },
+    "similarSlider": {
+      "title": "Similar",
+      "description": "Show similar content slider"
+    }
+  },
   "search": {
     "placeholder": "Search . . .",
-    "notAvailable": "N/A"
+    "noResults": "No results found. Try again.",
+    "poster": "Poster",
+    "movies": "Movies",
+    "series": "TV Series",
+    "more": "More"
   },
   "content": {
-    "poster": "poster"
+    "poster": "Poster"
+  },
+  "categories": {
+    "all": "All",
+    "movies": "Movies",
+    "series": "TV Series"
+  },
+  "navbar": {
+    "logo": "Logo",
+    "title": "Kepler",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "menu": {
+    "account": "Account",
+    "sorting": "Sort By",
+    "home": "Home",
+    "about": "About",
+    "sortedBy": {
+      "addedDate": "Date Added",
+      "popularity": "Popularity",
+      "rating": "Rating"
+    },
+    "signOut": "Sign Out"
   }
 }

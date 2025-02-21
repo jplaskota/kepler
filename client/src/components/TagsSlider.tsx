@@ -100,3 +100,5 @@ export default function TagsSlider({ tags, className }: TagsSliderProps) {
     </div>
   );
 }
+
+// FIXME genres (navbar)

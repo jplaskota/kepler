@@ -75,13 +75,13 @@
   "search": {
     "placeholder": "Wpisz nazwę filmu lub serialu ...",
     "noResults": "Nic nie znaleziono. Spróbuj ponownie.",
-    "poster": "plakat",
+    "poster": "Plakat",
     "movies": "Filmy",
     "series": "Seriale",
     "more": "Więcej"
   },
   "content": {
-    "poster": "plakat"
+    "poster": "Plakat"
   },
   "categories": {
     "all": "Wszystko",
@@ -89,7 +89,7 @@
     "series": "Seriale"
   },
   "navbar": {
-    "logo": "logo",
+    "logo": "Logo",
     "title": "Kepler",
     "signIn": "Zaloguj się",
     "signUp": "Zarejestruj się"

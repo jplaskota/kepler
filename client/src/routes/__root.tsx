@@ -4,9 +4,9 @@ import LanguageProvider from "@/store/language.context";
 import LibraryProvider from "@/store/library.context";
 import PreferencesProvider from "@/store/preferences.context";
 import type { QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 // need to be type to avoid error
 type RootRouteProps = {
@@ -29,11 +29,11 @@ function Root() {
         </PreferencesProvider>
         <Toaster />
       </LanguageProvider>
-      <TanStackRouterDevtools />
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <TanStackRouterDevtools /> */}
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </div>
   );
 }
 
-// TODO tanstack router devtools
-// TODO query devtools
+// ??? tanstack router devtools
+// ??? query devtools
