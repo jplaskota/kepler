@@ -19,7 +19,7 @@ export default function TagsSlider({ tags, className }: TagsSliderProps) {
     if (container) {
       setShowLeftArrow(container.scrollLeft > 0);
       setShowRightArrow(
-        container.scrollLeft < container.scrollWidth - container.clientWidth
+        container.scrollLeft < container.scrollWidth - container.clientWidth - 1
       );
     }
   };
@@ -47,7 +47,7 @@ export default function TagsSlider({ tags, className }: TagsSliderProps) {
     >
       <div
         className={cn(
-          "absolute left-0 top-1/2 -translate-y-1/2 z-10 transition-all duration-300 hidden sm:group-hover/tags:flex",
+          "absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-300 hidden sm:group-hover/tags:flex",
           showLeftArrow ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
       >
@@ -66,7 +66,7 @@ export default function TagsSlider({ tags, className }: TagsSliderProps) {
 
       <div
         ref={tagsRef}
-        className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x snap-mandatory"
+        className="flex gap-1.5 overflow-x-auto no-scrollbar snap-x snap-mandatory rounded-md"
       >
         {tags.map((tag) => (
           <Badge
@@ -81,7 +81,7 @@ export default function TagsSlider({ tags, className }: TagsSliderProps) {
 
       <div
         className={cn(
-          "absolute right-0 top-1/2 -translate-y-1/2 z-10 transition-all duration-300 hidden sm:group-hover/tags:flex",
+          "absolute right-0 top-1/2 -translate-y-1/2 transition-all duration-300 hidden sm:group-hover/tags:flex",
           showRightArrow ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
       >

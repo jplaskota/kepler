@@ -1,7 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 import { useScroll } from "@/hooks/useScroll";
-import { userQueryOptions } from "@/services/auth.services";
 import { cn } from "@/lib/utils";
+import { userQueryOptions } from "@/services/auth.services";
+import { useLanguage } from "@/store/language.context";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "@tanstack/react-router";
 import logo_dark from "../assets/logo_dark.png";
@@ -10,7 +11,6 @@ import CategoryBar from "./CategoryBar";
 import Menu from "./Menu";
 import { Search } from "./Search/Search";
 import { Button } from "./ui/button";
-import { useLanguage } from "@/store/language.context";
 
 export default function Navbar() {
   const location = useLocation();
@@ -19,7 +19,7 @@ export default function Navbar() {
   const { t } = useLanguage();
 
   return (
-    <div className="w-full h-[52px] sm:h-[70px] flex justify-center">
+    <div className="w-full h-[52px] sm:h-[70px] flex justify-center z-[1]">
       <nav
         className={cn(
           !navbarTop &&
