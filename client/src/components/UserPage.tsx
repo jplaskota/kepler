@@ -31,7 +31,15 @@ import { userQueryOptions } from "@/services/auth.services";
 import { useLanguage } from "@/store/language.context";
 import { usePreferencesContext } from "@/store/preferences.context";
 import { useQuery } from "@tanstack/react-query";
-import { Command, Laptop, Moon, Sun } from "lucide-react";
+import {
+  Bug,
+  Command,
+  HelpCircle,
+  Laptop,
+  Lightbulb,
+  Moon,
+  Sun,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
@@ -111,6 +119,35 @@ export default function UserPage() {
                   {t("userPage.account.libraryItems")}
                 </p>
                 <p className="text-sm text-muted-foreground">{cachedSize}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("userPage.shortcuts.title")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <span className="text-sm">{t("userPage.shortcuts.search")}</span>
+              <div className="flex items-center gap-1">
+                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                  <span className="text-xs">
+                    <Command className="h-3 w-3" />
+                  </span>{" "}
+                  K
+                </kbd>
+              </div>
+            </div>
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-sm">
+                {t("userPage.shortcuts.closeModal")}
+              </span>
+              <div className="flex items-center gap-1">
+                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                  Esc
+                </kbd>
               </div>
             </div>
           </CardContent>
@@ -219,34 +256,59 @@ export default function UserPage() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("userPage.shortcuts.title")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <span className="text-sm">{t("userPage.shortcuts.search")}</span>
-              <div className="flex items-center gap-1">
-                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-                  <span className="text-xs">
-                    <Command className="h-3 w-3" />
-                  </span>{" "}
-                  K
-                </kbd>
-              </div>
-            </div>
-            <div className="mt-2 flex items-center justify-between">
-              <span className="text-sm">
-                {t("userPage.shortcuts.closeModal")}
-              </span>
-              <div className="flex items-center gap-1">
-                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-                  Esc
-                </kbd>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+            <a
+              href="https://is.gd/6jtxfL"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5 text-yellow-500" />
+                  <CardTitle>
+                    {t("userPage.community.featureIdea.title")}
+                  </CardTitle>
+                </div>
+                <CardDescription>
+                  {t("userPage.community.featureIdea.description")}
+                </CardDescription>
+              </CardHeader>
+            </a>
+          </Card>
+
+          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+            <a
+              href="https://github.com/jplaskota/kepler/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <Bug className="h-5 w-5 text-red-500" />
+                  <CardTitle>{t("userPage.community.bug.title")}</CardTitle>
+                </div>
+                <CardDescription>
+                  {t("userPage.community.bug.description")}
+                </CardDescription>
+              </CardHeader>
+            </a>
+          </Card>
+
+          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+            <a href="mailto:support@kepler.app">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <HelpCircle className="h-5 w-5 text-blue-500" />
+                  <CardTitle>{t("userPage.community.support.title")}</CardTitle>
+                </div>
+                <CardDescription>
+                  {t("userPage.community.support.description")}
+                </CardDescription>
+              </CardHeader>
+            </a>
+          </Card>
+        </div>
 
         <Card>
           <CardHeader>
