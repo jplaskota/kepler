@@ -27,6 +27,23 @@
       "language": "Język",
       "theme": "Motyw"
     },
+    "community": {
+      "featureIdea": {
+        "title": "Pomysł na funkcję",
+        "description": "Masz pomysł na nową funkcję? Daj nam znać!",
+        "button": "Podziel się pomysłem"
+      },
+      "bug": {
+        "title": "Zgłoś błąd",
+        "description": "Znalazłeś błąd? Pomóż nam go naprawić.",
+        "button": "Zgłoś błąd"
+      },
+      "support": {
+        "title": "Wsparcie",
+        "description": "Masz pytanie? Skontaktuj się z naszym zespołem.",
+        "button": "Kontakt ze wsparciem"
+      }
+    },
     "dangerZone": {
       "title": "Strefa zagrożenia",
       "description": "Destrukcyjne działania dla twojego konta",

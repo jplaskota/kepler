@@ -27,6 +27,23 @@
       "language": "Language",
       "theme": "Theme"
     },
+    "community": {
+      "featureIdea": {
+        "title": "Feature Idea",
+        "description": "Have an idea for a new feature? Let us know!",
+        "button": "Share Idea"
+      },
+      "bug": {
+        "title": "Report Bug",
+        "description": "Found a bug? Help us improve by reporting it.",
+        "button": "Report Bug"
+      },
+      "support": {
+        "title": "Support",
+        "description": "Need help? Contact our support team.",
+        "button": "Contact Support"
+      }
+    },
     "dangerZone": {
       "title": "Danger Zone",
       "description": "Destructive actions for your account",
