@@ -82,11 +82,8 @@ export default function UserPage() {
     <div className="container flex max-sm:flex-col gap-4 px-2 sm:px-4 pb-2 sm:pb-4 mx-auto max-w-[1200px]">
       <div className="sm:w-64 w-full space-y-4">
         <Card>
-          <CardHeader>
-            <CardTitle>{t("userPage.account.title")}</CardTitle>
-          </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex flex-col items-center gap-4 pb-4">
+            <CardHeader className="flex flex-col items-center gap-4 pb-4">
               {data && (
                 <Avatar className="h-24 w-24">
                   <AvatarImage src={data.user.picture!} />
@@ -103,24 +100,15 @@ export default function UserPage() {
                   {data?.user?.email}
                 </p>
               </div>
-            </div>
+            </CardHeader>
 
             <Separator />
-
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm font-medium">
-                  {t("userPage.account.created")}
-                </p>
-                <p className="text-sm text-muted-foreground">January 1, 2024</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium">
-                  {t("userPage.account.libraryItems")}
-                </p>
-                <p className="text-sm text-muted-foreground">{cachedSize}</p>
-              </div>
-            </div>
+            <CardDescription>
+              <p className="text-sm font-medium">
+                {t("userPage.account.libraryItems")}
+              </p>
+              <p className="text-sm text-muted-foreground">{cachedSize}</p>
+            </CardDescription>
           </CardContent>
         </Card>
 

@@ -11,10 +11,11 @@ import CategoryBar from "./CategoryBar";
 import Menu from "./Menu";
 import { Search } from "./Search/Search";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
   const location = useLocation();
-  const { data } = useQuery(userQueryOptions);
+  const { data, isLoading } = useQuery(userQueryOptions);
   const { navbarVisible, navbarTop } = useScroll();
   const { t } = useLanguage();
 
@@ -52,7 +53,7 @@ export default function Navbar() {
                   location.pathname !== "/" && "block"
                 )}
               >
-                {t("navbar.title")}
+                Kepler
               </p>
             </Link>
             {location.pathname === "/" && data && (
@@ -63,7 +64,12 @@ export default function Navbar() {
             )}
           </div>
           <div className="flex items-center gap-2">
-            {data ? (
+            {isLoading ? (
+              <div className="flex gap-2">
+                <Skeleton className="w-9 h-9 rounded-md" />
+                <Skeleton className="w-9 h-9 rounded-md" />
+              </div>
+            ) : data ? (
               <>
                 <Search />
                 <Menu />

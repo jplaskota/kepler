@@ -76,7 +76,7 @@ export default function Menu() {
           </Link>
         </DropdownMenuGroup>
 
-        {data && (
+        {data && location.pathname === "/" && (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuLabel className="font-normal text-sm text-muted-foreground select-none cursor-default">
@@ -100,16 +100,15 @@ export default function Menu() {
                 </SelectContent>
               </Select>
             </div>
-
-            <DropdownMenuSeparator />
-            <a href="/api/logout">
-              <DropdownMenuItem className="cursor-pointer text-red-600 dark:text-red-400">
-                <Logout className="w-4 h-4 mr-2" />
-                <span>{t("menu.signOut")}</span>
-              </DropdownMenuItem>
-            </a>
           </>
         )}
+        <DropdownMenuSeparator />
+        <a href="/api/logout">
+          <DropdownMenuItem className="cursor-pointer text-red-600 dark:text-red-400">
+            <Logout className="w-4 h-4 mr-2" />
+            <span>{t("menu.signOut")}</span>
+          </DropdownMenuItem>
+        </a>
       </DropdownMenuContent>
     </DropdownMenu>
   );
