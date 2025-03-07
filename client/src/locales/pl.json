@@ -122,5 +122,50 @@
       "rating": "Oceny"
     },
     "signOut": "Wyloguj się"
+  },
+  "about": {
+    "subtitle": "Twój osobisty tracker filmów i seriali",
+    "whatIsKepler": {
+      "title": "CZYM JEST KEPLER?",
+      "subtitle": "Nowoczesny sposób na śledzenie rozrywki",
+      "description1": "Kepler to osobisty tracker filmów i seriali, który pomaga organizować i pamiętać ulubione treści. Pomyśl o nim jak o cyfrowym notatniku rozrywki, w którym możesz zapisywać filmy i seriale, które obejrzałeś lub chcesz obejrzeć w przyszłości.",
+      "description2": "Dzięki czystemu, intuicyjnemu interfejsowi i zaawansowanym funkcjom, Kepler ułatwia tworzenie i zarządzanie osobistą biblioteką mediów."
+    },
+    "keyFeatures": {
+      "title": "KLUCZOWE FUNKCJE",
+      "subtitle": "Wszystko, czego potrzebujesz do organizacji rozrywki",
+      "personalLibrary": "Zapisuj ulubione filmy i seriale w jednym miejscu",
+      "detailedInfo": "Uzyskaj dostęp do szczegółowych informacji o każdym tytule, w tym obsady, ocen i dat premiery",
+      "recommendations": "Odkrywaj nowe treści na podstawie zapisanych elementów",
+      "customization": "Personalizuj swoje doświadczenie dzięki opcjom motywów i preferencjom wyświetlania",
+      "multiLanguage": "Korzystaj z aplikacji w preferowanym języku"
+    },
+    "howToUse": {
+      "title": "JAK KORZYSTAĆ Z KEPLERA",
+      "subtitle": "Rozpoczęcie jest proste i nieskomplikowane",
+      "createAccount": {
+        "title": "1. Utwórz konto",
+        "description": "Zarejestruj się, aby rozpocząć budowanie osobistej biblioteki. Twoje dane będą bezpiecznie przechowywane i dostępne z każdego urządzenia."
+      },
+      "browseContent": {
+        "title": "2. Przeglądaj treści",
+        "description": "Wyszukuj ulubione filmy i seriale za pomocą funkcji wyszukiwania. Przeglądaj szczegółowe informacje, obsadę i powiązane treści."
+      },
+      "buildLibrary": {
+        "title": "3. Buduj swoją bibliotekę",
+        "description": "Dodawaj elementy do swojej biblioteki jednym kliknięciem. Twoja kolekcja będzie rosła w miarę zapisywania większej ilości treści, tworząc spersonalizowaną bazę danych rozrywki."
+      },
+      "customizeExperience": {
+        "title": "4. Dostosuj swoje doświadczenie",
+        "description": "Dostosuj ustawienia do swoich preferencji. Wybieraj między jasnymi i ciemnymi motywami, wybierz preferowany język i dostosuj opcje wyświetlania szczegółów treści."
+      }
+    },
+    "connect": {
+      "title": "KONTAKT",
+      "subtitle": "Skontaktuj się ze mną lub śledź moją pracę",
+      "github": "Profil GitHub",
+      "contact": "Wyślij Email",
+      "linkedin": "LinkedIn"
+    }
   }
 }

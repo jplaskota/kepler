@@ -122,5 +122,49 @@
       "rating": "Rating"
     },
     "signOut": "Sign Out"
+  },
+  "about": {
+    "subtitle": "Your personal movie and TV series tracker",
+    "whatIsKepler": {
+      "title": "WHAT IS KEPLER?",
+      "subtitle": "A modern way to track your entertainment",
+      "description1": "Kepler is a personal movie and TV series tracker that helps you organize and remember your favorite content. Think of it as your digital entertainment notebook where you can save movies and shows you've watched or want to watch in the future.",
+      "description2": "With a clean, intuitive interface and powerful features, Kepler makes it easy to build and manage your personal media library."
+    },
+    "keyFeatures": {
+      "title": "KEY FEATURES",
+      "subtitle": "Everything you need to organize your entertainment",
+      "personalLibrary": "Save your favorite movies and TV series in one place",
+      "detailedInfo": "Access comprehensive details about each title including cast, ratings, and release dates",
+      "recommendations": "Discover new content based on your saved items",
+      "customization": "Personalize your experience with theme options and display preferences",
+      "multiLanguage": "Use the app in your preferred language"
+    },
+    "howToUse": {
+      "title": "HOW TO USE KEPLER",
+      "subtitle": "Getting started is simple and straightforward",
+      "createAccount": {
+        "title": "1. Create an Account",
+        "description": "Sign up for a free account to start building your personal library. Your data will be securely stored and accessible from any device."
+      },
+      "browseContent": {
+        "title": "2. Browse Content",
+        "description": "Search for your favorite movies and TV series using the search function. Browse through detailed information, cast, and related content."
+      },
+      "buildLibrary": {
+        "title": "3. Build Your Library",
+        "description": "Add items to your library with a single click. Your collection will grow as you save more content, creating your personalized entertainment database."
+      },
+      "customizeExperience": {
+        "title": "4. Customize Your Experience",
+        "description": "Adjust settings to match your preferences. Choose between light and dark themes, select your preferred language, and customize display options for content details."
+      }
+    },
+    "connect": {
+      "title": "CONTACT ME",
+      "subtitle": "Get in touch or follow my work",
+      "github": "GitHub Profile",
+      "contact": "Send Email"
+    }
   }
 }
