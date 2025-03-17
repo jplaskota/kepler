@@ -14,9 +14,11 @@ interface PreferencesContextType {
   showActors: boolean;
   showRecommendations: boolean;
   showSimilar: boolean;
+  minimalCardView: boolean;
   toggleActors: () => void;
   toggleRecommendations: () => void;
   toggleSimilar: () => void;
+  toggleCardView: () => void;
   clearUserLibrary: ReturnType<
     typeof useMutation<{ message: string }, Error, void, unknown>
   >;
@@ -57,6 +59,11 @@ export default function PreferencesProvider({
     return stored ? JSON.parse(stored) : true;
   });
 
+  const [minimalCardView, setMinimalCardView] = useState<boolean>(() => {
+    const stored = localStorage.getItem("minimalCardView");
+    return stored ? JSON.parse(stored) : false;
+  });
+
   const clearUserLibrary = useMutation({
     mutationFn: clearLibrary,
     onSuccess: async () => {
@@ -80,9 +87,14 @@ export default function PreferencesProvider({
     localStorage.setItem("showSimilar", JSON.stringify(showSimilar));
   }, [showSimilar]);
 
+  useEffect(() => {
+    localStorage.setItem("minimalCardView", JSON.stringify(minimalCardView));
+  }, [minimalCardView]);
+
   const toggleActors = () => setShowActors((prev) => !prev);
   const toggleRecommendations = () => setShowRecommendations((prev) => !prev);
   const toggleSimilar = () => setShowSimilar((prev) => !prev);
+  const toggleCardView = () => setMinimalCardView((prev) => !prev);
 
   return (
     <PreferencesContext.Provider
@@ -93,6 +105,8 @@ export default function PreferencesProvider({
         toggleActors,
         toggleRecommendations,
         toggleSimilar,
+        minimalCardView,
+        toggleCardView,
         clearUserLibrary,
       }}
     >

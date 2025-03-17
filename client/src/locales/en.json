@@ -1,8 +1,6 @@
 {
   "userPage": {
     "account": {
-      "title": "Account",
-      "created": "Account Created",
       "libraryItems": "Library Items"
     },
     "shortcuts": {
@@ -24,24 +22,25 @@
         "title": "Similar Content",
         "description": "Show similar content slider"
       },
+      "minimalCardView": {
+        "title": "Minimalistic Card View",
+        "description": "Enable minimalistic card view with hover effects"
+      },
       "language": "Language",
       "theme": "Theme"
     },
     "community": {
       "featureIdea": {
         "title": "Feature Idea",
-        "description": "Have an idea for a new feature? Let us know!",
-        "button": "Share Idea"
+        "description": "Have an idea for a new feature? Let us know!"
       },
       "bug": {
         "title": "Report Bug",
-        "description": "Found a bug? Help us improve by reporting it.",
-        "button": "Report Bug"
+        "description": "Found a bug? Help us improve by reporting it."
       },
       "support": {
         "title": "Support",
-        "description": "Need help? Contact our support team.",
-        "button": "Contact Support"
+        "description": "Need help? Contact our support team."
       }
     },
     "dangerZone": {
@@ -164,7 +163,8 @@
       "title": "CONTACT ME",
       "subtitle": "Get in touch or follow my work",
       "github": "GitHub Profile",
-      "contact": "Send Email"
+      "contact": "Send Email",
+      "linkedin": "LinkedIn"
     }
   }
 }

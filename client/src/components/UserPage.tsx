@@ -56,6 +56,8 @@ export default function UserPage() {
     showRecommendations,
     toggleSimilar,
     showSimilar,
+    minimalCardView,
+    toggleCardView,
   } = usePreferencesContext();
 
   const handleClearLibrary = () => {
@@ -191,6 +193,21 @@ export default function UserPage() {
                 <Switch
                   onCheckedChange={handleToggleSimilar}
                   checked={showSimilar}
+                />
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <label className="text-sm font-medium">
+                    {t("userPage.customization.minimalCardView.title")}
+                  </label>
+                  <p className="text-sm text-muted-foreground">
+                    {t("userPage.customization.minimalCardView.description")}
+                  </p>
+                </div>
+                <Switch
+                  onCheckedChange={toggleCardView}
+                  checked={minimalCardView}
                 />
               </div>
 

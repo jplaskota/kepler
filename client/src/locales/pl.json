@@ -1,64 +1,63 @@
 {
   "userPage": {
     "account": {
-      "title": "Konto",
-      "created": "Konto utworzone",
-      "libraryItems": "Elementy biblioteki"
+      "libraryItems": "Zawartość biblioteki"
     },
     "shortcuts": {
       "title": "Skróty klawiszowe",
-      "search": "Szukaj",
+      "search": "Wyszukiwanie",
       "closeModal": "Zamknij okno"
     },
     "customization": {
       "title": "Personalizacja",
       "actorsSlider": {
-        "title": "Aktorzy",
-        "description": "Pokaż pasek aktorów"
+        "title": "Obsada",
+        "description": "Wyświetl pasek z obsadą"
       },
       "recommendations": {
         "title": "Rekomendacje",
-        "description": "Pokaż pasek z rekomendacjami"
+        "description": "Wyświetl pasek rekomendacji"
       },
       "similarContent": {
-        "title": "Podobna zawartość",
-        "description": "Pokaż pasek podobnej zawartości"
+        "title": "Podobne treści",
+        "description": "Wyświetl pasek podobnych treści"
+      },
+      "minimalCardView": {
+        "title": "Minimalistyczny widok kart",
+        "description": "Włącz uproszczony widok kart z efektami po najechaniu"
       },
       "language": "Język",
       "theme": "Motyw"
     },
     "community": {
       "featureIdea": {
-        "title": "Pomysł na funkcję",
-        "description": "Masz pomysł na nową funkcję? Daj nam znać!",
-        "button": "Podziel się pomysłem"
+        "title": "Propozycja funkcji",
+        "description": "Pomysł na zmianę? Podziel się nim z nami!"
       },
       "bug": {
         "title": "Zgłoś błąd",
-        "description": "Znalazłeś błąd? Pomóż nam go naprawić.",
-        "button": "Zgłoś błąd"
+        "description": "Znalazłeś błąd? Pomóż nam go naprawić!"
       },
       "support": {
         "title": "Wsparcie",
-        "description": "Masz pytanie? Skontaktuj się z naszym zespołem.",
-        "button": "Kontakt ze wsparciem"
+        "description": "Potrzebujesz pomocy? Skontaktuj się z nami!"
       }
     },
     "dangerZone": {
-      "title": "Strefa zagrożenia",
-      "description": "Destrukcyjne działania dla twojego konta",
+      "title": "Strefa niebezpieczna",
+      "description": "Operacje nieodwracalne dla Twojego konta",
       "clearLibrary": {
         "button": "Wyczyść bibliotekę",
-        "title": "Wyczyść bibliotekę",
-        "description": "Czy na pewno chcesz wyczyścić swoją bibliotekę? Tej akcji nie można cofnąć.",
+        "title": "Czyszczenie biblioteki",
+        "description": "Czy na pewno chcesz wyczyścić swoją bibliotekę? Tej operacji nie można cofnąć.",
         "cancel": "Anuluj",
-        "confirm": "Wyczyść bibliotekę"
+        "confirm": "Wyczyść"
       }
     }
   },
   "library": {
-    "empty": "Brak zapisanych mediów. Zacznij dodawać swoje ulubione filmy i seriale!",
-    "seasons": "sezony",
+    "empty": "Twoja biblioteka jest pusta. Dodaj swoje ulubione filmy i seriale!",
+    "seasons": "sezonów",
     "mins": "min"
   },
   "detailed": {
@@ -67,31 +66,31 @@
     "genres": "Gatunki",
     "releaseDate": "Data premiery",
     "runtime": "Czas trwania",
-    "seasons": "sezony",
+    "seasons": "sezonów",
     "add": "Dodaj do biblioteki",
     "delete": "Usuń z biblioteki",
     "seasonsSlider": {
       "title": "Sezony",
       "seasonNumber": "Sezon",
-      "episodes": "Odcinki",
-      "description": "Pokaż pasek sezonów"
+      "episodes": "Odcinków",
+      "description": "Wyświetl pasek sezonów"
     },
     "actorsSlider": {
-      "title": "Aktorzy",
-      "description": "Pokaż pasek aktorów"
+      "title": "Obsada",
+      "description": "Wyświetl pasek obsady"
     },
     "recommendationsSlider": {
       "title": "Rekomendacje",
-      "description": "Pokaż pasek z rekomendacjami"
+      "description": "Wyświetl pasek rekomendacji"
     },
     "similarSlider": {
-      "title": "Podobna zawartość",
-      "description": "Pokaż pasek podobnej zawartości"
+      "title": "Podobne treści",
+      "description": "Wyświetl pasek podobnych treści"
     }
   },
   "search": {
-    "placeholder": "Wpisz nazwę filmu lub serialu ...",
-    "noResults": "Nic nie znaleziono. Spróbuj ponownie.",
+    "placeholder": "Wyszukaj film lub serial...",
+    "noResults": "Brak wyników. Spróbuj ponownie.",
     "poster": "Plakat",
     "movies": "Filmy",
     "series": "Seriale",
@@ -101,7 +100,7 @@
     "poster": "Plakat"
   },
   "categories": {
-    "all": "Wszystko",
+    "all": "Wszystkie",
     "movies": "Filmy",
     "series": "Seriale"
   },
@@ -118,53 +117,53 @@
     "about": "O projekcie",
     "sortedBy": {
       "addedDate": "Data dodania",
-      "popularity": "Popularności",
-      "rating": "Oceny"
+      "popularity": "Popularność",
+      "rating": "Ocena"
     },
     "signOut": "Wyloguj się"
   },
   "about": {
-    "subtitle": "Twój osobisty tracker filmów i seriali",
+    "subtitle": "Twój osobisty asystent filmowo-serialowy",
     "whatIsKepler": {
       "title": "CZYM JEST KEPLER?",
       "subtitle": "Nowoczesny sposób na śledzenie rozrywki",
-      "description1": "Kepler to osobisty tracker filmów i seriali, który pomaga organizować i pamiętać ulubione treści. Pomyśl o nim jak o cyfrowym notatniku rozrywki, w którym możesz zapisywać filmy i seriale, które obejrzałeś lub chcesz obejrzeć w przyszłości.",
-      "description2": "Dzięki czystemu, intuicyjnemu interfejsowi i zaawansowanym funkcjom, Kepler ułatwia tworzenie i zarządzanie osobistą biblioteką mediów."
+      "description1": "Kepler to Twój osobisty asystent filmowo-serialowy, który pomoże Ci uporządkować i zapamiętać ulubione treści. To jak cyfrowy dziennik rozrywki, w którym możesz zapisywać filmy i seriale już obejrzane lub te, które chcesz obejrzeć w przyszłości.",
+      "description2": "Dzięki przejrzystemu, intuicyjnemu interfejsowi i zaawansowanym funkcjom, Kepler sprawia, że zarządzanie Twoją biblioteką mediów jest proste i przyjemne."
     },
     "keyFeatures": {
-      "title": "KLUCZOWE FUNKCJE",
+      "title": "GŁÓWNE FUNKCJE",
       "subtitle": "Wszystko, czego potrzebujesz do organizacji rozrywki",
-      "personalLibrary": "Zapisuj ulubione filmy i seriale w jednym miejscu",
-      "detailedInfo": "Uzyskaj dostęp do szczegółowych informacji o każdym tytule, w tym obsady, ocen i dat premiery",
-      "recommendations": "Odkrywaj nowe treści na podstawie zapisanych elementów",
-      "customization": "Personalizuj swoje doświadczenie dzięki opcjom motywów i preferencjom wyświetlania",
-      "multiLanguage": "Korzystaj z aplikacji w preferowanym języku"
+      "personalLibrary": "Gromadź ulubione filmy i seriale w jednym miejscu",
+      "detailedInfo": "Przeglądaj szczegółowe informacje o każdym tytule, włącznie z obsadą, ocenami i datami premier",
+      "recommendations": "Odkrywaj nowe treści na podstawie swoich preferencji",
+      "customization": "Dostosuj wygląd aplikacji do swoich upodobań dzięki różnym motywom i opcjom wyświetlania",
+      "multiLanguage": "Korzystaj z aplikacji w swoim języku"
     },
     "howToUse": {
       "title": "JAK KORZYSTAĆ Z KEPLERA",
-      "subtitle": "Rozpoczęcie jest proste i nieskomplikowane",
+      "subtitle": "Rozpoczęcie jest proste i intuicyjne",
       "createAccount": {
         "title": "1. Utwórz konto",
-        "description": "Zarejestruj się, aby rozpocząć budowanie osobistej biblioteki. Twoje dane będą bezpiecznie przechowywane i dostępne z każdego urządzenia."
+        "description": "Zarejestruj się, aby rozpocząć tworzenie swojej biblioteki. Twoje dane będą bezpieczne i dostępne na każdym urządzeniu."
       },
       "browseContent": {
         "title": "2. Przeglądaj treści",
-        "description": "Wyszukuj ulubione filmy i seriale za pomocą funkcji wyszukiwania. Przeglądaj szczegółowe informacje, obsadę i powiązane treści."
+        "description": "Wyszukuj ulubione filmy i seriale. Przeglądaj szczegółowe informacje, obsadę i powiązane treści."
       },
       "buildLibrary": {
-        "title": "3. Buduj swoją bibliotekę",
-        "description": "Dodawaj elementy do swojej biblioteki jednym kliknięciem. Twoja kolekcja będzie rosła w miarę zapisywania większej ilości treści, tworząc spersonalizowaną bazę danych rozrywki."
+        "title": "3. Twórz swoją bibliotekę",
+        "description": "Dodawaj tytuły do biblioteki jednym kliknięciem. Twoja kolekcja będzie rosła wraz z każdym nowym zapisem, tworząc spersonalizowaną bazę ulubionych treści."
       },
       "customizeExperience": {
-        "title": "4. Dostosuj swoje doświadczenie",
-        "description": "Dostosuj ustawienia do swoich preferencji. Wybieraj między jasnymi i ciemnymi motywami, wybierz preferowany język i dostosuj opcje wyświetlania szczegółów treści."
+        "title": "4. Dostosuj ustawienia",
+        "description": "Spersonalizuj aplikację według własnych preferencji. Wybierz jasny lub ciemny motyw, ustaw preferowany język i dostosuj sposób wyświetlania informacji o treściach."
       }
     },
     "connect": {
       "title": "KONTAKT",
       "subtitle": "Skontaktuj się ze mną lub śledź moją pracę",
       "github": "Profil GitHub",
-      "contact": "Wyślij Email",
+      "contact": "Wyślij wiadomość",
       "linkedin": "LinkedIn"
     }
   }
