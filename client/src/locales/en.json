@@ -122,6 +122,35 @@
     },
     "signOut": "Sign Out"
   },
+  "homePage": {
+    "welcome": {
+      "title": "Welcome to Kepler",
+      "subtitle": "Your Personal Movie and TV Series Library",
+      "description": "Track, discover, and organize your favorite movies and TV series in one place. Create your personal watchlist and never miss a show again.",
+      "signIn": "Sign In",
+      "learnMore": "Learn More"
+    },
+    "featured": {
+      "title": "Featured Content",
+      "subtitle": "Explore our handpicked selection of top-rated movies and TV series"
+    },
+    "features": {
+      "title": "Key Features",
+      "subtitle": "Everything you need to manage your entertainment journey",
+      "personalLibrary": {
+        "title": "Personal Library",
+        "description": "Create and curate your own collection of movies and TV series. Keep track of your favorite content in one organized space."
+      },
+      "detailedInfo": {
+        "title": "Detailed Information",
+        "description": "Access comprehensive details about movies and shows, including cast, ratings, reviews, and streaming availability."
+      },
+      "minimalisticInterface": {
+        "title": "Minimalistic Interface",
+        "description": "Experience a clean, modern interface with smart display options. Customize your viewing experience with adjustable layouts, minimal card views, and personalized content organization."
+      }
+    }
+  },
   "about": {
     "subtitle": "Your personal movie and TV series tracker",
     "whatIsKepler": {

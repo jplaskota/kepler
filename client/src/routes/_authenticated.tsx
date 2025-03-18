@@ -26,9 +26,7 @@ function Component() {
 }
 
 function Login() {
-  return (
-    <p>
-      You need to be logged in <br />
-    </p>
-  );
+  return <HomePage />;
 }
+
+import HomePage from "@/components/HomePage";

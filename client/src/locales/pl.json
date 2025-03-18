@@ -122,6 +122,35 @@
     },
     "signOut": "Wyloguj się"
   },
+  "homePage": {
+    "welcome": {
+      "title": "Witaj w Kepler",
+      "subtitle": "Twoja osobista biblioteka filmów i seriali",
+      "description": "Śledź, odkrywaj i organizuj swoje ulubione filmy i seriale w jednym miejscu. Stwórz swoją osobistą listę do obejrzenia i nigdy nie przegap żadnego filmu.",
+      "signIn": "Zaloguj się",
+      "learnMore": "Dowiedz się więcej"
+    },
+    "featured": {
+      "title": "Polecane treści",
+      "subtitle": "Odkryj nasz wybór najlepiej ocenianych filmów i seriali"
+    },
+    "features": {
+      "title": "Główne funkcje",
+      "subtitle": "Wszystko, czego potrzebujesz do zarządzania rozrywką",
+      "personalLibrary": {
+        "title": "Osobista biblioteka",
+        "description": "Twórz i zarządzaj własną kolekcją filmów i seriali. Śledź swoje ulubione treści w jednym, uporządkowanym miejscu."
+      },
+      "detailedInfo": {
+        "title": "Szczegółowe informacje",
+        "description": "Przeglądaj szczegółowe informacje o filmach i serialach, w tym obsadę, oceny, recenzje i dostępność streamingu."
+      },
+      "minimalisticInterface": {
+        "title": "Minimalistyczny interfejs",
+        "description": "Korzystaj z przejrzystego, nowoczesnego interfejsu z inteligentnymi opcjami wyświetlania. Dostosuj swoje doświadczenia dzięki regulowanym układom, minimalistycznym widokom kart i spersonalizowanej organizacji treści."
+      }
+    }
+  },
   "about": {
     "subtitle": "Twój osobisty asystent filmowo-serialowy",
     "whatIsKepler": {
